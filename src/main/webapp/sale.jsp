@@ -208,7 +208,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-end">
-                            <div class="col-3 text-right">
+                            <div class="col-2 text-right">
                                 <div class="mb-3">
                                     <label for="" class="pr-4">Total</label>
                                     <input type="number" class="form-control text-right font-weight-bold" disabled>
