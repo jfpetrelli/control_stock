@@ -22,9 +22,6 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
 </head>
 
 <body id="page-top">
@@ -153,18 +150,6 @@
 
                     <!-- Content Row -->
                     <form>
-                     <div class="row">
-                            <div class="col-2">
-                                <div class="mb-3">
-                                    <label for="fechahora" class="form-label">asdsadasd</label>
-                                    
-<select class="js-example-basic-single" name="state">
-  <option value="AL">Alabama</option>
-  <option value="WY">Wyoming</option>
-</select>
-                                  </div> 
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-2">
                                 <div class="mb-3">
@@ -284,13 +269,6 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-    <script type="text/javascript">
-
-    $(document).ready(function() {
-        $('.js-example-basic-single').select2();
-    });
-    </script>
-
 </body>
 
 </html>
