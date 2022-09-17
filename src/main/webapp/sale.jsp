@@ -1,3 +1,13 @@
+
+<%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
+<%@page import="logic.CustomersLogic"%>
+<%@page import="entities.Customers"%>
+<%@page import="logic.StoresLogic"%>
+<%@page import="entities.Stores"%>
+<%@page import="logic.ProductsLogic"%>
+<%@page import="entities.Products"%>
+<%@page import="java.util.ArrayList"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -21,11 +31,33 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    
+    <%
+    	CustomersLogic customersLogic = new CustomersLogic();
+    	ArrayList<Customers> customers = new ArrayList<>();
+    	
+        customers = customersLogic.getAll();
+        
+        StoresLogic storesLogic = new StoresLogic();
+        ArrayList<Stores> stores = new ArrayList<>();
+        
+        stores = storesLogic.getAll();
+        
+        ProductsLogic productsLogic = new ProductsLogic();
+        ArrayList<Products> products = new ArrayList<>();
+        
+        products = productsLogic.getAll();
+
+    %>
+
 </head>
 
 <body id="page-top">
 
+    <%
+    	if(customers == null || stores == null)
+    		response.sendRedirect("/control_stock/500.html");
+
+    %>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -149,39 +181,60 @@
                     </div>
 
                     <!-- Content Row -->
-                    <form>
+                    <form action="Sale" method ="POST">
                         <div class="row">
                             <div class="col-2">
                                 <div class="mb-3">
                                     <label for="fechahora" class="form-label">Fecha</label>
-                                    <input type="date" class="form-control" id="fechahora" value="">
+                                    <input type="date" class="form-control" id="datetime">
                                   </div> 
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="mb-3">
-                                  <label for="cliente" class="form-label">Cliente</label>
-                                  <input type="search" class="form-control" id="cliente">
+                                  <label for="customer" class="form-label">Cliente</label>
+                                  <select class="form-control" aria-label="Default select example" id="customer" onchange = "enabledProducts(this);">
+                                  <option value = ""></option>
+                                  <% for (Customers customer: customers) {%>
+									  <option value= "<%=customer.getId() %>"><%=customer.getComercial_name() %></option>
+									  <% } %>
+								 </select>
                                 </div> 
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
-                                  <label for="deposito" class="form-label">Deposito</label>
-                                  <input type="search" class="form-control" id="deposito">
+                                  	<label for="store" class="form-label">Deposito</label>
+                                  	<select class="form-control" aria-label="Default select example" id="store" onchange = "enabledProducts(this);">
+										<option value = ""></option>
+                                  		<% for (Stores store: stores) {%>
+									  <option value= "<%=store.getId() %>"><%=store.getDetail() %></option>
+									  <% } %>
+									</select>
                                 </div> 
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="mb-3">
-                                    <label for="articulo" class="form-label">Articulo</label>
-                                    <input type="search" class="form-control" id="articulo">
+                                   	<label for="product" class="form-label">Articulo</label>
+                                	<select class="form-control" aria-label="Default select example" id="product" disabled>
+									  	<option value = ""></option>
+                                  		<% for (Products product: products) {%>
+									  <option value= "<%= product.getId() %>"><%=product.getDetail() %></option>
+									  <% } %>
+									</select>
+                                  </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="mb-3">
+                                   	<label for="stock" class="form-label">Stock</label>
+                                    <input type="number" class="form-control" id="stock" disabled>
                                   </div>
                             </div>
                             <div class="col-2 align-self-end">
                                 <div class="mb-3">
-                                    <input type="button" class="form-control bg-warning text-gray-100" value="Agregar">
+                                    <input type="button" class="form-control bg-warning" value="Agregar" id ="add" disabled>
                                 </div>
                             </div>
                         </div>
@@ -212,6 +265,13 @@
                                 <div class="mb-3">
                                     <label for="" class="pr-4">Total</label>
                                     <input type="number" class="form-control text-right font-weight-bold" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="col-2 text-right">
+                                <div class="mb-3">
+                                    <input type="submit" value="Realizar Venta" class="form-control bg-warning" id="submit" disabled>
                                 </div>
                             </div>
                         </div>
@@ -269,6 +329,30 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    
+    <script type="text/javascript">
+    	function enabledProducts(element){
+    		
+    		if(document.getElementById('customer').value != '' && document.getElementById('store').value != ''){
+    			document.getElementById('product').disabled = false;
+    			document.getElementById('add').disabled = false;
+    			document.getElementById('submit').disabled = false;
+    			document.getElementById("add").classList.add("text-gray-100");
+      			document.getElementById("submit").classList.add("text-gray-100");
+      			document.getElementById("submit").submit();
+
+    		}else{
+    			document.getElementById('product').disabled = true;
+    			document.getElementById('add').disabled = true;
+    			document.getElementById('submit').disabled = true;
+    			document.getElementById("add").classList.remove("text-gray-100");
+    			document.getElementById("submit").classList.remove("text-gray-100");
+
+    		}
+    	}
+    
+    </script>
+       
 </body>
 
 </html>

@@ -6,7 +6,7 @@ public class Customers {
 	private String name;
 	private String surnarme;
 	private String mail;
-	private String company_name;
+	private String comercial_name;
 	private String addres;
 	
 	public int getId() {
@@ -33,11 +33,11 @@ public class Customers {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
-	public String getCompany_name() {
-		return company_name;
+	public String getComercial_name() {
+		return comercial_name;
 	}
-	public void setCompany_name(String company_name) {
-		this.company_name = company_name;
+	public void setComercial_name(String company_name) {
+		this.comercial_name = company_name;
 	}
 	public String getAddres() {
 		return addres;
