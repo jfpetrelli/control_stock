@@ -23,5 +23,18 @@ public class ProductsLogic {
 			}
 
 		}
+		
+		public ArrayList<Products> getProductsStores(int store_id) {
+			try {
+				return dataProducts.readProductsStores(store_id);
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+				return null;
+			}
+
+		}
 
 }

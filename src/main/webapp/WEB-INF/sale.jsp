@@ -1,10 +1,7 @@
 
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
-<%@page import="logic.CustomersLogic"%>
 <%@page import="entities.Customers"%>
-<%@page import="logic.StoresLogic"%>
 <%@page import="entities.Stores"%>
-<%@page import="logic.ProductsLogic"%>
 <%@page import="entities.Products"%>
 <%@page import="java.util.ArrayList"%>
 
@@ -32,21 +29,22 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <%
-    	CustomersLogic customersLogic = new CustomersLogic();
-    	ArrayList<Customers> customers = new ArrayList<>();
+    	ArrayList<Customers> customers = (ArrayList) request.getAttribute("customers");
+    	ArrayList<Stores> stores = (ArrayList) request.getAttribute("stores");
+    	ArrayList<Products> products = (ArrayList) request.getAttribute("products");	
     	
-        customers = customersLogic.getAll();
-        
-        StoresLogic storesLogic = new StoresLogic();
-        ArrayList<Stores> stores = new ArrayList<>();
-        
-        stores = storesLogic.getAll();
-        
-        ProductsLogic productsLogic = new ProductsLogic();
-        ArrayList<Products> products = new ArrayList<>();
-        
-        products = productsLogic.getAll();
-
+		String customer_selected = new String();
+		String store_selected = new String();
+		String cust = (String)request.getAttribute("customer");
+		String sto = (String)request.getAttribute("store");
+		
+		if(cust != null){
+			customer_selected = cust;
+		}
+		if(sto != null){
+			store_selected = sto;
+		}
+    	
     %>
 
 </head>
@@ -65,7 +63,7 @@
         <ul class="navbar-nav bg-gradient-warning sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Main">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -77,7 +75,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="sale.jsp">
+                <a class="nav-link" href="Sale">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Venta</span></a>
             </li>
@@ -181,12 +179,12 @@
                     </div>
 
                     <!-- Content Row -->
-                    <form action="Sale" method ="POST">
+                    <form action="Sale" method ="POST" name="form_sale" id = "form_sale">
                         <div class="row">
                             <div class="col-2">
                                 <div class="mb-3">
                                     <label for="fechahora" class="form-label">Fecha</label>
-                                    <input type="date" class="form-control" id="datetime">
+                                    <input type="datetime-local" class="form-control" id="datetime" name = "datetime">
                                   </div> 
                             </div>
                         </div>
@@ -194,10 +192,12 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                   <label for="customer" class="form-label">Cliente</label>
-                                  <select class="form-control" aria-label="Default select example" id="customer" onchange = "enabledProducts(this);">
+                                  <select class="form-control" aria-label="Default select example" id="customer" name="customer">
                                   <option value = ""></option>
-                                  <% for (Customers customer: customers) {%>
-									  <option value= "<%=customer.getId() %>"><%=customer.getComercial_name() %></option>
+                                 <% for (Customers customer: customers) {%>
+									  <option value= "<%=customer.getId() %>" 
+									  <%if(customer_selected != null && !customer_selected.isEmpty()) {%>
+									  <%if(customer.getId() == Integer.parseInt(customer_selected)){ %> selected<% }}%> ><%=customer.getComercial_name() %></option>
 									  <% } %>
 								 </select>
                                 </div> 
@@ -205,36 +205,47 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                   	<label for="store" class="form-label">Deposito</label>
-                                  	<select class="form-control" aria-label="Default select example" id="store" onchange = "enabledProducts(this);">
+                                  	<select class="form-control" aria-label="Default select example" id="store" name="store">
 										<option value = ""></option>
                                   		<% for (Stores store: stores) {%>
-									  <option value= "<%=store.getId() %>"><%=store.getDetail() %></option>
+									  <option value= "<%=store.getId() %>" 
+									  <%if(store_selected != null && !store_selected.isEmpty()) {%>
+									  <%if(store.getId() == Integer.parseInt(store_selected)){ %> selected<% }}%> ><%=store.getDetail() %></option>
 									  <% } %>
 									</select>
                                 </div> 
                             </div>
                         </div>
                         <div class="row">
+                        	<div class="col-2 align-self-end">
+                                <div class="mb-3">
+                                    <input type="submit" class="form-control bg-warning text-gray-100" value="Buscar Articulos" id ="search" name = "action">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-6">
                                 <div class="mb-3">
                                    	<label for="product" class="form-label">Articulo</label>
-                                	<select class="form-control" aria-label="Default select example" id="product" disabled>
+                                	<select class="form-control" aria-label="Default select example" id="product" name="product">
 									  	<option value = ""></option>
-                                  		<% for (Products product: products) {%>
-									  <option value= "<%= product.getId() %>"><%=product.getDetail() %></option>
-									  <% } %>
+                                  		<% if(products != null){
+                                            	for(Products product: products){
+                                            		%> <option value = "<%=product.getId() %>"><%=product.getDetail() %></option>
+                                            <%	}
+                                  			} %>
 									</select>
                                   </div>
                             </div>
-                            <div class="col-1">
-                                <div class="mb-3">
-                                   	<label for="stock" class="form-label">Stock</label>
-                                    <input type="number" class="form-control" id="stock" disabled>
+                            <div class="col-2">
+                                <div class="mb-3 text-right">
+                                   	<label for="quantity" class="form-label pr-4">Cantidad</label>
+                                    <input type="number" class="form-control text-right" id="quantity" name= "quantity" min=0 value= 0 step="1">
                                   </div>
                             </div>
                             <div class="col-2 align-self-end">
                                 <div class="mb-3">
-                                    <input type="button" class="form-control bg-warning" value="Agregar" id ="add" disabled>
+                                    <input type="submit" class="form-control bg-warning text-gray-100" value="Agregar" id ="add" name = "action">
                                 </div>
                             </div>
                         </div>
@@ -248,12 +259,25 @@
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
+                                                    	<th class="d-none">ID</th>
                                                         <th class="col-6">Articulo</th>
                                                         <th class="col-2 text-right">Cantidad</th>
                                                         <th class="col-2 text-right">Precio Unitario</th>
                                                         <th class="col-2 text-right">Total</th>
                                                     </tr>
                                                 </thead>
+                                                <tbody>
+                                                <% if(request.getAttribute("product_id") != null){ %>
+                                                	<tr>
+                                                		<td class="d-none"><%=(String)request.getAttribute("product_id") %></td>
+                                                        <td class="col-6"><%=(String)request.getAttribute("product_detail") %></td>
+                                                        <td class="col-2 text-right"><%=(String)request.getAttribute("product_quantity") %></td>
+                                                        <td class="col-2 text-right"><%=(String)request.getAttribute("product_price") %></td>
+                                                        <td class="col-2 text-right"><%=(String)request.getAttribute("product_total") %></td>
+                                                		
+                                                	<% }%>
+                                                	</tr>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -264,14 +288,14 @@
                             <div class="col-2 text-right">
                                 <div class="mb-3">
                                     <label for="" class="pr-4">Total</label>
-                                    <input type="number" class="form-control text-right font-weight-bold" disabled>
+                                    <input type="number" class="form-control text-right font-weight-bold" name="total" disabled>
                                 </div>
                             </div>
                         </div>
                         <div class="row justify-content-end">
                             <div class="col-2 text-right">
                                 <div class="mb-3">
-                                    <input type="submit" value="Realizar Venta" class="form-control bg-warning" id="submit" disabled>
+                                    <input type="submit" value="Realizar Venta" class="form-control bg-warning text-gray-100" id="submit" name="action">
                                 </div>
                             </div>
                         </div>
@@ -329,30 +353,6 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-    
-    <script type="text/javascript">
-    	function enabledProducts(element){
-    		
-    		if(document.getElementById('customer').value != '' && document.getElementById('store').value != ''){
-    			document.getElementById('product').disabled = false;
-    			document.getElementById('add').disabled = false;
-    			document.getElementById('submit').disabled = false;
-    			document.getElementById("add").classList.add("text-gray-100");
-      			document.getElementById("submit").classList.add("text-gray-100");
-      			document.getElementById("submit").submit();
-
-    		}else{
-    			document.getElementById('product').disabled = true;
-    			document.getElementById('add').disabled = true;
-    			document.getElementById('submit').disabled = true;
-    			document.getElementById("add").classList.remove("text-gray-100");
-    			document.getElementById("submit").classList.remove("text-gray-100");
-
-    		}
-    	}
-    
-    </script>
-       
 </body>
 
 </html>
