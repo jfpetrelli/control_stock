@@ -65,23 +65,27 @@ public class Sale extends HttpServlet {
 			 String store_id = request.getParameter("store");
 		     String customer_id = request.getParameter("customer");
 		     products = productsLogic.getProductsStores(Integer.parseInt(store_id));
+		     String datetime = request.getParameter("datetime");
+		     LocalDateTime local_datetime =  LocalDateTime.parse(datetime,DateTimeFormatter.ISO_DATE_TIME);
+
+		     System.out.println(local_datetime);
 			if(action.equals("Buscar Articulos")) {
 
 		        request.setAttribute("products", products);
 		        request.setAttribute("customer", customer_id);
 		        request.setAttribute("store", store_id);
-//		        request.setAttribute("datetime",datetime);
+		        request.setAttribute("datetime", datetime);
 
 			}
 			if(action.equals("Agregar")) {
-				
+		        request.setAttribute("products", products);
+		        request.setAttribute("customer", customer_id);
+		        request.setAttribute("store", store_id);
+		        request.setAttribute("datetime", datetime);
+		        
 		        int product_id = Integer.parseInt(request.getParameter("product"));
 		        int quantity = Integer.parseInt(request.getParameter("quantity"));
-		        DateTimeFormatter JEFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		        // parsing the string to convert it into date
-		        LocalDateTime local_date = LocalDateTime.parse(request.getParameter("datetime"), JEFormatter);
 
-		        System.out.println(local_date);
 
 		        
 				}		        

@@ -184,7 +184,7 @@
                             <div class="col-2">
                                 <div class="mb-3">
                                     <label for="fechahora" class="form-label">Fecha</label>
-                                    <input type="datetime-local" class="form-control" id="datetime" name = "datetime">
+                                    <input type="datetime-local" class="form-control" id="datetime" name = "datetime" value = "<%=request.getAttribute("datetime") %>">
                                   </div> 
                             </div>
                         </div>
