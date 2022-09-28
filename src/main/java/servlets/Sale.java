@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import entities.Customers;
 import entities.Products;
-import entities.Sales;
 import entities.Stores;
 import logic.CustomersLogic;
 import logic.ProductsLogic;
@@ -24,14 +23,27 @@ import logic.StoresLogic;
  */
 @WebServlet("/Sale")
 public class Sale extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-       
+	
+	CustomersLogic customersLogic = new CustomersLogic();
+	ArrayList<Customers> customers = new ArrayList<>();
+	StoresLogic storesLogic = new StoresLogic();
+	ArrayList<Stores> stores = new ArrayList<>();
+	ProductsLogic productsLogic = new ProductsLogic();
+	ArrayList<Products> products = new ArrayList<>();
+	LocalDateTime datetime;
+
     /**
      * @see HttpServlet#HttpServlet()
      */
     public Sale() {
         super();
         // TODO Auto-generated constructor stub
+        customers = customersLogic.getAll();
+        stores = storesLogic.getAll();
+        datetime = LocalDateTime.now();  
+
     }
 
 	/**
@@ -40,37 +52,37 @@ public class Sale extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		String action = request.getParameter("action");
-		double total = 0.0;
-			CustomersLogic customersLogic = new CustomersLogic();
-			ArrayList<Customers> customers = new ArrayList<>();
-    	
-			customers = customersLogic.getAll();
-        
-			StoresLogic storesLogic = new StoresLogic();
-			ArrayList<Stores> stores = new ArrayList<>();
-        
-			stores = storesLogic.getAll();
-        
-
-			request.setAttribute("customers", customers);
-			request.setAttribute("stores", stores);
-		
+		if(customers == null || stores == null) {
 			
-			ProductsLogic productsLogic = new ProductsLogic();
-	        ArrayList<Products> products = new ArrayList<>();
+			response.sendRedirect("/control_stock/500.html");
+			return;
+		} 
+		
+		String action = request.getParameter("action");
+		
+	 
+		request.setAttribute("customers", customers);
+		request.setAttribute("stores", stores);
+		request.setAttribute("datetime", datetime.toString());
 
 		if(action != null) {
+
 			
 			 String store_id = request.getParameter("store");
 		     String customer_id = request.getParameter("customer");
-		     products = productsLogic.getProductsStores(Integer.parseInt(store_id));
-		     String datetime = request.getParameter("datetime");
-		     LocalDateTime local_datetime =  LocalDateTime.parse(datetime,DateTimeFormatter.ISO_DATE_TIME);
+			 String datetime = request.getParameter("datetime");
+			 System.out.println(datetime);
+		     if(store_id.equals("") || customer_id.equals("")) {
+					response.sendRedirect("/control_stock/500.html");
+					return;
+		     }
+		     
 
-		     System.out.println(local_datetime);
+//		     LocalDateTime local_datetime =  LocalDateTime.parse(datetime,DateTimeFormatter.ISO_DATE_TIME);
+		     
 			if(action.equals("Buscar Articulos")) {
 
+			    products = productsLogic.getProductsStores(Integer.parseInt(store_id));
 		        request.setAttribute("products", products);
 		        request.setAttribute("customer", customer_id);
 		        request.setAttribute("store", store_id);
@@ -82,11 +94,6 @@ public class Sale extends HttpServlet {
 		        request.setAttribute("customer", customer_id);
 		        request.setAttribute("store", store_id);
 		        request.setAttribute("datetime", datetime);
-		        
-		        int product_id = Integer.parseInt(request.getParameter("product"));
-		        int quantity = Integer.parseInt(request.getParameter("quantity"));
-
-
 		        
 				}		        
 		       

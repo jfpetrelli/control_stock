@@ -51,11 +51,6 @@
 
 <body id="page-top">
 
-    <%
-    	if(customers == null || stores == null)
-    		response.sendRedirect("/control_stock/500.html");
-
-    %>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
