@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 import data.DataProducts;
 import entities.Products;
+import data.DataStores;
+import entities.Stores;
+import entities.InventoryItem;
 
 
 public class ProductsLogic {
@@ -36,5 +39,24 @@ public class ProductsLogic {
 			}
 
 		}
+		
+		public void increaseStock(Stores store, Products product, Integer quantity) {
+			InventoryItem inventoryItem = dataProducts.getProductByStore(store, product);
+			inventoryItem.setStock(inventoryItem.getStock() + quantity);
+			dataProducts.updateStock(inventoryItem);
+		}	
+		
+		public void decreaseStock(Stores store, Products product, Integer quantity) {
+			InventoryItem inventoryItem = dataProducts.getProductByStore(store, product);
+			inventoryItem.setStock(inventoryItem.getStock() - quantity);
+			dataProducts.updateStock(inventoryItem);
+		}	
+		
+		public void createStock(Stores store, Products product, Integer quantity) {
+			InventoryItem inventoryItem = new InventoryItem(store.getId(),product.getId(),quantity);
+			dataProducts.createStock(inventoryItem);
+		}
+		
+		
 
 }

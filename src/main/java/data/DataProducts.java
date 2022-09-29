@@ -1,11 +1,14 @@
 package data;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import entities.Products;
+import entities.Stores;
+import entities.InventoryItem;
 
 public class DataProducts {
 
@@ -60,7 +63,98 @@ public class DataProducts {
 		DbConnector.getInstancia().releaseConn();
 		return products;
 	}
+	
 
+	public InventoryItem getProductByStore(Stores store, Products product) {
+		InventoryItem ii = null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		
+		try {
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+					"select product_id,store_id,stock from products_stores where product_id=? and store_id=?"
+					);
+			stmt.setInt(1, product.getId());
+			stmt.setInt(2, store.getId());
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()) {
+				ii = new InventoryItem(rs.getInt("product_id"),rs.getInt("store_id"),rs.getInt("stock"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		return ii;		
+	}
+	
+	public void updateStock(InventoryItem inventoryItem) {
+		PreparedStatement stmt = null;			
+			try {
+				stmt = DbConnector.getInstancia().getConn().prepareStatement(
+								"UPDATE products_stores SET stock = ? where product_id = ? and store_id = ?"
+				);
+
+				stmt.setInt(1, inventoryItem.getStock());
+				stmt.setInt(2, inventoryItem.getProduct_id());
+				stmt.setInt(3, inventoryItem.getStore_id());
+				
+
+				stmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+	            try {	            	
+	                if(stmt!=null) {
+	                	stmt.close();
+	                }	                
+					DbConnector.getInstancia().releaseConn();	                
+	            } catch (SQLException e) {
+					// TODO Auto-generated catch block
+	            	e.printStackTrace();
+	            }
+			}			
+	}
+	
+	public void createStock(InventoryItem inventoryItem) {
+		
+		PreparedStatement stmt= null;
+		ResultSet keyResultSet=null;
+		
+		try {
+			stmt= DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"insert into products_stores(product_id, store_id, stock) values(?,?,?)"
+							);
+			
+			stmt.setInt(1, inventoryItem.getProduct_id());
+			stmt.setInt(2,inventoryItem.getStore_id());
+			stmt.setInt(3, inventoryItem.getStock());
+
+			stmt.executeUpdate();
+			
+			
+		}  catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(keyResultSet!=null)keyResultSet.close();
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }
+		}
+		
+	}
 
 }
 
