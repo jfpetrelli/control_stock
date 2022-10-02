@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import entities.Products;
 import entities.Stores;
-import entities.InventoryItem;
 
 public class DataProducts {
 
@@ -65,8 +64,7 @@ public class DataProducts {
 	}
 	
 
-	public InventoryItem getProductByStore(Stores store, Products product) {
-		InventoryItem ii = null;
+	public Products getProductByStore(Stores store, Products product) {		
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		
@@ -78,7 +76,7 @@ public class DataProducts {
 			stmt.setInt(2, store.getId());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()) {
-				ii = new InventoryItem(rs.getInt("product_id"),rs.getInt("store_id"),rs.getInt("stock"));
+				product.getStores().put(store, rs.getInt("stock"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -92,21 +90,20 @@ public class DataProducts {
 				e.printStackTrace();
 			}
 		}		
-		return ii;		
+		return product;		
 	}
 	
-	public void updateStock(InventoryItem inventoryItem) {
+	public void updateStock(Products product, Stores store) {
 		PreparedStatement stmt = null;			
 			try {
 				stmt = DbConnector.getInstancia().getConn().prepareStatement(
 								"UPDATE products_stores SET stock = ? where product_id = ? and store_id = ?"
 				);
 
-				stmt.setInt(1, inventoryItem.getStock());
-				stmt.setInt(2, inventoryItem.getProduct_id());
-				stmt.setInt(3, inventoryItem.getStore_id());
+				stmt.setInt(1, product.getStores().get(store));
+				stmt.setInt(2, product.getId());
+				stmt.setInt(3, store.getId());
 				
-
 				stmt.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -124,7 +121,7 @@ public class DataProducts {
 			}			
 	}
 	
-	public void createStock(InventoryItem inventoryItem) {
+	public void createStock(Stores store, Products product, Integer quantity) {
 		
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
@@ -135,9 +132,9 @@ public class DataProducts {
 							"insert into products_stores(product_id, store_id, stock) values(?,?,?)"
 							);
 			
-			stmt.setInt(1, inventoryItem.getProduct_id());
-			stmt.setInt(2,inventoryItem.getStore_id());
-			stmt.setInt(3, inventoryItem.getStock());
+			stmt.setInt(1, product.getId());
+			stmt.setInt(2,store.getId());
+			stmt.setInt(3, quantity);
 
 			stmt.executeUpdate();
 			

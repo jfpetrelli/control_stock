@@ -7,8 +7,6 @@ import data.DataProducts;
 import entities.Products;
 import data.DataStores;
 import entities.Stores;
-import entities.InventoryItem;
-
 
 public class ProductsLogic {
 	
@@ -37,26 +35,24 @@ public class ProductsLogic {
 				e.printStackTrace();
 				return null;
 			}
-
 		}
 		
 		public void increaseStock(Stores store, Products product, Integer quantity) {
-			InventoryItem inventoryItem = dataProducts.getProductByStore(store, product);
-			inventoryItem.setStock(inventoryItem.getStock() + quantity);
-			dataProducts.updateStock(inventoryItem);
+			Products p = dataProducts.getProductByStore(store, product);
+			Integer stock = p.getStores().get(store);
+			p.getStores().put(store, stock + quantity);					
+			dataProducts.updateStock(p,store);
 		}	
 		
 		public void decreaseStock(Stores store, Products product, Integer quantity) {
-			InventoryItem inventoryItem = dataProducts.getProductByStore(store, product);
-			inventoryItem.setStock(inventoryItem.getStock() - quantity);
-			dataProducts.updateStock(inventoryItem);
+			Products p = dataProducts.getProductByStore(store, product);
+			Integer stock = p.getStores().get(store);
+			p.getStores().put(store, stock - quantity);	
+			dataProducts.updateStock(p,store);
 		}	
 		
 		public void createStock(Stores store, Products product, Integer quantity) {
-			InventoryItem inventoryItem = new InventoryItem(store.getId(),product.getId(),quantity);
-			dataProducts.createStock(inventoryItem);
+			dataProducts.createStock(store,product,quantity);
 		}
-		
-		
-
+	
 }
