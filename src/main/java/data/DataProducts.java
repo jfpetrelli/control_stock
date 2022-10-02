@@ -36,6 +36,36 @@ public class DataProducts {
 		return products;
 	}
 	
+	public Products getById(Integer id) {
+		Products product=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select id,detail,price from products where id=?"
+					);
+			stmt.setInt(1, id);
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()) {
+				product = new Products();
+				product.setId(rs.getInt("id"));
+				product.setDetail(rs.getString("detail"));
+				product.setPrice(rs.getDouble("price"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		return product;
+	}
+	
 	public ArrayList<Products> readProductsStores(int store_id) throws SQLException{
 		
 		ArrayList<Products> products = new ArrayList<>();
