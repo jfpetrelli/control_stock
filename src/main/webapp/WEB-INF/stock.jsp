@@ -32,7 +32,6 @@
     	ArrayList<Products> products = (ArrayList) request.getAttribute("products");	
     	
 		String store_selected = new String();
-		String cust = (String)request.getAttribute("customer");
 		String sto = (String)request.getAttribute("store");
 		
 		if(sto != null){
@@ -66,7 +65,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="Sale">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Venta</span></a>
+                    <span>Stock</span></a>
             </li>
 
             <!-- Divider -->
