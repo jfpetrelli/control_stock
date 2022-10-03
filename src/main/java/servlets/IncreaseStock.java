@@ -51,7 +51,8 @@ public class IncreaseStock extends HttpServlet {
 		Stores store = dataStore.getById(storeId);
 		productLogic.increaseStock(store, product, quantity);
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		Stock stockServlet = new Stock();
+		stockServlet.doGet(request, response);
 	}
 
 }

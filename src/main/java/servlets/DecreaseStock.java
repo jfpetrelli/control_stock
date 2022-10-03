@@ -51,8 +51,9 @@ public class DecreaseStock extends HttpServlet {
 		Products product = dataProduct.getById(productId);
 		Stores store = dataStore.getById(storeId);
 		productLogic.decreaseStock(store, product, quantity);
-
-		doGet(request, response);
+		
+		Stock stockServlet = new Stock();
+		stockServlet.doGet(request, response);
 	}
 
 }
