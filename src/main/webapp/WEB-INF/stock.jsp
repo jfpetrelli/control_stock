@@ -163,7 +163,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Venta</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Stock</h1>
                     </div>
 
                     <!-- Content Row -->
@@ -199,32 +199,44 @@
                                 <div class="card shadow mb-4">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <table class="table table-bordered" id="productsTable" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
                                                     	<th class="d-none">ID</th>
-                                                        <th class="col-6">Articulo</th>
+                                                        <th class="col-4">Articulo</th>
                                                         <th class="col-2 text-right">Precio Unitario</th>
-                                                        <th class="col-2 text-right">Cant</th>
-                                                        <th class="col-2 text-right">Acción</th>
+                                                        <th class="col-4 text-center">Stock</th>
                                                         
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="tbodyProducts">
                                                 <% for (Products product : products) {%>                                              
-                                                	<tr>
+                                                	<tr id="<%= product.getId() %>">
                                                 		<td class="d-none"><%= product.getId() %></td>  
                                                 		<td class="col-6"><%=product.getDetail() %></td>
-                                                		<td class="col-2 text-right"><%=product.getPrice() %></td>
-                                                        <td class="col-2 text-right"><%=product.getStock() %></td>
-                                                        <td class="col-2 text-right">
-															<!-- Button trigger modal -->                                                        
-															<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#decreaseStockModal">
-															  -
-															</button>																															
-															<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#increaseStockModal">
-															  +
-															</button>															
+                                                        <td class="col-2 text-right"><%=product.getPrice()%></td>
+                                                        <td class="col-2 ">
+															<div  class="row justify-content-md-center">
+																<div class="col-2">
+																	<form id="decreaseStock<%= product.getId() %>" action="DecreaseStock" method="GET">                                                   																																					
+																			<input type="hidden" name="store" value="<%=store_selected %>">
+																			<input type="hidden" name="product" value="<%= product.getId() %>">																			
+																	</form>	
+																	<input form="decreaseStock<%= product.getId() %>" type="submit" class="btn btn-primary" value="-"> 
+																			 	
+																	
+																</div>
+																<div class="col-3 text-center">
+																	<%=product.getStock() %>
+																</div>
+																<div class="col-2">
+																	<form id="increaseStock<%= product.getId() %>" action="IncreaseStock" method="GET">                                                   																		
+																			<input type="hidden" name="store" value="<%=store_selected %>">
+																			<input type="hidden" name="product" value="<%= product.getId() %>">																		
+																	</form>	
+																	<input form="increaseStock<%= product.getId() %>" type="submit" class="btn btn-primary" value="+">																
+																</div>		
+															</div>																									
 														</td>
                                                     </tr>                                              		
                                                 <% } %>	
@@ -258,76 +270,7 @@
     
 
 	
-	<!-- Modal -->
-	<div class="modal fade" id="increaseStockModal" tabindex="-1" role="dialog" aria-labelledby="increaseStockModalCenterTitle" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLongTitle">Aumentar stock</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body" id="divNuevoRol">		
-	      	<form id="increaseStock" action="IncreaseStock" method="POST">	
-			  <div class="form-group">
-			    <label for="product">Producto</label>
-			    <input name="product" id="product" value="">			   
-			  </div>
-			  <div class="form-group">
-			  	<label for="store">Depósito</label>
-			  	<input name="store" id="store" value="">				    
-			  </div>
-			  <div class="form-group">
-			    <label for="quantity">Cantidad</label>
-			    <input name="quantity" id="quantity" value="">
-			  </div>	
-			</form>		  
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>		        
-		        <button type="submit" class="btn btn-primary" form="increaseStock">Aumentar</button>		        
-		      </div>
-			
- 		 </div>
-
-	    </div>
-	  </div>
-	</div>
 	
-	<div class="modal fade" id="decreaseStockModal" tabindex="-1" role="dialog" aria-labelledby="increaseStockModalCenterTitle" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLongTitle">Disminuir stock</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body" id="divNuevoRol">		
-	      	<form id="decreaseStock" action="DecreaseStock" method="POST">	
-			  <div class="form-group">
-			    <label for="product">Producto</label>
-			    <input name="product" id="product" value="">			   
-			  </div>
-			  <div class="form-group">
-			  	<label for="store">Depósito</label>
-			  	<input name="store" id="store" value="">				    
-			  </div>
-			  <div class="form-group">
-			    <label for="quantity">Cantidad</label>
-			    <input name="quantity" id="quantity" value="">
-			  </div>	
-			</form>		  
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>		        
-		        <button type="submit" class="btn btn-primary" form="decreaseStock">Quitar</button>		        
-		      </div>
-			
- 		 </div>
-
-	    </div>
-	  </div>
-	</div>
 	
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -368,3 +311,7 @@
 </body>
 
 </html>
+
+<script>
+	
+</script>
