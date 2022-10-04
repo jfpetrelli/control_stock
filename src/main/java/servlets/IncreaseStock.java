@@ -36,6 +36,14 @@ public class IncreaseStock extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub		
+		Integer store_id = Integer.parseInt(request.getParameter("store"));
+		Integer product_id = Integer.parseInt(request.getParameter("product"));
+		Products product = dataProduct.getById(product_id);
+		Stores store = dataStore.getById(store_id);
+	     
+	     request.setAttribute("product", product);
+	     request.setAttribute("store", store);
+	     
 		request.getRequestDispatcher("WEB-INF/increaseStock.jsp").forward(request, response);
 	}
 
