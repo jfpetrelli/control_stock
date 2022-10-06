@@ -44,6 +44,8 @@
 		if(sto != null){
 			store_selected = sto;
 		}
+		
+		String msg = (String) request.getAttribute("msg");
     	
     %>
 
@@ -179,7 +181,7 @@
                             <div class="col-2">
                                 <div class="mb-3">
                                     <label for="fechahora" class="form-label">Fecha</label>
-                                    <input type="datetime-local" class="form-control" id="datetime" name = "datetime" value = "<%=request.getAttribute("datetime") %>">
+                                    <input type="datetime-local" class="form-control" id="datetime" name = "datetime" value = "<%= request.getAttribute("datetime") %>">
                                   </div> 
                             </div>
                         </div>
@@ -215,6 +217,10 @@
                         	<div class="col-2 align-self-end">
                                 <div class="mb-3">
                                     <input type="submit" class="form-control bg-warning text-gray-100" value="Buscar Articulos" id ="search" name = "action">
+                                    
+                                    <% if(msg != null){
+                                    	%> <h3> <%=msg %></h3> <%
+                                    } %>
                                 </div>
                             </div>
                         </div>

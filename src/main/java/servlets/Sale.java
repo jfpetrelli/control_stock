@@ -32,7 +32,11 @@ public class Sale extends HttpServlet {
 	ArrayList<Stores> stores = new ArrayList<>();
 	ProductsLogic productsLogic = new ProductsLogic();
 	ArrayList<Products> products = new ArrayList<>();
-	LocalDateTime datetime;
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+	LocalDateTime datetime = LocalDateTime.now();
+	
+	
+	
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -42,7 +46,6 @@ public class Sale extends HttpServlet {
         // TODO Auto-generated constructor stub
         customers = customersLogic.getAll();
         stores = storesLogic.getAll();
-        datetime = LocalDateTime.now();  
 
     }
 
@@ -63,7 +66,9 @@ public class Sale extends HttpServlet {
 	 
 		request.setAttribute("customers", customers);
 		request.setAttribute("stores", stores);
-		request.setAttribute("datetime", datetime.toString());
+		request.setAttribute("msg", "");
+		String formattedString = datetime.format(formatter);
+		request.setAttribute("datetime", formattedString);
 
 		if(action != null) {
 
@@ -71,14 +76,14 @@ public class Sale extends HttpServlet {
 			 String store_id = request.getParameter("store");
 		     String customer_id = request.getParameter("customer");
 			 String datetime = request.getParameter("datetime");
-			 System.out.println(datetime);
+
 		     if(store_id.equals("") || customer_id.equals("")) {
-					response.sendRedirect("/control_stock/500.html");
+		    	 	
+					request.setAttribute("msg", "Complete todos los datos");
+					request.getRequestDispatcher("WEB-INF/sale.jsp").forward(request, response);
 					return;
 		     }
 		     
-
-//		     LocalDateTime local_datetime =  LocalDateTime.parse(datetime,DateTimeFormatter.ISO_DATE_TIME);
 		     
 			if(action.equals("Buscar Articulos")) {
 
@@ -88,6 +93,7 @@ public class Sale extends HttpServlet {
 		        request.setAttribute("store", store_id);
 		        request.setAttribute("datetime", datetime);
 
+
 			}
 			if(action.equals("Agregar")) {
 		        request.setAttribute("products", products);
@@ -95,7 +101,7 @@ public class Sale extends HttpServlet {
 		        request.setAttribute("store", store_id);
 		        request.setAttribute("datetime", datetime);
 		        
-				}		        
+			}		        
 		       
 		}
 		
