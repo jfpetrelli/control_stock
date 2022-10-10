@@ -46,6 +46,8 @@
 		}
 		
 		String msg = (String) request.getAttribute("msg");
+		
+		String msgAddOK = (String) request.getAttribute("msgAddOK");
     	
     %>
 
@@ -178,7 +180,7 @@
                     <!-- Content Row -->
                     <form action="Sale" method ="POST" name="form_sale" id = "form_sale">
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-3">
                                 <div class="mb-3">
                                     <label for="fechahora" class="form-label">Fecha</label>
                                     <input type="datetime-local" class="form-control" id="datetime" name = "datetime" value = "<%= request.getAttribute("datetime") %>">
@@ -217,9 +219,8 @@
                         	<div class="col-2 align-self-end">
                                 <div class="mb-3">
                                     <input type="submit" class="form-control bg-warning text-gray-100" value="Buscar Articulos" id ="search" name = "action">
-                                    
                                     <% if(msg != null){
-                                    	%> <h3> <%=msg %></h3> <%
+                                    	%> <p class = "d-block"> <%=msg %></p><%
                                     } %>
                                 </div>
                             </div>
@@ -232,7 +233,7 @@
 									  	<option value = ""></option>
                                   		<% if(products != null){
                                             	for(Products product: products){
-                                            		%> <option value = "<%=product.getId() %>"><%=product.getDetail() %></option>
+                                            		%> <option value = "<%=product.getId() %>"><%=product.getDetail() %> - Cantidad: <%=product.getStock() %></option>
                                             <%	}
                                   			} %>
 									</select>
@@ -247,9 +248,14 @@
                             <div class="col-2 align-self-end">
                                 <div class="mb-3">
                                     <input type="submit" class="form-control bg-warning text-gray-100" value="Agregar" id ="add" name = "action">
+                                   
                                 </div>
+                                 
                             </div>
                         </div>
+                        <% if(msgAddOK != null){
+                                    	%><div class= "row"><p class = "d-block"> <%=msgAddOK %></p></div> <%
+                                    } %>
                         <!-- Begin Page Content -->
                         <div class="row">
                             <div class="col-12">

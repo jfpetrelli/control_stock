@@ -16,6 +16,7 @@ import entities.Products;
 import entities.Stores;
 import logic.CustomersLogic;
 import logic.ProductsLogic;
+import logic.SalesLogic;
 import logic.StoresLogic;
 
 /**
@@ -100,6 +101,25 @@ public class Sale extends HttpServlet {
 		        request.setAttribute("customer", customer_id);
 		        request.setAttribute("store", store_id);
 		        request.setAttribute("datetime", datetime);
+
+		        String msgAddOK;
+		        
+		        
+		        
+		        if(request.getParameter("product").equals("")) {
+		        	msgAddOK = "Seleccione un Articulo";
+		        	
+		        }else {
+		        	msgAddOK = SalesLogic.quantityAddOK(products, request.getParameter("quantity"), request.getParameter("product"));
+		        }
+		        
+		        if(msgAddOK != null) {
+		        	request.setAttribute("msgAddOK", msgAddOK);
+		        	request.getRequestDispatcher("WEB-INF/sale.jsp").forward(request, response);
+					return;
+		        }
+		        
+		        
 		        
 			}		        
 		       
