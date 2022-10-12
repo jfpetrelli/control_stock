@@ -1,8 +1,8 @@
 
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
-<%@page import="entities.Customers"%>
 <%@page import="entities.Stores"%>
 <%@page import="entities.Products"%>
+<%@page import="logic.ProductsLogic"%>
 <%@page import="java.util.ArrayList"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -28,9 +28,18 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <%    	
-		Stores store = (Stores) request.getAttribute("store");
-		Products product = (Products) request.getAttribute("product");    	
+    <%
+    	ArrayList<Stores> stores = (ArrayList) request.getAttribute("stores");
+    	ArrayList<Products> products = (ArrayList) request.getAttribute("products");	
+    	ProductsLogic productLogic = new ProductsLogic();
+    		
+		String store_selected = new String();
+		String sto = (String)request.getAttribute("store");
+		
+		if(sto != null){
+			store_selected = sto;
+		}
+    	
     %>
 
 </head>
@@ -56,7 +65,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="Stock">
+                <a class="nav-link" href="Sale">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Stock</span></a>
             </li>
@@ -156,36 +165,75 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Venta</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Stock</h1>
                     </div>
 
-	<div id="divNuevoRol">
-	  	<h4>Nuevo stock:</h4>
-		<form action="IncreaseStock" method="POST">
-		<div>
-		    <label for="product">Producto</label>
-		    <input disabled name="product_detail" id="product_detail" value="<%= product.getDetail() %>">
-		    <input type="hidden" name ="product" id="product" value="<%= product.getId() %>">
-		  </div>
-		  <div>
-		    <label for="store">Almacen</label>
-		    <input disabled name="store_detail" id="store_detail" value="<%= store.getDetail() %>">
-		    <input type="hidden" name="store" id="store" value="<%= store.getId() %>">		    
-		  </div>
-		  <div>
-		    <label for="">Stock</label>
-		    <input disabled value="<%= product.getStock() %>">
-		  </div>
-		  <div>
-		    <label for="quantity">Cantidad</label>
-		    <input name="quantity" id="quantity" value="">
-		  </div>
-		  
-		  <div>
-		    <button>Aumentar stock</button>
-		  </div>
-		</form>
-  </div>
+                    <!-- Content Row -->
+
+                        <div class="row">
+
+                            <div class="col">
+                                <div class="mb-3">
+                                  	<label for="store" class="form-label">Deposito <%= sto %></label>
+                                  	
+                                </div> 
+                            </div>
+                        </div>
+
+                        <!-- Begin Page Content -->
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- DataTales Example -->
+                                <div class="card shadow mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="productsTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                    	<th class="d-none">ID</th>
+                                                        <th class="col-3">Articulo</th>
+                                                        <th class="col-2 text-right">Precio Unitario</th>
+                                                        <th class="col-3 text-center">Acción</th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbodyProducts">
+                                                <% for (Products product : products) {%>                                              
+                                                	<tr id="<%= product.getId() %>">
+                                                		<td class="d-none"><%= product.getId() %></td>  
+                                                		<td class="col-3"><%=product.getDetail() %></td>
+                                                        <td class="col-2 text-right"><%=product.getPrice()%></td>
+                                                        <td class="col-3 ">
+															<div  class="row justify-content-md-center">
+																<div class="col-2">
+																<% if(!productLogic.belongsToStore(store_selected, product)){ %>
+																	<form id="addToStore<%= product.getId() %>" action="SaveProductToStore" method="POST">
+																		<input type="number" name="quantity" value="">
+																		<input type="hidden" name="store" value="<%=store_selected %>">
+																		<input type="hidden" name="product" value="<%= product.getId() %>">
+																	</form>	
+																	<button form="addToStore<%= product.getId() %>" type="submit" class="btn btn-primary">Agregar</button>
+																<%} else {%>
+																	<form id="removeFromStore<%= product.getId() %>" action="RemoveProductFromStore" method="POST">
+																		<input type="hidden" name="store" value="<%=store_selected %>">
+																		<input type="hidden" name="product" value="<%= product.getId() %>">																		
+																	</form>	
+																	<button form="removeFromStore<%= product.getId() %>" type="submit" class="btn btn-danger">Quitar</button>
+																<%}%>																
+																</div>		
+															</div>																									
+														</td>
+                                                    </tr>                                              		
+                                                <% } %>	
+                                                	
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                 </div>
                 <!-- /.container-fluid -->
 
@@ -202,6 +250,10 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    
+    <form action="AddProductToStore" method ="POST" id="product_to_store_form">
+    </form>
+    
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -243,8 +295,6 @@
 
 </html>
 
-
-
-
-
-
+<script>
+	
+</script>

@@ -63,7 +63,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="Sale">
+                <a class="nav-link" href="Stock">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Stock</span></a>
             </li>
@@ -191,6 +191,11 @@
                                     <input type="submit" class="form-control bg-warning text-gray-100" value="Buscar Articulos" id ="search" name = "action">
                                 </div>
                             </div>
+                        	<div class="col-2 align-self-end">
+                                <div class="mb-3">
+                                	<button type="submit" class="form-control bg-warning text-gray-100" name="store" form="product_to_store_form" value="<%= store_selected %>">Agregar producto</button>
+                                </div>
+                            </div>                            
                         </div>
                         <!-- Begin Page Content -->
                         <div class="row">
@@ -220,9 +225,9 @@
 																<div class="col-2">
 																	<form id="decreaseStock<%= product.getId() %>" action="DecreaseStock" method="GET">                                                   																																					
 																			<input type="hidden" name="store" value="<%=store_selected %>">
-																			<input type="hidden" name="product" value="<%= product.getId() %>">																			
+																			<input type="hidden" name="product" value="<%= product.getId() %>">
+																			<input form="decreaseStock<%= product.getId() %>" type="submit" class="btn btn-primary" value="-"> 																																					
 																	</form>	
-																	<input form="decreaseStock<%= product.getId() %>" type="submit" class="btn btn-primary" value="-"> 
 																			 	
 																	
 																</div>
@@ -233,8 +238,8 @@
 																	<form id="increaseStock<%= product.getId() %>" action="IncreaseStock" method="GET">                                                   																		
 																			<input type="hidden" name="store" value="<%=store_selected %>">
 																			<input type="hidden" name="product" value="<%= product.getId() %>">																		
+																			<input form="increaseStock<%= product.getId() %>" type="submit" class="btn btn-primary" value="+">																
 																	</form>	
-																	<input form="increaseStock<%= product.getId() %>" type="submit" class="btn btn-primary" value="+">																
 																</div>		
 															</div>																									
 														</td>
@@ -268,10 +273,10 @@
         <i class="fas fa-angle-up"></i>
     </a>
     
+    <form action="AddProductToStore" method ="POST" id="product_to_store_form">
+    </form>
+    
 
-	
-	
-	
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">

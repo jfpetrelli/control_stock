@@ -182,6 +182,37 @@ public class DataProducts {
 		}
 		
 	}
+	
+	public void removeStock(Stores store, Products product) {
+		
+		PreparedStatement stmt= null;
+		ResultSet keyResultSet=null;
+		
+		try {
+			stmt= DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"delete from products_stores where product_id= ? and store_id= ?"
+							);
+			
+			stmt.setInt(1, product.getId());
+			stmt.setInt(2,store.getId());
+
+			stmt.executeUpdate();
+			
+			
+		}  catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(keyResultSet!=null)keyResultSet.close();
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }
+		}
+		
+	}
 
 }
 

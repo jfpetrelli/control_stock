@@ -11,6 +11,7 @@ import entities.Stores;
 public class ProductsLogic {
 	
 		private DataProducts dataProducts = new DataProducts();
+		private DataStores dataStore = new DataStores();
 
 		public ArrayList<Products> getAll() {
 			try {
@@ -53,6 +54,27 @@ public class ProductsLogic {
 		
 		public void createStock(Stores store, Products product, Integer quantity) {
 			dataProducts.createStock(store,product,quantity);
+		}
+		
+		public boolean belongsToStore(String store, Products product) {
+			Integer storeId = Integer.parseInt(store);
+			
+			ArrayList<Products> products = null;
+			try {
+				products = dataProducts.readProductsStores(storeId);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			for(Products prod : products) {
+				if(prod.getId() == product.getId()) {
+					return true;
+				}
+			}
+			return false;
+			
 		}
 	
 }

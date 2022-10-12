@@ -56,9 +56,9 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="Sale">
+                <a class="nav-link" href="Stock">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Venta</span></a>
+                    <span>Stock</span></a>
             </li>
 
             <!-- Divider -->
