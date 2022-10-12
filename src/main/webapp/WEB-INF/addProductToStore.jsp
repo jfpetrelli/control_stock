@@ -205,22 +205,28 @@
                                                         <td class="col-2 text-right"><%=product.getPrice()%></td>
                                                         <td class="col-3 ">
 															<div  class="row justify-content-md-center">
-																<div class="col-2">
+																
 																<% if(!productLogic.belongsToStore(store_selected, product)){ %>
+																<div class="col-4">
 																	<form id="addToStore<%= product.getId() %>" action="SaveProductToStore" method="POST">
-																		<input type="number" name="quantity" value="">
+																		<input required class="form-control" type="number" name="quantity" value="">
 																		<input type="hidden" name="store" value="<%=store_selected %>">
 																		<input type="hidden" name="product" value="<%= product.getId() %>">
 																	</form>	
+																</div>
+																<div class="col-2">
 																	<button form="addToStore<%= product.getId() %>" type="submit" class="btn btn-primary">Agregar</button>
+																</div>
 																<%} else {%>
+																<div class="col-2">
 																	<form id="removeFromStore<%= product.getId() %>" action="RemoveProductFromStore" method="POST">
 																		<input type="hidden" name="store" value="<%=store_selected %>">
 																		<input type="hidden" name="product" value="<%= product.getId() %>">																		
 																	</form>	
 																	<button form="removeFromStore<%= product.getId() %>" type="submit" class="btn btn-danger">Quitar</button>
+																</div>
 																<%}%>																
-																</div>		
+																	
 															</div>																									
 														</td>
                                                     </tr>                                              		
