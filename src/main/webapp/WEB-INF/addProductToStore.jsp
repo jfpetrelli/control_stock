@@ -209,13 +209,13 @@
 																<% if(!productLogic.belongsToStore(store_selected, product)){ %>
 																<div class="col-4">
 																	<form id="addToStore<%= product.getId() %>" action="SaveProductToStore" method="POST">
-																		<input required class="form-control" type="number" name="quantity" value="">
+																		<input id ="quantity<%= product.getId() %>" required class="form-control" type="number" name="quantity" value="">
 																		<input type="hidden" name="store" value="<%=store_selected %>">
-																		<input type="hidden" name="product" value="<%= product.getId() %>">
+																		<input id ="product_id" type="hidden" name="product" value="<%= product.getId() %>">
 																	</form>	
 																</div>
 																<div class="col-2">
-																	<button form="addToStore<%= product.getId() %>" type="submit" class="btn btn-primary">Agregar</button>
+																	<button type="submit" class="btn btn-primary" onclick="stockValidation()">Agregar</button>
 																</div>
 																<%} else {%>
 																<div class="col-2">
@@ -297,6 +297,29 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    
+        <script>
+		function stockValidation(){
+			var productId = document.getElementById('product_id').value;	
+			var quantityId = 'quantity'+productId;
+			var quantityToDecrease = document.getElementById(quantityId);	
+
+			quantityToDecrease = parseInt(quantityToDecrease);
+			if(quantityToDecrease < 0){
+				alert("No puede ingresar números negativos.");
+				return;
+			}
+			if(!quantityToDecrease){
+				alert("Debe ingresar un número válido.");
+				return;
+			}
+			
+			document.getElementById("addToStore"+productId).submit();
+			
+		}
+	</script>
+	
+	
 </body>
 
 </html>

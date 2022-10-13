@@ -193,7 +193,7 @@
                             </div>
                         	<div class="col-2 align-self-end">
                                 <div class="mb-3">
-                                	<button type="submit" class="form-control bg-warning text-gray-100" name="store" form="product_to_store_form" value="<%= store_selected %>">Agregar producto</button>
+                                	<button type="submit" class="form-control bg-warning text-gray-100" name="store" form="product_to_store_form" value="<%= store_selected %>">Alta/Baja Articulo</button>
                                 </div>
                             </div>                            
                         </div>
