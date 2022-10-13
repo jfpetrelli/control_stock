@@ -32,7 +32,8 @@
 		Stores store = (Stores) request.getAttribute("store");
 		Products product = (Products) request.getAttribute("product");    	
     %>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
 </head>
 
 <body id="page-top">
@@ -185,7 +186,7 @@
                                                 <tbody id="tbodyProducts">
                                                    	<form id="decreaseStock" action="DecreaseStock" method="POST">                                           
                                                 	<tr id="1">
-                                                		<td class="d-none">1</td>  
+                                                		<td class="d-none"></td>  
                                                 		<td class="col-4">
 														    <%= product.getDetail() %>
 														    <input type="hidden" name ="product" id="product" value="<%= product.getId() %>">                                                			
@@ -194,14 +195,14 @@
 														    <%= store.getDetail() %>
 														    <input type="hidden" name="store" id="store" value="<%= store.getId() %>">		                                                         
 														</td>
-                                                        <td class="col-2 text-center">
-                                                        	<%= product.getStock() %>
+                                                        <td  class="col-2 text-center">
+                                                        	<span id="productStock"><%= product.getStock() %></span>                                                        	
                                                         </td>
                                                         <td class="col-1 text-center">
                                                         	<input required name="quantity" id="quantity" value="">
                                                         </td>
                                                         <td class="col-2 text-center">
-                                                        	 <input form="decreaseStock" type="submit" class="btn btn-danger" value="Restar">
+                                                        	 <input id="decreaseButton" class="btn btn-danger" value="Restar" onclick = "stockValidation()">
                                                         </td>
                                                     </tr>    
                                                     </form>                                          		                                                	
@@ -268,7 +269,29 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    
+    <script>
+		function stockValidation(){
+			var productStock = document.getElementById('productStock').textContent;
+			var quantityToDecrease = document.getElementById('quantity').value;		
+			productStock = parseInt(productStock);
+			quantityToDecrease = parseInt(quantityToDecrease);
+			if(quantityToDecrease < 0){
+				alert("No puede ingresar números negativos.");
+				return;
+			}
+			if(productStock >= quantityToDecrease){
+				document.getElementById("decreaseStock").submit();
+			} else {
+				alert("No puede restar más de lo que tiene.");
+			}
+		}
+	</script>
+
+
 </body>
+
+
 
 </html>
 

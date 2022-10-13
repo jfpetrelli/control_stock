@@ -192,13 +192,13 @@
 														    <input type="hidden" name="store" id="store" value="<%= store.getId() %>">		                                                         
 														</td>
                                                         <td class="col-2 text-center">
-                                                        	<%= product.getStock() %>
+                                                        	<span id="productStock"><%= product.getStock() %></span>
                                                         </td>
                                                         <td class="col-1 text-center">
                                                         	<input required name="quantity" id="quantity" value="">
                                                         </td>
                                                         <td class="col-2 text-center">
-                                                        	 <input form="increaseStock" type="submit" class="btn btn-primary" value="Aumentar">
+                                                        	 <input id="increaseButton" class="btn btn-primary" value="Aumentar" onclick = "stockValidation()">
                                                         </td>
                                                     </tr>    
                                                     </form>                                          		                                                	
@@ -263,6 +263,26 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script>
+		function stockValidation(){
+			var productStock = document.getElementById('productStock').textContent;
+			var quantityToDecrease = document.getElementById('quantity').value;		
+			productStock = parseInt(productStock);
+			quantityToDecrease = parseInt(quantityToDecrease);
+			if(quantityToDecrease < 0){
+				alert("No puede ingresar números negativos.");
+				return;
+			}
+			if(!quantityToDecrease){
+				alert("Debe ingresar un número válido.");
+				return;
+			}
+			
+			document.getElementById("increaseStock").submit();
+			
+		}
+	</script>
+    
 </body>
 
 </html>

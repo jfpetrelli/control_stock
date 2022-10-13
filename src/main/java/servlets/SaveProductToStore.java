@@ -51,7 +51,10 @@ public class SaveProductToStore extends HttpServlet {
 		products = productLogic.getProductsStores(storeId);
 	    request.setAttribute("store", store_id);
 	    request.setAttribute("products", products);
-		request.getRequestDispatcher("WEB-INF/addProductToStore.jsp").forward(request, response);
+//		request.getRequestDispatcher("WEB-INF/addProductToStore.jsp").forward(request, response);
+		
+		AddProductToStore apts = new AddProductToStore();
+		apts.doGet(request, response);
 
 	}
 
