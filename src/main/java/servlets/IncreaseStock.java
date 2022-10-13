@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,11 +40,19 @@ public class IncreaseStock extends HttpServlet {
 		// TODO Auto-generated method stub		
 		Integer store_id = Integer.parseInt(request.getParameter("store"));
 		Integer product_id = Integer.parseInt(request.getParameter("product"));
-		Products product = dataProduct.getById(product_id);
+		Products product = null;
 		Stores store = dataStore.getById(store_id);
-	     
-	     request.setAttribute("product", product);
-	     request.setAttribute("store", store);
+		
+		ArrayList<Products> products = productLogic.getProductsStores(store_id);
+		
+		for(Products prod : products) {
+			if(prod.getId() == product_id) {
+				product = prod;
+			}
+		}
+		
+	    request.setAttribute("product", product);
+	    request.setAttribute("store", store);
 	     
 		request.getRequestDispatcher("WEB-INF/increaseStock.jsp").forward(request, response);
 	}
@@ -54,7 +64,6 @@ public class IncreaseStock extends HttpServlet {
 		Integer productId = Integer.parseInt(request.getParameter("product"));
 		Integer storeId = Integer.parseInt(request.getParameter("store"));
 		Integer quantity = Integer.parseInt(request.getParameter("quantity"));
-		
 		Products product = dataProduct.getById(productId);
 		Stores store = dataStore.getById(storeId);
 		productLogic.increaseStock(store, product, quantity);

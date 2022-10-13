@@ -156,12 +156,12 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Venta</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Stock</h1>
                     </div>
 
 					<div class="row">
                             <div class="col-12">
-                            <h4>Nuevo stock:</h4>
+                            <h4>Aumentar stock:</h4>
                                 <!-- DataTales Example -->
                                 <div class="card shadow mb-4">
                                     <div class="card-body">
@@ -195,10 +195,10 @@
                                                         	<%= product.getStock() %>
                                                         </td>
                                                         <td class="col-1 text-center">
-                                                        	<input name="quantity" id="quantity" value="">
+                                                        	<input required name="quantity" id="quantity" value="">
                                                         </td>
                                                         <td class="col-2 text-center">
-                                                        	 <input form="increaseStock" type="submit" class="btn btn-primary" value="Aumentar stock">
+                                                        	 <input form="increaseStock" type="submit" class="btn btn-primary" value="Aumentar">
                                                         </td>
                                                     </tr>    
                                                     </form>                                          		                                                	

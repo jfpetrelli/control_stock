@@ -159,33 +159,62 @@
                         <h1 class="h3 mb-0 text-gray-800">Stock</h1>
                     </div>
 
-	<div id="divNuevoRol">
-	  	<h4>Nuevo stock:</h4>
-		<form action="DecreaseStock" method="POST">
-		<div>
-		    <label for="product">Producto</label>
-		    <input disabled name="product_detail" id="product_detail" value="<%= product.getDetail() %>">
-		    <input type="hidden" name ="product" id="product" value="<%= product.getId() %>">
-		  </div>
-		  <div>
-		    <label for="store">Almacen</label>
-		    <input disabled name="store_detail" id="store_detail" value="<%= store.getDetail() %>">
-		    <input type="hidden" name="store" id="store" value="<%= store.getId() %>">		    
-		  </div>
-		  <div>
-		    <label for="">Stock</label>
-		    <input disabled value="<%= product.getStock() %>">
-		  </div>
-		  <div>
-		  	<label for="quantity">Cantidad</label>
-		    <input name="quantity" id="quantity" value="">
-		  </div>
-		  
-		  <div>
-		    <button>Disminuir stock</button>
-		  </div>
-		</form>
-  </div>
+                <div class="container-fluid">
+
+
+					<div class="row">
+                            <div class="col-12">
+                            <h4>Disminuir stock:</h4>
+                                <!-- DataTales Example -->
+                                <div class="card shadow mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="productsTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                    	<th class="d-none">ID</th>
+                                                        <th class="col-4">Articulo</th>
+                                                        <th class="col-3 text-center">Almacen</th>
+                                                        <th class="col-2 text-center">Stock</th>
+                                                        <th class="col-1 text-center">Cantidad</th>
+                                                        <th class="col-2 text-center">Acción</th>
+                                                        
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbodyProducts">
+                                                   	<form id="decreaseStock" action="DecreaseStock" method="POST">                                           
+                                                	<tr id="1">
+                                                		<td class="d-none">1</td>  
+                                                		<td class="col-4">
+														    <%= product.getDetail() %>
+														    <input type="hidden" name ="product" id="product" value="<%= product.getId() %>">                                                			
+														</td>
+                                                        <td class="col-3 text-center">
+														    <%= store.getDetail() %>
+														    <input type="hidden" name="store" id="store" value="<%= store.getId() %>">		                                                         
+														</td>
+                                                        <td class="col-2 text-center">
+                                                        	<%= product.getStock() %>
+                                                        </td>
+                                                        <td class="col-1 text-center">
+                                                        	<input required name="quantity" id="quantity" value="">
+                                                        </td>
+                                                        <td class="col-2 text-center">
+                                                        	 <input form="decreaseStock" type="submit" class="btn btn-danger" value="Restar">
+                                                        </td>
+                                                    </tr>    
+                                                    </form>                                          		                                                	
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>	
+
+                </div>                    
+
                 </div>
                 <!-- /.container-fluid -->
 
