@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import entities.Customers;
 import entities.Products;
+import entities.Sales;
 import entities.Stores;
 import logic.CustomersLogic;
 import logic.ProductsLogic;
@@ -35,6 +36,11 @@ public class Sale extends HttpServlet {
 	ArrayList<Products> products = new ArrayList<>();
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 	LocalDateTime datetime = LocalDateTime.now();
+	SalesLogic salesLogic = new SalesLogic();
+	Sales sale;
+	 String store_id;
+     String customer_id ;
+
 	
 	
 	
@@ -73,20 +79,20 @@ public class Sale extends HttpServlet {
 
 		if(action != null) {
 
-			
-			 String store_id = request.getParameter("store");
-		     String customer_id = request.getParameter("customer");
 			 String datetime = request.getParameter("datetime");
-
-		     if(store_id.equals("") || customer_id.equals("")) {
-		    	 	
-					request.setAttribute("msg", "Complete todos los datos");
-					request.getRequestDispatcher("WEB-INF/sale.jsp").forward(request, response);
-					return;
-		     }
-		     
-		     
+			 
 			if(action.equals("Buscar Articulos")) {
+				
+				 store_id = request.getParameter("store");
+				 customer_id = request.getParameter("customer");
+
+
+			     if(store_id.equals("") || customer_id.equals("")) {
+			    	 	
+						request.setAttribute("msg", "Complete todos los datos");
+						request.getRequestDispatcher("WEB-INF/sale.jsp").forward(request, response);
+						return;
+			     }
 
 			    products = productsLogic.getProductsStores(Integer.parseInt(store_id));
 		        request.setAttribute("products", products);
@@ -94,9 +100,11 @@ public class Sale extends HttpServlet {
 		        request.setAttribute("store", store_id);
 		        request.setAttribute("datetime", datetime);
 
+		        sale = new Sales();
 
 			}
 			if(action.equals("Agregar")) {
+				
 		        request.setAttribute("products", products);
 		        request.setAttribute("customer", customer_id);
 		        request.setAttribute("store", store_id);
@@ -104,12 +112,11 @@ public class Sale extends HttpServlet {
 
 		        String msgAddOK;
 		        
-		        
-		        
 		        if(request.getParameter("product").equals("")) {
 		        	msgAddOK = "Seleccione un Articulo";
 		        	
 		        }else {
+
 		        	msgAddOK = SalesLogic.quantityAddOK(products, request.getParameter("quantity"), request.getParameter("product"));
 		        }
 		        
@@ -118,10 +125,13 @@ public class Sale extends HttpServlet {
 		        	request.getRequestDispatcher("WEB-INF/sale.jsp").forward(request, response);
 					return;
 		        }
+
+		        Products product_selected = SalesLogic.setProduct(products, request.getParameter("quantity"), request.getParameter("product"));
+
+		        sale.addProduct(product_selected);
+		        request.setAttribute("products_selected", sale.getProducts());
 		        
-		        
-		        
-			}		        
+			}
 		       
 		}
 		

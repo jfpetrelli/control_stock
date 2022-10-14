@@ -32,7 +32,9 @@
     	ArrayList<Customers> customers = (ArrayList) request.getAttribute("customers");
     	ArrayList<Stores> stores = (ArrayList) request.getAttribute("stores");
     	ArrayList<Products> products = (ArrayList) request.getAttribute("products");	
-    	
+
+    	ArrayList<Products> products_selected = (ArrayList) request.getAttribute("products_selected");	
+
 		String customer_selected = new String();
 		String store_selected = new String();
 		String cust = (String)request.getAttribute("customer");
@@ -274,16 +276,17 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                <% if(request.getAttribute("product_id") != null){ %>
+                                                <% if(products_selected != null){ %>
+                                                	<% for (Products product: products_selected ){ %>
                                                 	<tr>
-                                                		<td class="d-none"><%=(String)request.getAttribute("product_id") %></td>
-                                                        <td class="col-6"><%=(String)request.getAttribute("product_detail") %></td>
-                                                        <td class="col-2 text-right"><%=(String)request.getAttribute("product_quantity") %></td>
-                                                        <td class="col-2 text-right"><%=(String)request.getAttribute("product_price") %></td>
-                                                        <td class="col-2 text-right"><%=(String)request.getAttribute("product_total") %></td>
-                                                		
-                                                	<% }%>
+                                                		<td class="d-none"><%= product.getId() %></td>
+                                                        <td class="col-6"><%= product.getDetail() %></td>
+                                                        <td class="col-2 text-right"><%= product.getStock() %></td>
+                                                        <td class="col-2 text-right"><%= product.getPrice() %></td>
+                                                        <td class="col-2 text-right"><%= product.getPrice() * product.getStock() %></td>
                                                 	</tr>
+                                                	<% } %>
+                                                <% }%>
                                                 </tbody>
                                             </table>
                                         </div>
