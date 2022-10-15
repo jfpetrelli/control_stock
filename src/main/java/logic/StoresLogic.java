@@ -23,4 +23,8 @@ public class StoresLogic {
 		
 		
 	}
+	
+	public void create(Stores store) {
+		dataStores.create(store);
+	}
 }

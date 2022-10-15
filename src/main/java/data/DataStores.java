@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import entities.Products;
 import entities.Stores;
+import entities.Users;
 
 public class DataStores {
 
@@ -62,5 +63,70 @@ public class DataStores {
 			}
 		}		
 		return store;
+	}
+	
+	public void create(Stores store) {
+		
+		PreparedStatement stmt= null;
+		ResultSet keyResultSet=null;
+		
+		try {
+			stmt= DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"insert into stores(address, detail) values(?,?)",
+							PreparedStatement.RETURN_GENERATED_KEYS
+							);
+			
+			stmt.setString(1, store.getAddress());
+			stmt.setString(2, store.getDetail());
+
+			stmt.executeUpdate();
+			
+			keyResultSet=stmt.getGeneratedKeys();
+            if(keyResultSet!=null && keyResultSet.next()){
+            	store.setId(keyResultSet.getInt(1));
+            }
+
+			
+		}  catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(keyResultSet!=null)keyResultSet.close();
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }
+		}
+		
+	}	
+	
+	public void update(Stores store) {
+		PreparedStatement stmt = null;			
+		try {
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+							"UPDATE stores SET address = ?, detail = ? where id = ?"
+			);
+
+			stmt.setString(1, store.getAddress());
+			stmt.setString(2, store.getDetail());
+			stmt.setInt(3, store.getId());
+			
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+            try {	            	
+                if(stmt!=null) {
+                	stmt.close();
+                }	                
+				DbConnector.getInstancia().releaseConn();	                
+            } catch (SQLException e) {
+				// TODO Auto-generated catch block
+            	e.printStackTrace();
+            }
+		}
 	}
 }
