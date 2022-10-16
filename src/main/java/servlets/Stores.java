@@ -36,6 +36,7 @@ public class Stores extends HttpServlet {
 		ArrayList<entities.Stores> stores = new ArrayList<>();
 		try {
 			stores = dataStore.readAll();
+			request.setAttribute("stores", stores);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -167,7 +167,7 @@
 								    <input required class="form-control" id="addressStore">
 								  </div>	
 								  
-								  <input id="createStockButton" class="btn btn-primary" value="Crear">
+								  <input type="submit" id="createStockButton" class="btn btn-primary" value="Crear">
 								  							  
 								</form>                            		   
                             </div>

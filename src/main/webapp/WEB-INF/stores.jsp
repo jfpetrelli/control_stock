@@ -163,7 +163,7 @@
                         <div class="row">
                         	<div class="col-2 align-self-end">
                                 <div class="mb-3">
-									<a class="form-control bg-warning text-gray-100" href="CreateStore">
+									<a  class="btn btn-primary" href="CreateStore">Nuevo depósito</a>
                                 </div>
                             </div>                        	                        
                         </div>
