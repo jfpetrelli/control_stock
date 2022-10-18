@@ -109,7 +109,7 @@ public class Sale extends HttpServlet {
 		        request.setAttribute("customer", customer_id);
 		        request.setAttribute("store", store_id);
 		        request.setAttribute("datetime", datetime);
-
+		        request.setAttribute("products_selected", sale.getProducts());
 		        String msgAddOK;
 		        
 		        if(request.getParameter("product").equals("")) {

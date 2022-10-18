@@ -29,13 +29,20 @@ public class SalesLogic {
 	
 	public static Products setProduct(ArrayList<Products> products,String quantity, String id_product) {
 		
+		Products prod_selected = new Products();
+		
 		for (Products product: products) {
 			
 			if(product.getId() == Integer.parseInt(id_product)) {
 				
-				product.setStock(Integer.parseInt(quantity));
+				product.setStock(product.getStock() - Double.parseDouble(quantity));
 				
-				return product;
+				prod_selected.setId(product.getId());
+				prod_selected.setDetail(product.getDetail());
+				prod_selected.setPrice(product.getPrice());
+				prod_selected.setStock(Double.parseDouble(quantity));
+				return prod_selected;
+				
 				
 			}
 			

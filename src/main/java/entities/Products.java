@@ -7,7 +7,7 @@ public class Products {
 	private int id;
 	private String detail;
 	private double price;
-	private int stock;	
+	private double stock;	
 	private HashMap<Stores, Integer> stores = new HashMap<Stores, Integer>();
 		
 	public HashMap<Stores, Integer> getStores() {
@@ -31,8 +31,8 @@ public class Products {
 	public double getStock() {
 		return stock;
 	}
-	public void setStock(int stock) {
-		this.stock = stock;
+	public void setStock(double d) {
+		this.stock = d;
 	}
 	public double getPrice() {
 		return price;
