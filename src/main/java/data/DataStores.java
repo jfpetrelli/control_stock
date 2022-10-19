@@ -129,4 +129,32 @@ public class DataStores {
             }
 		}
 	}
+	
+	public void delete(Stores store) {
+		PreparedStatement stmt= null;
+		ResultSet keyResultSet=null;
+		
+		try {
+			stmt= DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"delete from stores where id = ?"
+							);
+			
+			stmt.setInt(1, store.getId());
+
+			stmt.executeUpdate();
+			
+			
+		}  catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(keyResultSet!=null)keyResultSet.close();
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }
+		}
+	}
 }

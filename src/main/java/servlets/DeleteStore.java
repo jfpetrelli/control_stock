@@ -1,29 +1,26 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import data.DataStores;
+import logic.StoresLogic;
 
 /**
- * Servlet implementation class Stores
+ * Servlet implementation class DeleteStore
  */
-@WebServlet("/Stores")
-public class Stores extends HttpServlet {
+@WebServlet("/DeleteStore")
+public class DeleteStore extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	DataStores dataStore = new DataStores();
-       
+	StoresLogic storeLogic = new StoresLogic();
+
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Stores() {
+    public DeleteStore() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,15 +30,7 @@ public class Stores extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ArrayList<entities.Stores> stores = new ArrayList<>();
-		try {
-			stores = dataStore.readAll();
-			request.setAttribute("stores", stores);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		request.getRequestDispatcher("WEB-INF/stores.jsp").forward(request, response);
+
 	}
 
 	/**
@@ -49,7 +38,11 @@ public class Stores extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		entities.Stores store = new entities.Stores();
+		store.setId(Integer.parseInt(request.getParameter("store")));
+		storeLogic.delete(store);
+		StoreList stores = new StoreList();
+		stores.doGet(request, response);
 	}
 
 }

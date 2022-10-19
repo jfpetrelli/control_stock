@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,20 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import data.DataStores;
-import logic.StoresLogic;
 
 /**
- * Servlet implementation class CreateStore
+ * Servlet implementation class Stores
  */
-@WebServlet("/CreateStore")
-public class CreateStore extends HttpServlet {
+@WebServlet("/Stores")
+public class StoreList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	StoresLogic storeLogic = new StoresLogic();
-
+	DataStores dataStore = new DataStores();
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreateStore() {
+    public StoreList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,7 +33,15 @@ public class CreateStore extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("WEB-INF/createStore.jsp").forward(request, response);
+		ArrayList<entities.Stores> stores = new ArrayList<>();
+		try {
+			stores = dataStore.readAll();
+			request.setAttribute("stores", stores);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.getRequestDispatcher("WEB-INF/stores.jsp").forward(request, response);
 	}
 
 	/**
@@ -39,14 +49,7 @@ public class CreateStore extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		entities.Stores store = new entities.Stores();
-		store.setAddress(request.getParameter("address"));
-		store.setDetail(request.getParameter("detail"));
-		storeLogic.create(store);
-		
-		StoreList stores = new StoreList();		
-		stores.doGet(request, response);
+		doGet(request, response);
 	}
 
 }

@@ -19,12 +19,23 @@ public class StoresLogic {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			return null;
-		}
-		
-		
+		}				
 	}
 	
 	public void create(Stores store) {
 		dataStores.create(store);
+	}
+	
+	public void delete(Stores store) {
+		dataStores.delete(store);
+	}
+	
+	public void update(Stores store) {
+		dataStores.update(store);
+	}
+	
+	public Stores getById(Integer store_id) {
+		Stores store = dataStores.getById(store_id);
+		return store;
 	}
 }

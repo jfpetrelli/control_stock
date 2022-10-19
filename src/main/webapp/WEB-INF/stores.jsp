@@ -192,13 +192,13 @@
                                                         <td class="col-4 ">
 															<div  class="row justify-content-md-center">
 																<div class="col-2">
-																	<form id="editStore<%= store.getId() %>" action="EditStore" method="GET">                                                   																																					
+																	<form id="editStore<%= store.getId() %>" action="UpdateStore" method="GET">                                                   																																					
 																			<input type="hidden" name="store" value="<%= store.getId() %>">
 																			<input type="submit" class="btn btn-primary" value="Editar"> 																																					
 																	</form>																				 																	
 																</div>
 																<div class="col-2">
-																	<form id="deleteStore<%= store.getId() %>" action="DeleteStore" method="GET">                                                   																		
+																	<form id="deleteStore<%= store.getId() %>" action="DeleteStore" method="POST">                                                   																		
 																			<input type="hidden" name="store" value="<%= store.getId() %>">
 																			<input type="submit" class="btn btn-danger" value="Eliminar"> 																																																																					
 																	</form>	

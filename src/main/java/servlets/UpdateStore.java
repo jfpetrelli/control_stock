@@ -7,13 +7,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entities.Stores;
+import logic.StoresLogic;
+
 /**
- * Servlet implementation class UpdateStock
+ * Servlet implementation class UpdateStore
  */
-@WebServlet("/UpdateStock")
+@WebServlet("/UpdateStore")
 public class UpdateStore extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	StoresLogic storeLogic = new StoresLogic();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -27,7 +30,9 @@ public class UpdateStore extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		Integer store_id = Integer.parseInt(request.getParameter("store"));
+		entities.Stores store = storeLogic.getById(store_id);
+		request.setAttribute("store", store);
 		request.getRequestDispatcher("WEB-INF/editStore.jsp").forward(request, response);
 	}
 
@@ -36,7 +41,16 @@ public class UpdateStore extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		Stores store = new Stores();
+		Integer id = Integer.parseInt(request.getParameter("store"));
+		String detail = request.getParameter("detail");
+		String address = request.getParameter("address");
+		store.setDetail(detail);
+		store.setAddress(address);
+		store.setId(id);
+		storeLogic.update(store);
+		StoreList storeServlet = new StoreList();
+		storeServlet.doGet(request, response);
 	}
 
 }

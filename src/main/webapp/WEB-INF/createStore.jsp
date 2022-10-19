@@ -161,10 +161,10 @@
 								<form id="createStore" action="CreateStore" method="POST">
 								  <div class="form-group">
 								    <label for="detailStore">Detalle</label>
-									<textarea required class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>								  </div>
+									<textarea name ="detail" required class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>								  </div>
 								  <div class="form-group">
 								    <label for="addressStore">Dirección</label>
-								    <input required class="form-control" id="addressStore">
+								    <input required class="form-control" name="address">
 								  </div>	
 								  
 								  <input type="submit" id="createStockButton" class="btn btn-primary" value="Crear">

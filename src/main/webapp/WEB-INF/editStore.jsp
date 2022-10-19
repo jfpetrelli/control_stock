@@ -164,13 +164,15 @@
 								<form id="updateStore" action="UpdateStore" method="POST">
 								  <div class="form-group">
 								    <label for="detailStore">Detalle</label>
-									<textarea required class="form-control" id="exampleFormControlTextarea1" rows="3"><%=store.getDetail()%> %></textarea>								  </div>
+									<textarea required class="form-control" name="detail" id="exampleFormControlTextarea1" rows="3"><%=store.getDetail()%></textarea>								  </div>
 								  <div class="form-group">
 								    <label for="addressStore">Dirección</label>
-								    <input required class="form-control" id="addressStore" value="<%=store.getAddress()%>">
+								    <input required class="form-control" name="address" value="<%=store.getAddress()%>">
 								  </div>	
+								  <input type="hidden" name="store" value="<%= store.getId() %>">		                                                         
 								  
-								  <input id="updateStockButton" class="btn btn-primary" value="Crear">
+								  
+								  <input type="submit" id="updateStockButton" class="btn btn-primary" value="Actualizar">
 								  							  
 								</form>                            		   
                             </div>
