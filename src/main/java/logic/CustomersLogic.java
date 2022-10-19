@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import data.DataCustomers;
 import entities.Customers;
+import entities.Users;
 
 public class CustomersLogic {
 	
@@ -23,4 +24,22 @@ public class CustomersLogic {
 		
 		
 	}
+	
+	public void create(Customers customer) {
+		dataCustomer.create(customer);
+	}
+	
+	public void remove(Customers customer) {
+		dataCustomer.remove(customer);
+	}
+	
+	public void update(Customers customer) {
+		dataCustomer.update(customer);
+	}
+	
+	public Customers getById(Integer id) {
+		Customers customer = dataCustomer.getById(id);
+		return customer;
+	}
+	
 }

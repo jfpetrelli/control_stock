@@ -1,3 +1,8 @@
+
+<%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
+<%@page import="entities.Customers"%>
+<%@page import="java.util.ArrayList"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -21,6 +26,9 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <%    	
+		Customers customer = (Customers) request.getAttribute("customer");
+    %>
 
 </head>
 
@@ -33,7 +41,7 @@
         <ul class="navbar-nav bg-gradient-warning sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Main" name="logo">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Main">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -45,23 +53,11 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="Sale">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Venta</span>
-                </a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="Customer">
-                    <i class="fas fa-address-book"></i>
-                    <span>Clientes</span>
-                </a>
-			</li>
-			 <li class="nav-item active">
                 <a class="nav-link" href="Stock">
-                    <i></i>
-                    <span>Stock</span>
-                </a>
-			</li>
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Stock</span></a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -89,6 +85,30 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -133,11 +153,31 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">CONTROL STOCK</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Clientes</h1>
                     </div>
 
-                    <!-- Content Row -->
+					<div class="row">
+                            <div class="col-12">
+                            	<h4>Modificacion de Cliente:</h4>
+								<form id="updateCustomer" action="EditCustomer" method="POST">
+								  <div class="form-group">
+								  	<input type="hidden" id="idCustomer" value="><%=customer.getId()%>">
+								    <label for="nameCustomer">Nombre</label>
+									<input required class="form-control" id="nameCustomer" value="><%=customer.getName()%>">
+								    <label for="surnameCustomer">Apellido</label>
+								    <input required class="form-control" id="surnameCustomer" value="<%=customer.getSurnarme()%>">
+								    <label for="comercialNameCustomer">Empresa</label>
+								    <input required class="form-control" id="comercialNameCustomer" value="<%=customer.getComercial_name()%>">
+								    <label for="mailCustomer">Mail</label>
+								    <input required class="form-control" id="mailCustomer" value="<%=customer.getMail()%>">
+								  </div>
+								  <input id="editCustomerButton" name="aceptCustomer" type="submit" class="btn btn-primary" value="Aceptar">
+								  							  
+								</form>                            		   
+                            </div>
+                    </div>	
 
+                </div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -190,7 +230,9 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
+    
 </body>
 
 </html>
+
+

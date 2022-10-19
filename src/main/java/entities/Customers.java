@@ -9,6 +9,16 @@ public class Customers {
 	private String comercial_name;
 	private String addres;
 	
+	public Customers() {};
+	
+	public Customers(int id,String name, String surname, String comercial_name, String mail) {
+		this.id = id;
+		this.name = name;
+		this.surnarme = surname;
+		this.mail = mail;
+		this.comercial_name = comercial_name;
+	}
+	
 	public int getId() {
 		return id;
 	}

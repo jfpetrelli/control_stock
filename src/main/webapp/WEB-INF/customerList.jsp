@@ -1,3 +1,7 @@
+<%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
+<%@page import="entities.Customers"%>
+<%@page import="java.util.ArrayList"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -11,7 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Control Stock</title>
+    <title>Sistema de Control de Stock</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -21,6 +25,11 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <%
+    		ArrayList<Customers> customers = (ArrayList) request.getAttribute("customers");
+
+    	
+    %>
 
 </head>
 
@@ -33,7 +42,7 @@
         <ul class="navbar-nav bg-gradient-warning sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Main" name="logo">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Main">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -47,8 +56,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="Sale">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Venta</span>
-                </a>
+                    <span>Venta</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="Customer">
@@ -56,12 +64,13 @@
                     <span>Clientes</span>
                 </a>
 			</li>
-			 <li class="nav-item active">
+			<li class="nav-item active">
                 <a class="nav-link" href="Stock">
                     <i></i>
                     <span>Stock</span>
                 </a>
 			</li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -89,6 +98,30 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -133,13 +166,79 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">CONTROL STOCK</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Clientes</h1>
                     </div>
 
                     <!-- Content Row -->
+                    <form action="Customer" method ="POST" name="form_customer" id = "form_customer"> 
 
+                        <div class="row">
+
+                            <div class="col">
+                                <div class="mb-3">
+                                  	<label for="customers" class="form-label">Lista de Clientes</label>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <!-- Begin Page Content -->
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- DataTales Example -->
+                                <div class="card shadow mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="customersTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                    	<th class="d-none">ID</th>
+                                                        <th class="col-2 text-center">Nombre</th>
+                                                        <th class="col-2 text-center">Apellido</th>
+                                                        <th class="col-2 text-center">Empresa</th>
+                                                        <th class="col-2 text-center">Mail</th>
+                                                        <th colspan=2 class="col-10 text-center">Acciones</th> 
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbodyCustomers">
+                                                <% for (Customers customer : customers) {%>                                              
+                                                	<tr id="<%= customer.getId() %>">
+                                                		<td class="col-2 text-center"><%=customer.getName() %></td>
+                                                        <td class="col-2 text-center"><%=customer.getSurnarme()%></td>
+                                                        <td class="col-2 text-center"><%=customer.getComercial_name()%></td>
+                                                        <td class="col-2 text-center"><%=customer.getMail()%></td>			
+                                                        <td class="col-3 ">
+															<div  class="row justify-content-md-center">
+																<div class="col-3">
+																	<form id="editCustomer<%= customer.getId() %>" action="EditCustomer" method="GET">
+																			<input type="hidden" name="customer_id" value="<%= customer.getId() %>">
+																			<input form="editCustomer<%= customer.getId() %>" type="submit" class="btn btn-primary" value="Editar"> 																																					
+																	</form>	
+																			 	
+																	
+																</div>
+																<div class="col-3">
+																	<form id="removeCustomer<%= customer.getId() %>" action="RemoveCustomer" method="POST">
+																			<input type="hidden" name="customer_id" id="customer_id" value="<%=customer.getId() %>">																		
+																			<input form="removeCustomer<%= customer.getId() %>" type="submit" class="btn btn-primary" value="Eliminar">																
+																	</form>	
+																</div>		
+															</div>																									
+														</td>												
+                                                    </tr>                                              		
+                                                <% } %>	
+                                                	
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
 
@@ -153,7 +252,11 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    
 
+	
+	
+	
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -190,7 +293,10 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
 </body>
 
 </html>
+
+<script>
+	
+</script>
