@@ -105,6 +105,12 @@ public class Sale extends HttpServlet {
 			}
 			if(action.equals("Agregar")) {
 				
+				if(products.isEmpty()) {
+					request.setAttribute("msgAddOK", "Seleccione un Articulo");
+		        	request.getRequestDispatcher("WEB-INF/sale.jsp").forward(request, response);
+					return;
+				}
+				
 		        request.setAttribute("products", products);
 		        request.setAttribute("customer", customer_id);
 		        request.setAttribute("store", store_id);
@@ -131,6 +137,13 @@ public class Sale extends HttpServlet {
 		        sale.addProduct(product_selected);
 		        request.setAttribute("products_selected", sale.getProducts());
 		        
+			}
+			
+			if(action.equals("Realizar Venta")) {
+				
+				if(sale == null){
+					System.out.println("ASDASD");
+				}
 			}
 		       
 		}
