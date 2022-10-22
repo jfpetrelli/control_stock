@@ -302,14 +302,14 @@
 		function stockValidation(){
 			var productId = document.getElementById('product_id').value;	
 			var quantityId = 'quantity'+productId;
-			var quantityToDecrease = document.getElementById(quantityId);	
+			var quantityToAdd = document.getElementById(quantityId).value;	
 
-			quantityToDecrease = parseInt(quantityToDecrease);
-			if(quantityToDecrease < 0){
+			quantityToAdd = parseInt(quantityToAdd);
+			if(quantityToAdd < 0){
 				alert("No puede ingresar números negativos.");
 				return;
 			}
-			if(!quantityToDecrease){
+			if(!quantityToAdd){
 				alert("Debe ingresar un número válido.");
 				return;
 			}
