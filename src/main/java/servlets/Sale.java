@@ -40,7 +40,7 @@ public class Sale extends HttpServlet {
 	Sales sale;
 	 String store_id;
      String customer_id ;
-
+     Double total = 0.0;
 	
 	
 	
@@ -70,7 +70,7 @@ public class Sale extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		
-	 
+		
 		request.setAttribute("customers", customers);
 		request.setAttribute("stores", stores);
 		request.setAttribute("msg", "");
@@ -83,6 +83,7 @@ public class Sale extends HttpServlet {
 			 
 			if(action.equals("Buscar Articulos")) {
 				
+
 				 store_id = request.getParameter("store");
 				 customer_id = request.getParameter("customer");
 
@@ -94,6 +95,7 @@ public class Sale extends HttpServlet {
 						return;
 			     }
 
+				total = 0.0;
 			    products = productsLogic.getProductsStores(Integer.parseInt(store_id));
 		        request.setAttribute("products", products);
 		        request.setAttribute("customer", customer_id);
@@ -133,17 +135,26 @@ public class Sale extends HttpServlet {
 		        }
 
 		        Products product_selected = SalesLogic.setProduct(products, request.getParameter("quantity"), request.getParameter("product"));
-
+		        total += product_selected.getPrice() * product_selected.getStock();
 		        sale.addProduct(product_selected);
 		        request.setAttribute("products_selected", sale.getProducts());
+		        request.setAttribute("total", total);
 		        
 			}
 			
 			if(action.equals("Realizar Venta")) {
 				
 				if(sale == null){
-					System.out.println("ASDASD");
+		        	request.getRequestDispatcher("WEB-INF/sale.jsp").forward(request, response);
+					return;
 				}
+				
+				
+			}
+			if(action.equals("Eliminar")) {
+				
+				System.out.println("ELIMINAADOOO");
+				
 			}
 		       
 		}

@@ -50,6 +50,8 @@
 		String msg = (String) request.getAttribute("msg");
 		
 		String msgAddOK = (String) request.getAttribute("msgAddOK");
+		
+		Double total = (Double) request.getAttribute("total");
     	
     %>
 
@@ -268,22 +270,33 @@
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
+                                                    	<th class="d-none">Pos</th>
                                                     	<th class="d-none">ID</th>
                                                         <th class="col-6">Articulo</th>
                                                         <th class="col-2 text-right">Cantidad</th>
                                                         <th class="col-2 text-right">Precio Unitario</th>
                                                         <th class="col-2 text-right">Total</th>
+                                                        <th class="col-2 text-right">
+                                                         	
+                                    					</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                <% if(products_selected != null){ %>
+                                                <% if(products_selected != null){ int pos = 0;%>
                                                 	<% for (Products product: products_selected ){ %>
                                                 	<tr>
+                                                	<td class="d-none"><%= pos++ %></td>
                                                 		<td class="d-none"><%= product.getId() %></td>
                                                         <td class="col-6"><%= product.getDetail() %></td>
                                                         <td class="col-2 text-right"><%= product.getStock() %></td>
                                                         <td class="col-2 text-right"><%= product.getPrice() %></td>
                                                         <td class="col-2 text-right"><%= product.getPrice() * product.getStock() %></td>
+                                                        <td class="col-2 text-right">
+                    					 				<button type="submit" name="action" value="Eliminar" class="btn btn-danger btn-circle btn-sm">
+  																<i class="fas fa-trash"></i>
+														</button>                               								
+                                        				</td>
+                                                        
                                                 	</tr>
                                                 	<% } %>
                                                 <% }%>
@@ -298,7 +311,7 @@
                             <div class="col-2 text-right">
                                 <div class="mb-3">
                                     <label for="" class="pr-4">Total</label>
-                                    <input type="number" class="form-control text-right font-weight-bold" name="total" disabled>
+                                    <input type="number" class="form-control text-right font-weight-bold" name="total" value = "<%= total %>" disabled>
                                 </div>
                             </div>
                         </div>
