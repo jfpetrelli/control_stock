@@ -1,5 +1,6 @@
 
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
+<%@page import="entities.Customers"%>
 <%@page import="entities.Stores"%>
 <%@page import="entities.Products"%>
 <%@page import="java.util.ArrayList"%>
@@ -27,8 +28,8 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <%
-    	ArrayList<Stores> stores = (ArrayList) request.getAttribute("stores");    
+    <%    	
+		Stores store = (Stores) request.getAttribute("store");
     %>
 
 </head>
@@ -154,74 +155,33 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Depositos</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Depósito</h1>
                     </div>
 
-                    <!-- Content Row -->
-
-
-                        <div class="row">
-                        	<div class="col-2 align-self-end">
-                                <div class="mb-3">
-									<a  class="btn btn-primary" href="CreateStore">Nuevo depósito</a>
-                                </div>
-                            </div>                        	                        
-                        </div>
-                        <!-- Begin Page Content -->
-                        <div class="row">
+					<div class="row">							
                             <div class="col-12">
-                                <!-- DataTales Example -->
-                                <div class="card shadow mb-4">
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="productsTable" width="100%" cellspacing="0">
-                                                <thead>
-                                                    <tr>
-                                                    	<th class="d-none">ID</th>
-                                                        <th class="col-4">Dirección</th>
-                                                        <th class="col-4 ">Detalle</th>        
-                                                        <th class="col-4 text-center">Acción</th>                             
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="tbodyProducts">
-                                                <% for (Stores store : stores) {%>                                              
-                                                	<tr id="<%= store.getId() %>">
-                                                		<td class="d-none"><%= store.getId() %></td>  
-                                                		<td class="col-4"><%=store.getAddress() %></td>
-                                                        <td class="col-4"><%=store.getDetail()%></td>
-                                                        <td class="col-4">
-															<div  class="row justify-content-center">
-																<div class="col-4">
-																	<form id="viewStore<%= store.getId() %>" action="Store" method="GET">                                                   																																					
-																			<input type="hidden" name="store" value="<%= store.getId() %>">
-																			<input type="submit" class="btn btn-success" value="Ver"> 																																					
-																	</form>	
-																</div>
-																<div class="col-4">
-																	<form id="editStore<%= store.getId() %>" action="UpdateStore" method="GET">                                                   																																					
-																			<input type="hidden" name="store" value="<%= store.getId() %>">
-																			<input type="submit" class="btn btn-primary" value="Editar"> 																																					
-																	</form>																				 																	
-																</div>
-																
-																<div class="col-4">
-																	<form id="deleteStore<%= store.getId() %>" action="DeleteStore" method="POST">                                                   																		
-																			<input type="hidden" name="store" value="<%= store.getId() %>">
-																			<input type="submit" class="btn btn-danger" value="Eliminar"> 																																																																					
-																	</form>	
-																</div>		
-															</div>																									
-														</td>
-                                                    </tr>                                              		
-                                                <% } %>	
-                                                	
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+	                            <form id="storeStock" action="Stock" method="POST">
+	                            		<input type="submit" class="form-control bg-warning text-gray-100" value="Buscar Articulos" id ="search" name = "action">
+	                            		<input type="hidden" name="store" value="<%=store.getId()%>">
+	                            </form>                              	  
+                            	<br>
+								<form id="updateStore" action="UpdateStore" method="POST">
+								  <div class="form-group">
+								    <label for="detailStore">Detalle</label>
+									<textarea required class="form-control" name="detail" id="exampleFormControlTextarea1" rows="3"><%=store.getDetail()%></textarea>								  </div>
+								  <div class="form-group">
+								    <label for="addressStore">Dirección</label>
+								    <input required class="form-control" name="address" value="<%=store.getAddress()%>">
+								  </div>	
+								  <input type="hidden" name="store" value="<%= store.getId() %>">		                                                         
+								  
+								  
+								  <input type="submit" id="updateStockButton" class="btn btn-primary" value="Actualizar">
+								  							  
+								</form>                            		   
                             </div>
-                        </div>
+                    </div>	
+
                 </div>
                 <!-- /.container-fluid -->
 
@@ -238,10 +198,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-    
-    <form action="AddProductToStore" method ="POST" id="product_to_store_form">
-    </form>
-    
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -279,10 +235,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    
 </body>
 
 </html>
-
-<script>
-	
-</script>
