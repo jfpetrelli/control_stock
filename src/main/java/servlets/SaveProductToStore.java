@@ -38,20 +38,25 @@ public class SaveProductToStore extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String store_id = request.getParameter("store");
-		Integer productId = Integer.parseInt(request.getParameter("product"));
-		Integer storeId = Integer.parseInt(request.getParameter("store"));
-		Integer quantity = Integer.parseInt(request.getParameter("quantity"));
 		
-		Products product = dataProduct.getById(productId);
-		Stores store = dataStore.getById(storeId);
-		
-		dataProduct.createStock(store, product, quantity);
-		
-		products = productLogic.getProductsStores(storeId);
-	    request.setAttribute("store", store_id);
-	    request.setAttribute("products", products);
-//		request.getRequestDispatcher("WEB-INF/addProductToStore.jsp").forward(request, response);
+		try {
+			String store_id = request.getParameter("store");
+			Integer productId = Integer.parseInt(request.getParameter("product"));
+			Integer storeId = Integer.parseInt(request.getParameter("store"));
+			Integer quantity = Integer.parseInt(request.getParameter("quantity"));
+			
+			Products product = dataProduct.getById(productId);
+			Stores store = dataStore.getById(storeId);
+			
+			dataProduct.createStock(store, product, quantity);
+			
+			products = productLogic.getProductsStores(storeId);
+		    request.setAttribute("store", store_id);
+		    request.setAttribute("products", products);
+		} catch (Exception e) {
+			response.sendRedirect("/control_stock/500.html");	
+			return;
+		}		
 		
 		AddProductToStore apts = new AddProductToStore();
 		apts.doGet(request, response);

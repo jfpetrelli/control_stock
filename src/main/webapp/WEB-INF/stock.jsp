@@ -222,7 +222,7 @@
 																	<form id="decreaseStock<%= product.getId() %>" action="DecreaseStock" method="GET">                                                   																																					
 																			<input type="hidden" name="store" value="<%=store_selected %>">
 																			<input type="hidden" name="product" value="<%= product.getId() %>">
-																			<input form="decreaseStock<%= product.getId() %>" type="submit" class="btn btn-primary" value="-"> 																																					
+																			<input  type="submit" class="btn btn-primary" value="-"> 																																					
 																	</form>	
 																			 	
 																	
@@ -234,7 +234,7 @@
 																	<form id="increaseStock<%= product.getId() %>" action="IncreaseStock" method="GET">                                                   																		
 																			<input type="hidden" name="store" value="<%=store_selected %>">
 																			<input type="hidden" name="product" value="<%= product.getId() %>">																		
-																			<input form="increaseStock<%= product.getId() %>" type="submit" class="btn btn-primary" value="+">																
+																			<input  type="submit" class="btn btn-primary" value="+">																
 																	</form>	
 																</div>		
 															</div>																									

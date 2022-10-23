@@ -30,7 +30,10 @@ public class DeleteStore extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		if(request.getParameter("store") == null || request.getParameter("store").isEmpty()) {
+			response.sendRedirect("/control_stock/500.html");
+			return;
+		}
 	}
 
 	/**
@@ -39,6 +42,10 @@ public class DeleteStore extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		entities.Stores store = new entities.Stores();
+		if(request.getParameter("store") == null || request.getParameter("store").isEmpty()) {
+			response.sendRedirect("/control_stock/500.html");
+			return;
+		}
 		store.setId(Integer.parseInt(request.getParameter("store")));
 		storeLogic.delete(store);
 		StoreList stores = new StoreList();

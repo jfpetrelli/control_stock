@@ -37,15 +37,21 @@ public class RemoveProductFromStore extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Integer store_id = Integer.parseInt(request.getParameter("store"));
-		Integer product_id = Integer.parseInt(request.getParameter("product"));
-		Stores store = dataStore.getById(store_id);
-		Products product = dataProduct.getById(product_id);
-		dataProduct.removeStock(store, product);
 		
-		products = productLogic.getAll();
-	    request.setAttribute("store", request.getParameter("store"));
-	    request.setAttribute("products", products);
+		try {
+			Integer store_id = Integer.parseInt(request.getParameter("store"));
+			Integer product_id = Integer.parseInt(request.getParameter("product"));
+			Stores store = dataStore.getById(store_id);
+			Products product = dataProduct.getById(product_id);
+			dataProduct.removeStock(store, product);
+			
+			products = productLogic.getAll();
+		    request.setAttribute("store", request.getParameter("store"));
+		    request.setAttribute("products", products);
+		} catch (Exception e) {
+			response.sendRedirect("/control_stock/500.html");		
+			return;
+		}	
 	     
 		request.getRequestDispatcher("WEB-INF/addProductToStore.jsp").forward(request, response);
 	}

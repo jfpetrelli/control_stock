@@ -38,21 +38,38 @@ public class IncreaseStock extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub		
-		Integer store_id = Integer.parseInt(request.getParameter("store"));
-		Integer product_id = Integer.parseInt(request.getParameter("product"));
-		Products product = null;
-		Stores store = dataStore.getById(store_id);
-		
-		ArrayList<Products> products = productLogic.getProductsStores(store_id);
-		
-		for(Products prod : products) {
-			if(prod.getId() == product_id) {
-				product = prod;
+		try {				
+			Integer store_id = Integer.parseInt(request.getParameter("store"));
+			Integer product_id = Integer.parseInt(request.getParameter("product"));
+			Products product = null;
+			Stores store = dataStore.getById(store_id);
+			
+			if(store == null) {
+				response.sendRedirect("/control_stock/500.html");
+				return;
 			}
+			
+			ArrayList<Products> products = productLogic.getProductsStores(store_id);
+			
+			for(Products prod : products) {
+				if(prod.getId() == product_id) {
+					product = prod;
+				}
+			}
+			
+			if(product == null) {
+				response.sendRedirect("/control_stock/500.html");
+				return;
+			}
+						
+		    request.setAttribute("product", product);
+		    request.setAttribute("store", store);
+		    
+		} catch (Exception e) {
+			response.sendRedirect("/control_stock/500.html");
+			return;
 		}
-		
-	    request.setAttribute("product", product);
-	    request.setAttribute("store", store);
+
 	     
 		request.getRequestDispatcher("WEB-INF/increaseStock.jsp").forward(request, response);
 	}

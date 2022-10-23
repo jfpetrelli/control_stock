@@ -39,7 +39,8 @@ public class StoreList extends HttpServlet {
 			request.setAttribute("stores", stores);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			response.sendRedirect("/control_stock/500.html");
+			return;
 		}
 		request.getRequestDispatcher("WEB-INF/stores.jsp").forward(request, response);
 	}

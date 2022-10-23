@@ -38,6 +38,7 @@ public class DecreaseStock extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		try {
 		Integer store_id = Integer.parseInt(request.getParameter("store"));
 		Integer product_id = Integer.parseInt(request.getParameter("product"));
 		Products product = null;
@@ -45,14 +46,29 @@ public class DecreaseStock extends HttpServlet {
 		
 		ArrayList<Products> products = productLogic.getProductsStores(store_id);
 		
+		if(store == null || products == null) {
+			response.sendRedirect("/control_stock/500.html");
+			return;
+		}
+		
 		for(Products prod : products) {
 			if(prod.getId() == product_id) {
 				product = prod;
 			}
 		}
+		
+		if(product == null) {
+			response.sendRedirect("/control_stock/500.html");
+			return;
+		}
 	     
 	    request.setAttribute("product", product);
 	    request.setAttribute("store", store);
+		}
+		catch (Exception e) {
+			response.sendRedirect("/control_stock/500.html");
+			return;
+		}
 	    
 		request.getRequestDispatcher("WEB-INF/decreaseStock.jsp").forward(request, response);
 	}

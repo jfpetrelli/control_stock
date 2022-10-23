@@ -38,6 +38,10 @@ public class AddProductToStore extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("store") == null) {
+			response.sendRedirect("/control_stock/500.html");
+			return;
+		}
 		Integer store_id = Integer.parseInt(request.getParameter("store"));
 		products = productLogic.getAll();
 	    request.setAttribute("store", request.getParameter("store"));

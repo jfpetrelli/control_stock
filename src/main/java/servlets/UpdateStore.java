@@ -30,6 +30,10 @@ public class UpdateStore extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		if(request.getParameter("store") == null) {
+			response.sendRedirect("/control_stock/500.html");
+			return;
+		}
 		Integer store_id = Integer.parseInt(request.getParameter("store"));
 		entities.Stores store = storeLogic.getById(store_id);
 		request.setAttribute("store", store);
