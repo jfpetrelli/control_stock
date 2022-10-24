@@ -1,10 +1,16 @@
 package logic;
 
 import java.util.ArrayList;
+
+import data.DataCustomers;
+import data.DataSales;
 import entities.Products;
+import entities.Sales;
 
 public class SalesLogic {
 
+	private DataSales dataSales = new DataSales();
+	
 	
 	public static String quantityAddOK(ArrayList<Products> products,String quantity, String id_product) {
 		
@@ -47,6 +53,19 @@ public class SalesLogic {
 			}
 			
 		}
+		
+		return null;
+
+	}
+	
+	public static String addSale(Sales sale) {
+		
+		
+		
+			dataSales
+		
+		
+		
 		
 		return null;
 

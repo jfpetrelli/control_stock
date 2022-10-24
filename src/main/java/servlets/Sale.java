@@ -38,9 +38,9 @@ public class Sale extends HttpServlet {
 	LocalDateTime datetime = LocalDateTime.now();
 	SalesLogic salesLogic = new SalesLogic();
 	Sales sale;
-	 String store_id;
-     String customer_id ;
-     Double total = 0.0;
+	String store_id;
+    String customer_id ;
+    Double total = 0.0;
 	
 	
 	
@@ -148,12 +148,20 @@ public class Sale extends HttpServlet {
 		        	request.getRequestDispatcher("WEB-INF/sale.jsp").forward(request, response);
 					return;
 				}
+				Customers customer = new Customers();
+				customer.setId(Integer.parseInt(customer_id));
+				Stores store = new Stores();
+				store.setId(Integer.parseInt(store_id));
+				sale.setCustomer(customer);
+				sale.setStore(store);
+				sale.setDatetime(this.datetime);
 				
+				String msgAddOK = salesLogic.addSale(sale);
 				
 			}
 			if(action.equals("Eliminar")) {
 				
-				System.out.println("ELIMINAADOOO");
+				System.out.println("TEST");
 				
 			}
 		       
