@@ -157,7 +157,7 @@ public class Sale extends HttpServlet {
 				sale.setDatetime(this.datetime);
 				
 				String msgAddOK = salesLogic.addSale(sale);
-				
+				request.setAttribute("msgAddOK", msgAddOK);
 			}
 			if(action.equals("Eliminar")) {
 				

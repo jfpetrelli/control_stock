@@ -6,10 +6,12 @@ import data.DataCustomers;
 import data.DataSales;
 import entities.Products;
 import entities.Sales;
+import logic.ProductsLogic;;
 
 public class SalesLogic {
 
 	private DataSales dataSales = new DataSales();
+	private ProductsLogic productsLogic = new ProductsLogic();
 	
 	
 	public static String quantityAddOK(ArrayList<Products> products,String quantity, String id_product) {
@@ -58,16 +60,32 @@ public class SalesLogic {
 
 	}
 	
-	public static String addSale(Sales sale) {
+	public String addSale(Sales sale) {
 		
 		
 		
-			dataSales
+		Integer id = dataSales.insertSale(sale);
+		
+		if(id == null) {
+			return " No se cargó la venta";
+		}
+		
+		ArrayList<Products> products = new ArrayList<>();
+		products = sale.getProducts();
+		int count = 1;
+		for(Products prod: products) {
+			
+			String ok = dataSales.insertProductsQuantities(id,prod.getId(), prod.getStock(), count);
+			
+			
+			if(ok == null) return " No se cargó la venta";
+			
+			dataSales.updateProductsStores(prod.getId(), sale.getStore().getId(), prod.getStock());
+			count++;
+		}
 		
 		
-		
-		
-		return null;
+		return "Se cargó la venta correctamente";
 
 	}
 	
