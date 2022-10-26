@@ -53,10 +53,23 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="Stock">
+                <a class="nav-link" href="Sale">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Stock</span></a>
+                    <span>Venta</span>
+                </a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="Customer">
+                    <i class="fas fa-address-book"></i>
+                    <span>Clientes</span>
+                </a>
+			</li>
+			 <li class="nav-item active">
+                <a class="nav-link" href="Stock">
+                    <i></i>
+                    <span>Stock</span>
+                </a>
+			</li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -159,20 +172,27 @@
 					<div class="row">
                             <div class="col-12">
                             	<h4>Modificacion de Cliente:</h4>
-								<form id="updateCustomer" action="EditCustomer" method="POST">
+								<form id="editCustomer<%=customer.getId()%>" action="EditCustomer" method="POST">
 								  <div class="form-group">
-								  	<input type="hidden" id="idCustomer" value="><%=customer.getId()%>">
+								  	<input type="hidden" name="customer_id" id="customer_id" value="<%=customer.getId()%>">
 								    <label for="nameCustomer">Nombre</label>
-									<input required class="form-control" id="nameCustomer" value="><%=customer.getName()%>">
+									<input required class="form-control" name="name" value="<%=customer.getName()%>">
 								    <label for="surnameCustomer">Apellido</label>
-								    <input required class="form-control" id="surnameCustomer" value="<%=customer.getSurnarme()%>">
+								    <input required class="form-control" name="surname" value="<%=customer.getSurnarme()%>">
 								    <label for="comercialNameCustomer">Empresa</label>
-								    <input required class="form-control" id="comercialNameCustomer" value="<%=customer.getComercial_name()%>">
+								    <input required class="form-control" name="comercialName" value="<%=customer.getComercial_name()%>">
 								    <label for="mailCustomer">Mail</label>
-								    <input required class="form-control" id="mailCustomer" value="<%=customer.getMail()%>">
-								  </div>
-								  <input id="editCustomerButton" name="aceptCustomer" type="submit" class="btn btn-primary" value="Aceptar">
-								  							  
+								    <input required class="form-control" name="mail" value="<%=customer.getMail()%>">
+								    <br>
+								    <div  class="row">
+										<div class="col-1">
+											<button type="submit" class="btn btn-primary">Aceptar</button> 																																					
+										</div>
+										<div class="col-2">
+											<a href="Customer" class="btn btn-info" role="button">Atras</a>
+										</div>		
+					 				 </div>		
+								  </div>					  
 								</form>                            		   
                             </div>
                     </div>	

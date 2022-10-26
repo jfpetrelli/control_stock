@@ -1,3 +1,4 @@
+
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
 <%@page import="entities.Customers"%>
 <%@page import="java.util.ArrayList"%>
@@ -15,7 +16,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sistema de Control de Stock</title>
+    <title>Control Stock</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -25,12 +26,8 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <%
-    
-    		
-    		ArrayList<Customers> customers = (ArrayList) request.getAttribute("customers");
-
-    	
+    <%    	
+		//Customers customer = (Customers) request.getAttribute("customer");
     %>
 
 </head>
@@ -58,7 +55,8 @@
             <li class="nav-item active">
                 <a class="nav-link" href="Sale">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Venta</span></a>
+                    <span>Venta</span>
+                </a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="Customer">
@@ -66,7 +64,7 @@
                     <span>Clientes</span>
                 </a>
 			</li>
-			<li class="nav-item active">
+			 <li class="nav-item active">
                 <a class="nav-link" href="Stock">
                     <i></i>
                     <span>Stock</span>
@@ -171,83 +169,43 @@
                         <h1 class="h3 mb-0 text-gray-800">Clientes</h1>
                     </div>
 
-                    <div class="row">
+					<div class="row">
+                            <div class="col-10 text-center">
+                            	<h4 >Alta de Cliente:</h4>
+                    		</div>	        	
+                    </div>     	
+					<form action = "NewCustomer" method = "POST">
+					  <div class="form-group">
+					    <label for="nameCustomer">Nombre</label>
+					    <input type="text" class="form-control" name="name" aria-describedby="textHelp" placeholder="Ej: Juan">
+					  </div>
+					  <div class="form-group">
+					    <label for="surnameCustomer">Apellido</label>
+					    <input type="text" class="form-control" name="surname" aria-describedby="textHelp" placeholder="Ej: Perez">
+					  </div>
+					  <div class="form-group">
+					    <label for="emailCustomer">Email</label>
+					    <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Ej: juanperez@gmail.com">
+					  </div>
+					  <div class="form-group">
+					    <label for="comercialNameCustomer">Empresa</label>
+					    <input type="text" class="form-control" name="comercialName" aria-describedby="textHelp" placeholder="Ej: Perez S.A.">
+					  </div>
+					  <div  class="row">
+							<div class="col-1">
+								<button type="submit" class="btn btn-primary">Aceptar</button> 																																					
+							</div>
+							<div class="col-2">
+								<a href="Customer" class="btn btn-info" role="button">Atras</a>
+							</div>		
+					  </div>																										
+					</form>                        		   
 
-                            <div class="col">
-                                <div class="mb-3">
-                                <form action="NewCustomer" method = GET>
+                   
 
-									<input type="hidden" id="Action" name="Action" value=""/>
-
-									<!-- En la funcion onlick del boton estableces el valor del parametro-->
-
-									<button type="submit" id="boton1"  class="btn btn-primary" onclick="javascript:document.getElementById('Action').value = 'Dar de Alta';" >Dar de Alta</button>
-
-								</form>
-                            </div>
-                        </div>
-                    </div> 
-                    <!-- Content Row -->
-                      <form action="Customer" method ="POST" name="form_customer" id = "form_customer"> 
-
-
-                        <!-- Begin Page Content -->
-                        <div class="row">
-                            <div class="col-12">
-                                <!-- DataTales Example -->
-                                <div class="card shadow mb-4">
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="customersTable" width="100%" cellspacing="0">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="col-2 text-center">Nombre</th>
-                                                        <th class="col-2 text-center">Apellido</th>
-                                                        <th class="col-2 text-center">Empresa</th>
-                                                        <th class="col-2 text-center">Mail</th>
-                                                        <th colspan=2 class="col-10 text-center">Acciones</th> 
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="tbodyCustomers">
-                                                <% for (Customers customer : customers) {%>                                              
-                                                	<tr id="<%= customer.getId() %>">
-                                                		<td class="col-2 text-center"><%=customer.getName() %></td>
-                                                        <td class="col-2 text-center"><%=customer.getSurnarme()%></td>
-                                                        <td class="col-2 text-center"><%=customer.getComercial_name()%></td>
-                                                        <td class="col-2 text-center"><%=customer.getMail()%></td>			
-                                                        <td class="col-3 ">
-															<div  class="row justify-content-md-center">
-																<div class="col-3">
-																	<form id="editCustomer<%= customer.getId() %>" action="EditCustomer" method="GET">
-																			<input type="hidden" name="customer_id" value="<%= customer.getId() %>">
-																			<input form="editCustomer<%= customer.getId() %>" type="submit" class="btn btn-primary" value="Editar"> 																																					
-																	</form>	
-																			 	
-																	
-																</div>
-																<div class="col-3">
-																	<form id="removeCustomer<%= customer.getId() %>" action="RemoveCustomer" method="POST">
-																			<input type="hidden" name="customer_id" id="customer_id" value="<%=customer.getId() %>">																		
-																			<input form="removeCustomer<%= customer.getId() %>" type="submit" class="btn btn-danger" value="Eliminar">																
-																	</form>	
-																</div>		
-															</div>																									
-														</td>												
-                                                    </tr>                                              		
-                                                <% } %>	
-                                                	
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </form> 
                 </div>
                 <!-- /.container-fluid -->
+
             </div>
             <!-- End of Main Content -->
 
@@ -261,11 +219,7 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-    
 
-	
-	
-	
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -302,6 +256,9 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    
 </body>
 
 </html>
+
+
