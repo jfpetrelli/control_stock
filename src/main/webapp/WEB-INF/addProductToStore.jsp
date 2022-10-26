@@ -223,7 +223,7 @@
 																		<input type="hidden" name="store" value="<%=store_selected %>">
 																		<input type="hidden" name="product" value="<%= product.getId() %>">																		
 																	</form>	
-																	<button form="removeFromStore<%= product.getId() %>" type="submit" class="btn btn-danger">Quitar</button>
+																	<button form="removeFromStore<%= product.getId() %>" type="submit" class="btn btn-danger">Eliminar</button>
 																</div>
 																<%}%>																
 																	

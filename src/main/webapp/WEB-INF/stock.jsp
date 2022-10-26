@@ -193,6 +193,7 @@
                                 </div>
                             </div>                            
                         </div>
+                   </form>
                         <!-- Begin Page Content -->
                         <div class="row">
                             <div class="col-12">
@@ -251,7 +252,7 @@
                         </div>
 
 
-                    </form>
+
                 </div>
                 <!-- /.container-fluid -->
 
