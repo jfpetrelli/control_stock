@@ -158,6 +158,7 @@ public class Sale extends HttpServlet {
 				
 				String msgAddOK = salesLogic.addSale(sale);
 				request.setAttribute("msgAddOK", msgAddOK);
+				sale = null;
 			}
 			if(action.equals("Eliminar")) {
 				
