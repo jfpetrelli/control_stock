@@ -186,14 +186,7 @@
                             <div class="col">
                                 <div class="mb-3">
                                   	<label for="store" class="form-label">Deposito</label>
-                                  	<select class="form-control" aria-label="Default select example" id="store" name="store">
-										<option value = ""></option>
-                                  		<% for (Stores store: stores) {%>
-									  <option value= "<%=store.getId() %>" 
-									  <%if(store_selected != null && !store_selected.isEmpty()) {%>
-									  <%if(store.getId() == Integer.parseInt(store_selected)){ %> selected<% }}%> ><%=store.getDetail() %></option>
-									  <% } %>
-									</select>
+
                                 </div> 
                             </div>
                         </div>
