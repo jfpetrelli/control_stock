@@ -66,7 +66,7 @@
         <ul class="navbar-nav bg-gradient-warning sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Main">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Main" name="logo">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -80,9 +80,21 @@
             <li class="nav-item active">
                 <a class="nav-link" href="Sale">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Venta</span></a>
+                    <span>Venta</span>
+                </a>
             </li>
-
+            <li class="nav-item active">
+                <a class="nav-link" href="Customer">
+                    <i class="fas fa-address-book"></i>
+                    <span>Clientes</span>
+                </a>
+			</li>
+			 <li class="nav-item active">
+                <a class="nav-link" href="Stock">
+                    <i class = "fas fa-clipboard-list"></i>
+                    <span>Stock</span>
+                </a>
+			</li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -286,6 +298,7 @@
                                                 	<% for (Products product: products_selected ){ %>
                                                 	<tr>
                                                 	<td class="d-none"><%= pos++ %></td>
+                                                	<input type="hidden" class="form-control text-right font-weight-bold" name="deleteItem" value = "<%= pos %>">
                                                 		<td class="d-none"><%= product.getId() %></td>
                                                         <td class="col-6"><%= product.getDetail() %></td>
                                                         <td class="col-2 text-right"><%= product.getStock() %></td>

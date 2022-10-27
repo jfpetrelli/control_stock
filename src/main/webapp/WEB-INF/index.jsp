@@ -58,7 +58,7 @@
 			</li>
 			 <li class="nav-item active">
                 <a class="nav-link" href="Stock">
-                    <i></i>
+                    <i class = "fas fa-clipboard-list"></i>
                     <span>Stock</span>
                 </a>
 			</li>

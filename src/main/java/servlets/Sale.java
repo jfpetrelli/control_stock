@@ -162,7 +162,7 @@ public class Sale extends HttpServlet {
 			}
 			if(action.equals("Eliminar")) {
 				
-				System.out.println("TEST");
+				System.out.println(request.getParameter("deleteItem"));
 				
 			}
 		       
