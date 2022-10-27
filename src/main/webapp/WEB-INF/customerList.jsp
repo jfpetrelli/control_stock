@@ -188,7 +188,7 @@
                         </div>
                     </div> 
                     <!-- Content Row -->
-                      <form action="Customer" method ="POST" name="form_customer" id = "form_customer"> 
+                      
 
 
                         <!-- Begin Page Content -->
@@ -245,7 +245,7 @@
                         </div>
 
 
-                    </form> 
+                     
                 </div>
                 <!-- /.container-fluid -->
             </div>
