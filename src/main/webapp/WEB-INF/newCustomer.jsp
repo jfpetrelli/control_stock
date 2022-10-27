@@ -176,11 +176,11 @@
 					<form action = "NewCustomer" method = "POST">
 					  <div class="form-group">
 					    <label for="nameCustomer">Nombre</label>
-					    <input type="text" class="form-control" name="name" aria-describedby="textHelp" placeholder="Ej: Juan">
+					    <input type="text" class="form-control" name="name" aria-describedby="textHelp" placeholder="Ej: Juan" pattern="[a-zA-Z ]{3,30}" required>
 					  </div>
 					  <div class="form-group">
 					    <label for="surnameCustomer">Apellido</label>
-					    <input type="text" class="form-control" name="surname" aria-describedby="textHelp" placeholder="Ej: Perez">
+					    <input type="text" class="form-control" name="surname" aria-describedby="textHelp" placeholder="Ej: Perez" pattern="[a-zA-Z ]{3,30}" required>
 					  </div>
 					  <div class="form-group">
 					    <label for="emailCustomer">Email</label>
@@ -198,7 +198,7 @@
 								<a href="Customer" class="btn btn-info" role="button">Atras</a>
 							</div>		
 					  </div>																										
-					</form>                        		   
+					</form>                       		   
 
                    
 
