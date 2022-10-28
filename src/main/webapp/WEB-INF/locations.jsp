@@ -1,8 +1,7 @@
 
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
-<%@page import="entities.Customers"%>
 <%@page import="entities.Stores"%>
-<%@page import="entities.Products"%>
+<%@page import="entities.Location"%>
 <%@page import="java.util.ArrayList"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -28,9 +27,8 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <%    	
-		Stores store = (Stores) request.getAttribute("store");
-    	String location = (String) request.getAttribute("location");
+    <%
+    	ArrayList<Location> locations = (ArrayList) request.getAttribute("locations");    
     %>
 
 </head>
@@ -78,7 +76,7 @@
                     <i class = "fas fa-clipboard-list"></i>
                     <span>Stock</span>
                 </a>
-			</li>						
+			</li>			
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -174,38 +172,76 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Depósito</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Depositos</h1>
                     </div>
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h2 class="h5 mb-0 text-gray-800">Dirección: <%= store.getAddress() %></h2>
-                    </div>
-					<div class="row">							
-                            <div class="col-12">
-	                            <form id="storeStock" action="Stock" method="POST">
-	                            		<input type="submit" class="form-control bg-warning text-gray-100" value="Buscar Articulos" id ="search" name = "action">
-	                            		<input type="hidden" name="store" value="<%=store.getId()%>">
-	                            </form>                              	  
-                            	<br>
-								<form id="updateStore" action="UpdateStore" method="POST">
-								  <div class="form-group">
-								    <label for="detailStore">Detalle</label>
-									<textarea disabled required class="form-control" name="detail" id="exampleFormControlTextarea1" rows="3"><%=store.getDetail()%></textarea>								  </div>
-								  <div class="form-group">
-								    <label for="addressStore">Dirección</label>
-								    <input disabled required class="form-control" name="address" value="<%=store.getAddress()%>">
-								  </div>	
-								  <div class="form-group">
-								    <label for="locationStore">Localidad</label>
-								    <input disabled required class="form-control" name="address" value="<%=location%>">
-								  </div>								  
-								  <input type="hidden" name="store" value="<%= store.getId() %>">		                                                         
-								  
-								  
-								  							  
-								</form>                            		   
-                            </div>
-                    </div>	
 
+                    <!-- Content Row -->
+
+
+                        <div class="row">
+                        	<div class="col-2 align-self-end">
+                                <div class="mb-3">
+									<a  class="btn btn-primary" href="CreateLocation">Nueva localidad</a>
+                                </div>
+                            </div>                        	                        
+                        </div>
+                        <!-- Begin Page Content -->
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- DataTales Example -->
+                                <div class="card shadow mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="productsTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                    	<th class="d-none">ID</th>
+                                                        <th class="col-3">Ciudad</th>
+                                                        <th class="col-3 ">Provincia</th>     
+                                                        <th class="col-3 ">CP</th>      
+                                                        <th class="col-3 text-center">Acción</th>                             
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbodyProducts">
+                                                <% for (Location location : locations) {%>                                              
+                                                	<tr id="<%= location.getId() %>">
+                                                		<td class="d-none"><%= location.getId() %></td>  
+                                                		<td class="col-3"><%=location.getCity() %></td>
+                                                        <td class="col-3"><%=location.getState()%></td>
+                                                        <td class="col-3"><%=location.getZipcode()%></td>
+                                                        <td class="col-3">
+															<div  class="row justify-content-center">
+																<div class="col-4">
+																	<form id="viewLocation<%= location.getId() %>" action="Location" method="GET">                                                   																																					
+																			<input type="hidden" name="location" value="<%= location.getId() %>">
+																			<input type="submit" class="btn btn-success" value="Ver"> 																																					
+																	</form>	
+																</div>
+																<div class="col-4">
+																	<form id="editLocation<%= location.getId() %>" action="UpdateLocation" method="GET">                                                   																																					
+																			<input type="hidden" name="location" value="<%= location.getId() %>">
+																			<input type="submit" class="btn btn-primary" value="Editar"> 																																					
+																	</form>																				 																	
+																</div>
+																
+																<div class="col-4">
+																	<form id="deleteLocation<%= location.getId() %>" action="DeleteLocation" method="POST">                                                   																		
+																			<input type="hidden" name="location" value="<%= location.getId() %>">
+																			<input type="submit" class="btn btn-danger" value="Eliminar"> 																																																																					
+																	</form>	
+																</div>		
+															</div>																									
+														</td>
+                                                    </tr>                                              		
+                                                <% } %>	
+                                                	
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
                 <!-- /.container-fluid -->
 
@@ -222,6 +258,10 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    
+    <form action="AddProductToStore" method ="POST" id="product_to_store_form">
+    </form>
+    
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -259,7 +299,10 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-    
 </body>
 
 </html>
+
+<script>
+	
+</script>

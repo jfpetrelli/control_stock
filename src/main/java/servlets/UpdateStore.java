@@ -35,16 +35,18 @@ public class UpdateStore extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		if(request.getParameter("store") == null) {
+		try {
+			ArrayList<Location> locations = dataLocation.readAll();
+			Integer store_id = Integer.parseInt(request.getParameter("store"));
+			entities.Stores store = storeLogic.getById(store_id);
+			request.setAttribute("store", store);
+		    request.setAttribute("locations", locations);
+		    request.setAttribute("location_store", store.getLocation_id());
+		} catch (Exception e) {
 			response.sendRedirect("/control_stock/500.html");
-			return;
+			return;			
 		}
-		ArrayList<Location> locations = dataLocation.readAll();
-		Integer store_id = Integer.parseInt(request.getParameter("store"));
-		entities.Stores store = storeLogic.getById(store_id);
-		request.setAttribute("store", store);
-	    request.setAttribute("locations", locations);
-	    request.setAttribute("location_store", store.getLocation_id());
+
 		request.getRequestDispatcher("WEB-INF/editStore.jsp").forward(request, response);
 	}
 

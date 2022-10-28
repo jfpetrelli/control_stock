@@ -2,7 +2,7 @@
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
 <%@page import="entities.Customers"%>
 <%@page import="entities.Stores"%>
-<%@page import="entities.Products"%>
+<%@page import="entities.Location"%>
 <%@page import="java.util.ArrayList"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -28,10 +28,6 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <%    	
-		Stores store = (Stores) request.getAttribute("store");
-    	String location = (String) request.getAttribute("location");
-    %>
 
 </head>
 
@@ -174,34 +170,25 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Depósito</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Localidad</h1>
                     </div>
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h2 class="h5 mb-0 text-gray-800">Dirección: <%= store.getAddress() %></h2>
-                    </div>
-					<div class="row">							
+
+					<div class="row">
                             <div class="col-12">
-	                            <form id="storeStock" action="Stock" method="POST">
-	                            		<input type="submit" class="form-control bg-warning text-gray-100" value="Buscar Articulos" id ="search" name = "action">
-	                            		<input type="hidden" name="store" value="<%=store.getId()%>">
-	                            </form>                              	  
-                            	<br>
-								<form id="updateStore" action="UpdateStore" method="POST">
+                            	<h4>Nueva localidad:</h4>
+								<form id="createStore" action="CreateLocation" method="POST">
 								  <div class="form-group">
-								    <label for="detailStore">Detalle</label>
-									<textarea disabled required class="form-control" name="detail" id="exampleFormControlTextarea1" rows="3"><%=store.getDetail()%></textarea>								  </div>
+								    <label for="city">Ciudad</label>
+								    <input required class="form-control" name="city">
 								  <div class="form-group">
-								    <label for="addressStore">Dirección</label>
-								    <input disabled required class="form-control" name="address" value="<%=store.getAddress()%>">
+								    <label for="state">Provincia</label>
+								    <input required class="form-control" name="state">
 								  </div>	
 								  <div class="form-group">
-								    <label for="locationStore">Localidad</label>
-								    <input disabled required class="form-control" name="address" value="<%=location%>">
-								  </div>								  
-								  <input type="hidden" name="store" value="<%= store.getId() %>">		                                                         
-								  
-								  
-								  							  
+								    <label for="cp">CP</label>
+								    <input required class="form-control" name="cp">
+								  </div>									  
+								  <input type="submit" id="createLocationButton" class="btn btn-primary" value="Crear">
 								</form>                            		   
                             </div>
                     </div>	
@@ -263,3 +250,5 @@
 </body>
 
 </html>
+
+

@@ -1,28 +1,28 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entities.Stores;
 import logic.LocationsLogic;
-import logic.StoresLogic;
+import logic.ProductsLogic;
 
 /**
- * Servlet implementation class Store
+ * Servlet implementation class LocationList
  */
-@WebServlet("/Store")
-public class Store extends HttpServlet {
+@WebServlet("/LocationList")
+public class LocationList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	StoresLogic storeLogic = new StoresLogic();
 	LocationsLogic locationLogic = new LocationsLogic();
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Store() {
+    public LocationList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,20 +32,10 @@ public class Store extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		if(request.getParameter("store") == null) {
-			response.sendRedirect("/control_stock/500.html");
-			return;
-		}
-		Integer store_id = Integer.parseInt(request.getParameter("store"));
-		Stores store = storeLogic.getById(store_id);
-		entities.Location location = locationLogic.getById(store.getLocation_id());
-		if(store == null) {
-			response.sendRedirect("/control_stock/500.html");
-			return;
-		}
-		request.setAttribute("store", store);
-		request.setAttribute("location", location.getCity());
-		request.getRequestDispatcher("WEB-INF/store.jsp").forward(request, response);
+		ArrayList<entities.Location> locations = locationLogic.getAll();
+		request.setAttribute("locations", locations);
+		request.getRequestDispatcher("WEB-INF/locations.jsp").forward(request, response);
+
 	}
 
 	/**

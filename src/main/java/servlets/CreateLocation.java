@@ -7,22 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entities.Stores;
 import logic.LocationsLogic;
-import logic.StoresLogic;
 
 /**
- * Servlet implementation class Store
+ * Servlet implementation class CreateLocation
  */
-@WebServlet("/Store")
-public class Store extends HttpServlet {
+@WebServlet("/CreateLocation")
+public class CreateLocation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	StoresLogic storeLogic = new StoresLogic();
 	LocationsLogic locationLogic = new LocationsLogic();
+
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Store() {
+    public CreateLocation() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,20 +30,8 @@ public class Store extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		if(request.getParameter("store") == null) {
-			response.sendRedirect("/control_stock/500.html");
-			return;
-		}
-		Integer store_id = Integer.parseInt(request.getParameter("store"));
-		Stores store = storeLogic.getById(store_id);
-		entities.Location location = locationLogic.getById(store.getLocation_id());
-		if(store == null) {
-			response.sendRedirect("/control_stock/500.html");
-			return;
-		}
-		request.setAttribute("store", store);
-		request.setAttribute("location", location.getCity());
-		request.getRequestDispatcher("WEB-INF/store.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/createLocation.jsp").forward(request, response);
+
 	}
 
 	/**
@@ -53,7 +39,15 @@ public class Store extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		entities.Location location = new entities.Location();
+
+		location.setCity(request.getParameter("city"));
+		location.setState(request.getParameter("state"));
+		location.setZipcode(request.getParameter("cp"));
+		locationLogic.create(location);
+		
+		LocationList locations = new LocationList();		
+		locations.doGet(request, response);
 	}
 
 }
