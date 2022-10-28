@@ -44,7 +44,18 @@ public class Stock extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+		stores = storeLogic.getAll();
+		request.setAttribute("stores", stores);
+		request.getRequestDispatcher("WEB-INF/stores_stock.jsp").forward(request, response);
+
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		try {
 			Stores store = storeLogic.getById(Integer.parseInt(request.getParameter("store")));		
 			Integer store_id = Integer.parseInt(request.getParameter("store"));
@@ -58,14 +69,6 @@ public class Stock extends HttpServlet {
 
 
 		request.getRequestDispatcher("WEB-INF/stock.jsp").forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }
