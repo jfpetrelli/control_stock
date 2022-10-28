@@ -1,3 +1,8 @@
+
+<%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
+<%@page import="entities.Roles"%>
+<%@page import="java.util.ArrayList"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -21,6 +26,9 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <%    	
+		Roles rol = (Roles) request.getAttribute("rol");
+    %>
 
 </head>
 
@@ -62,12 +70,12 @@
                     <span>Depositos</span>
                 </a>
 			</li>
-			 <li class="nav-item active">
+			<li class="nav-item active">
                 <a class="nav-link" href="Stock">
                     <i class = "fas fa-clipboard-list"></i>
                     <span>Stock</span>
                 </a>
-			</li>		
+			</li>
 			<li class="nav-item active">
                 <a class="nav-link" href="Product">
                     <i class = "fab fa-product-hunt"></i>
@@ -79,7 +87,7 @@
                     <i class = "fas fa-user-cog"></i>
                     <span>Roles</span>
                 </a>
-			</li>					
+			</li>							
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -107,6 +115,30 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -151,11 +183,32 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">CONTROL STOCK</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Roles</h1>
                     </div>
 
-                    <!-- Content Row -->
+					<div class="row">
+                            <div class="col-12">
+                            	<h4>Modificacion de Rol:</h4>
+								<form action="EditRol" method="POST">
+								  <div class="form-group">
+								  	<input type="hidden" name="rol_id" value="<%=rol.getId()%>">
+								    <label for="typeRol">Tipo de Rol</label>
+									<input required class="form-control" name="type" value="<%=rol.getType()%>">
+								    <br>
+								    <div  class="row">
+										<div class="col-1">
+											<button type="submit" class="btn btn-primary">Aceptar</button> 																																					
+										</div>
+										<div class="col-2">
+											<a href="Rol" class="btn btn-info" role="button">Atras</a>
+										</div>		
+					 				 </div>		
+								  </div>					  
+								</form>                            		   
+                            </div>
+                    </div>	
 
+                </div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -208,7 +261,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
+    
 </body>
 
 </html>

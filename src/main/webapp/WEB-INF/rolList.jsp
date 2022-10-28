@@ -1,3 +1,7 @@
+<%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
+<%@page import="entities.Roles"%>
+<%@page import="java.util.ArrayList"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -11,7 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Control Stock</title>
+    <title>Sistema de Control de Stock</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -21,6 +25,13 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <%
+    
+    		
+    		ArrayList<Roles> roles = (ArrayList) request.getAttribute("roles");
+
+    	
+    %>
 
 </head>
 
@@ -57,9 +68,9 @@
                 </a>
 			</li>
 			 <li class="nav-item active">
-                <a class="nav-link" href="Stores">
+                <a class="nav-link" href="Stock">
                     <i class = "fas fa-clipboard-list"></i>
-                    <span>Depositos</span>
+                    <span>Stock</span>
                 </a>
 			</li>
 			 <li class="nav-item active">
@@ -67,7 +78,7 @@
                     <i class = "fas fa-clipboard-list"></i>
                     <span>Stock</span>
                 </a>
-			</li>		
+			</li>
 			<li class="nav-item active">
                 <a class="nav-link" href="Product">
                     <i class = "fab fa-product-hunt"></i>
@@ -79,7 +90,7 @@
                     <i class = "fas fa-user-cog"></i>
                     <span>Roles</span>
                 </a>
-			</li>					
+			</li>							
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -107,6 +118,30 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -151,13 +186,80 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">CONTROL STOCK</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Roles</h1>
                     </div>
 
+                    <div class="row">
+
+                            <div class="col">
+                                <div class="mb-3">
+                                <form action="NewRol" method = GET>
+
+									<input type="hidden" id="Action" name="Action" value=""/>
+
+									<!-- En la funcion onlick del boton estableces el valor del parametro-->
+
+									<button type="submit" id="boton1"  class="btn btn-primary" onclick="javascript:document.getElementById('Action').value = 'Dar de Alta';" >Dar de Alta</button>
+
+								</form>
+                            </div>
+                        </div>
+                    </div> 
                     <!-- Content Row -->
+                      
 
+
+                        <!-- Begin Page Content -->
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- DataTales Example -->
+                                <div class="card shadow mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="rolesTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="col-2 text-center">Tipo de Rol</th>
+                                                        <th colspan=2 class="col-6 text-center">Acciones</th> 
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbodyRoles">
+                                                <% for (Roles rol : roles) {%>                                              
+                                                	<tr id="<%= rol.getId() %>">
+                                                		<td class="col-2 text-center"><%=rol.getType() %></td>
+                                                        <td class="col-3 ">
+															<div  class="row justify-content-md-center">
+																<div class="col-2">
+																	<form  action="EditRol" method="GET">
+																			<input type="hidden" name="rol_id" value="<%= rol.getId() %>">
+																			<input type="submit" class="btn btn-primary" value="Editar"> 																																					
+																	</form>	
+																			 	
+																	
+																</div>
+																<div class="col-2">
+																	<form  action="RemoveRol" method="POST">
+																			<input type="hidden" name="rol_id"  value="<%= rol.getId() %>">																		
+																			<input type="submit" class="btn btn-danger" value="Eliminar">																
+																	</form>	
+																</div>		
+															</div>																									
+														</td>												
+                                                    </tr>                                              		
+                                                <% } %>	
+                                                	
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                     
+                </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
 
@@ -171,7 +273,11 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    
 
+	
+	
+	
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -208,7 +314,6 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
 </body>
 
 </html>
