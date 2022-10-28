@@ -188,23 +188,13 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Roles</h1>
                     </div>
-
                     <div class="row">
-
-                            <div class="col">
+                        	<div class="col-2 align-self-end">
                                 <div class="mb-3">
-                                <form action="NewRol" method = GET>
-
-									<input type="hidden" id="Action" name="Action" value=""/>
-
-									<!-- En la funcion onlick del boton estableces el valor del parametro-->
-
-									<button type="submit" id="boton1"  class="btn btn-primary" onclick="javascript:document.getElementById('Action').value = 'Dar de Alta';" >Dar de Alta</button>
-
-								</form>
-                            </div>
-                        </div>
-                    </div> 
+									<a  class="btn btn-primary" href="NewRol">Dar de Alta</a>
+                                </div>
+                            </div>                        	                        
+                    </div>
                     <!-- Content Row -->
                       
 

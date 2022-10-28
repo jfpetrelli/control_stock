@@ -84,7 +84,13 @@
                     <i class = "fab fa-product-hunt"></i>
                     <span>Productos</span>
                 </a>
-			</li>						
+			</li>
+			<li class="nav-item active">
+                <a class="nav-link" href="Rol">
+                    <i class = "fas fa-user-cog"></i>
+                    <span>Roles</span>
+                </a>
+			</li>							
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -182,23 +188,13 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Productos</h1>
                     </div>
-
-                    <div class="row">
-
-                            <div class="col">
+					<div class="row">
+                        	<div class="col-2 align-self-end">
                                 <div class="mb-3">
-                                <form action="NewProduct" method = GET>
-
-									<input type="hidden" id="Action" name="Action" value=""/>
-
-									<!-- En la funcion onlick del boton estableces el valor del parametro-->
-
-									<button type="submit" id="boton1"  class="btn btn-primary" onclick="javascript:document.getElementById('Action').value = 'Dar de Alta';" >Dar de Alta</button>
-
-								</form>
-                            </div>
-                        </div>
-                    </div> 
+									<a  class="btn btn-primary" href="NewProduct">Dar de Alta</a>
+                                </div>
+                            </div>                        	                        
+                    </div>
                     <!-- Content Row -->
                       
 

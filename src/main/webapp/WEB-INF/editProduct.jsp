@@ -81,7 +81,13 @@
                     <i class = "fab fa-product-hunt"></i>
                     <span>Productos</span>
                 </a>
-			</li>						
+			</li>
+			<li class="nav-item active">
+                <a class="nav-link" href="Rol">
+                    <i class = "fas fa-user-cog"></i>
+                    <span>Roles</span>
+                </a>
+			</li>							
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
