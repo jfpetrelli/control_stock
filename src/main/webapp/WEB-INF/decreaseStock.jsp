@@ -74,6 +74,12 @@
                     <span>Depositos</span>
                 </a>
 			</li>
+			 <li class="nav-item active">
+                <a class="nav-link" href="Stock">
+                    <i class = "fas fa-clipboard-list"></i>
+                    <span>Stock</span>
+                </a>
+			</li>						
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
