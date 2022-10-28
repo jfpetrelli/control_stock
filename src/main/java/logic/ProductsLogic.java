@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import data.DataProducts;
+import entities.Customers;
 import entities.Products;
 import data.DataStores;
 import entities.Stores;
@@ -75,6 +76,23 @@ public class ProductsLogic {
 			}
 			return false;
 			
+		}
+		
+		public void create(Products product) {
+			dataProducts.create(product);
+		}
+		
+		public void remove(Products product) {
+			dataProducts.remove(product);
+		}
+		
+		public void update(Products product) {
+			dataProducts.update(product);
+		}
+		
+		public Products getById(Integer id) {
+			Products product = dataProducts.getById(id);
+			return product;
 		}
 	
 }

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import entities.Customers;
 import entities.Products;
 import entities.Stores;
 
@@ -212,6 +213,100 @@ public class DataProducts {
             }
 		}
 		
+	}
+	
+	public void create(Products product) {
+		
+		PreparedStatement stmt= null;
+		ResultSet keyResultSet=null;
+		
+		try {
+			stmt= DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"insert into products(detail, price) values(?,?)",
+							PreparedStatement.RETURN_GENERATED_KEYS
+							);
+			
+			stmt.setString(1, product.getDetail());
+			stmt.setDouble(2, product.getPrice());
+
+
+			stmt.executeUpdate();
+			
+			keyResultSet=stmt.getGeneratedKeys();
+            if(keyResultSet!=null && keyResultSet.next()){
+            	product.setId(keyResultSet.getInt(1));
+            }
+
+			
+		}  catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(keyResultSet!=null)keyResultSet.close();
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }
+		}
+		
+	}
+	
+	public void remove(Products product) {
+		
+		PreparedStatement stmt= null;
+		
+		try {
+			stmt= DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"delete from products where id = ?"
+							);
+			
+			stmt.setInt(1, product.getId());
+
+			stmt.executeUpdate();
+			
+			
+		}  catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }
+		}
+		
+	}
+	
+	public void update(Products product) {
+		PreparedStatement stmt = null;			
+		try {
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+							"UPDATE products SET detail = ?, price = ?  where id = ?"
+			);
+
+			stmt.setString(1, product.getDetail());
+			stmt.setDouble(2, product.getPrice());
+			stmt.setInt(3, product.getId());
+			
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+            try {	            	
+                if(stmt!=null) {
+                	stmt.close();
+                }	                
+				DbConnector.getInstancia().releaseConn();	                
+            } catch (SQLException e) {
+				// TODO Auto-generated catch block
+            	e.printStackTrace();
+            }
+		}
 	}
 
 }
