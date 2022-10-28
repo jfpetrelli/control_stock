@@ -3,6 +3,7 @@
 <%@page import="entities.Customers"%>
 <%@page import="entities.Stores"%>
 <%@page import="entities.Products"%>
+<%@page import="entities.Location"%>
 <%@page import="java.util.ArrayList"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -30,6 +31,8 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <%    	
 		Stores store = (Stores) request.getAttribute("store");
+        ArrayList<Location> locations = (ArrayList) request.getAttribute("locations"); 	
+    	Integer location_store = (Integer) request.getAttribute("location_store");
     %>
 
 </head>
@@ -187,6 +190,19 @@
 								    <label for="addressStore">Dirección</label>
 								    <input required class="form-control" name="address" value="<%=store.getAddress()%>">
 								  </div>	
+								  <div class="form-group">
+								    <label for="locationStore">Localidad</label>
+								     <select class="form-control" aria-label="Default select example" id="location" name="location">
+                                  		<% for (Location location : locations) {%>
+									  		<option 
+									  			value= "<%=location.getId() %>"
+									  			<%if(location.getId() == location_store) {%>
+									  				selected
+									  			<%} %>
+									  		><%=location.getCity() %></option>
+									  	<% } %>
+									</select>
+								  </div>									  
 								  <input type="hidden" name="store" value="<%= store.getId() %>">		                                                         
 								  
 								  

@@ -41,7 +41,7 @@ public class DataStores {
 		ResultSet rs=null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select id,detail,address from stores where id=?"
+					"select id,detail,address,location_id from stores where id=?"
 					);
 			stmt.setInt(1, id);
 			rs=stmt.executeQuery();
@@ -50,6 +50,7 @@ public class DataStores {
 				store.setId(rs.getInt("id"));
 				store.setDetail(rs.getString("detail"));
 				store.setAddress(rs.getString("address"));
+				store.setLocation_id(rs.getInt("location_id"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -73,12 +74,13 @@ public class DataStores {
 		try {
 			stmt= DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"insert into stores(address, detail) values(?,?)",
+							"insert into stores(address, detail, location_id) values(?,?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
 			
 			stmt.setString(1, store.getAddress());
 			stmt.setString(2, store.getDetail());
+			stmt.setInt(3, store.getLocation_id());
 
 			stmt.executeUpdate();
 			
@@ -106,12 +108,13 @@ public class DataStores {
 		PreparedStatement stmt = null;			
 		try {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement(
-							"UPDATE stores SET address = ?, detail = ? where id = ?"
+							"UPDATE stores SET address = ?, detail = ?, location_id = ? where id = ?"
 			);
 
 			stmt.setString(1, store.getAddress());
 			stmt.setString(2, store.getDetail());
-			stmt.setInt(3, store.getId());
+			stmt.setInt(4, store.getId());
+			stmt.setInt(3, store.getLocation_id());
 			
 			stmt.executeUpdate();
 		} catch (SQLException e) {

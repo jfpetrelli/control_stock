@@ -2,7 +2,7 @@
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
 <%@page import="entities.Customers"%>
 <%@page import="entities.Stores"%>
-<%@page import="entities.Products"%>
+<%@page import="entities.Location"%>
 <%@page import="java.util.ArrayList"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -28,7 +28,9 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+    <%
+    	ArrayList<Location> locations = (ArrayList) request.getAttribute("locations"); 	
+    %>
 </head>
 
 <body id="page-top">
@@ -184,7 +186,14 @@
 								    <label for="addressStore">Dirección</label>
 								    <input required class="form-control" name="address">
 								  </div>	
-								  
+								  <div class="form-group">
+								    <label for="locationStore">Localidad</label>
+								     <select class="form-control" aria-label="Default select example" id="location" name="location">
+                                  		<% for (Location location : locations) {%>
+									  		<option value= "<%=location.getId() %>"><%=location.getCity() %></option>
+									  	<% } %>
+									</select>
+								  </div>									  
 								  <input type="submit" id="createStockButton" class="btn btn-primary" value="Crear">
 								  							  
 								</form>                            		   

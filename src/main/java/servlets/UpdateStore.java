@@ -1,12 +1,16 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import data.DataLocations;
+import entities.Location;
 import entities.Stores;
 import logic.StoresLogic;
 
@@ -17,6 +21,7 @@ import logic.StoresLogic;
 public class UpdateStore extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	StoresLogic storeLogic = new StoresLogic();
+	DataLocations dataLocation = new DataLocations();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -34,9 +39,12 @@ public class UpdateStore extends HttpServlet {
 			response.sendRedirect("/control_stock/500.html");
 			return;
 		}
+		ArrayList<Location> locations = dataLocation.readAll();
 		Integer store_id = Integer.parseInt(request.getParameter("store"));
 		entities.Stores store = storeLogic.getById(store_id);
 		request.setAttribute("store", store);
+	    request.setAttribute("locations", locations);
+	    request.setAttribute("location_store", store.getLocation_id());
 		request.getRequestDispatcher("WEB-INF/editStore.jsp").forward(request, response);
 	}
 
@@ -49,6 +57,8 @@ public class UpdateStore extends HttpServlet {
 		Integer id = Integer.parseInt(request.getParameter("store"));
 		String detail = request.getParameter("detail");
 		String address = request.getParameter("address");
+		Integer locationId = Integer.parseInt(request.getParameter("location"));
+		store.setLocation_id(locationId);
 		store.setDetail(detail);
 		store.setAddress(address);
 		store.setId(id);
