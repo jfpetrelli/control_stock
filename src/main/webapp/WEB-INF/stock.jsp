@@ -1,4 +1,3 @@
-
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
 <%@page import="entities.Stores"%>
 <%@page import="entities.Products"%>
@@ -7,10 +6,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,27 +25,19 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <%
-    	ArrayList<Stores> stores = (ArrayList) request.getAttribute("stores");
-    	ArrayList<Products> products = (ArrayList) request.getAttribute("products");	
-    	
-		String store_selected = new String();
-		String sto = (String)request.getAttribute("store");
-		
-		if(sto != null){
-			store_selected = sto;
-		}
-    	
+    	ArrayList<Products> products = (ArrayList) request.getAttribute("products");
+    	Stores store = (Stores) request.getAttribute("store");
     %>
-
 </head>
 
-<body id="page-top">
+
+
 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
         <!-- Sidebar -->
-       <ul class="navbar-nav bg-gradient-warning sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-warning sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Main" name="logo">
@@ -177,32 +166,13 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Stock</h1>
                     </div>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h2 class="h3 mb-0 text-gray-800"> <%= store.getDetail() %></h2>
+                    </div>                    
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h2 class="h5 mb-0 text-gray-800">Dirección: <%= store.getAddress() %></h2>
+                    </div>
 
-                    <!-- Content Row -->
-                    <form action="Stock" method ="POST" name="form_sale" id = "form_sale">
-
-                        <div class="row">
-
-                            <div class="col">
-                                <div class="mb-3">
-                                  	<label for="store" class="form-label">Deposito</label>
-
-                                </div> 
-                            </div>
-                        </div>
-                        <div class="row">
-                        	<div class="col-2 align-self-end">
-                                <div class="mb-3">
-                                    <input type="submit" class="form-control bg-warning text-gray-100" value="Buscar Articulos" id ="search" name = "action">
-                                </div>
-                            </div>
-                        	<div class="col-2 align-self-end">
-                                <div class="mb-3">
-                                	<button type="submit" class="form-control bg-warning text-gray-100" name="store" form="product_to_store_form" value="<%= store_selected %>">Alta/Baja Articulo</button>
-                                </div>
-                            </div>                            
-                        </div>
-                   </form>
                         <!-- Begin Page Content -->
                         <div class="row">
                             <div class="col-12">
@@ -230,9 +200,9 @@
 															<div  class="row justify-content-md-center">
 																<div class="col-2">
 																	<form id="decreaseStock<%= product.getId() %>" action="DecreaseStock" method="GET">                                                   																																					
-																			<input type="hidden" name="store" value="<%=store_selected %>">
+																			<input type="hidden" name="store" value="<%=store.getId() %>">
 																			<input type="hidden" name="product" value="<%= product.getId() %>">
-																			<input  type="submit" class="btn btn-primary" value="-"> 																																					
+																			<input  type="submit" class="btn btn-danger" value="-"> 																																					
 																	</form>	
 																			 	
 																	
@@ -242,9 +212,9 @@
 																</div>
 																<div class="col-2">
 																	<form id="increaseStock<%= product.getId() %>" action="IncreaseStock" method="GET">                                                   																		
-																			<input type="hidden" name="store" value="<%=store_selected %>">
+																			<input type="hidden" name="store" value="<%=store.getId() %>">
 																			<input type="hidden" name="product" value="<%= product.getId() %>">																		
-																			<input  type="submit" class="btn btn-primary" value="+">																
+																			<input  type="submit" class="btn btn-success" value="+">																
 																	</form>	
 																</div>		
 															</div>																									
@@ -322,7 +292,3 @@
 </body>
 
 </html>
-
-<script>
-	
-</script>

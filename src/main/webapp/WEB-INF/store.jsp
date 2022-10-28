@@ -67,9 +67,9 @@
                 </a>
 			</li>
 			 <li class="nav-item active">
-                <a class="nav-link" href="Stock">
+                <a class="nav-link" href="Stores">
                     <i class = "fas fa-clipboard-list"></i>
-                    <span>Stock</span>
+                    <span>Depositos</span>
                 </a>
 			</li>
             <!-- Divider -->
@@ -169,7 +169,9 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Depósito</h1>
                     </div>
-
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h2 class="h5 mb-0 text-gray-800">Dirección: <%= store.getAddress() %></h2>
+                    </div>
 					<div class="row">							
                             <div class="col-12">
 	                            <form id="storeStock" action="Stock" method="POST">

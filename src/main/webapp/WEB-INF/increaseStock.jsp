@@ -68,9 +68,9 @@
                 </a>
 			</li>
 			 <li class="nav-item active">
-                <a class="nav-link" href="Stock">
+                <a class="nav-link" href="Stores">
                     <i class = "fas fa-clipboard-list"></i>
-                    <span>Stock</span>
+                    <span>Depositos</span>
                 </a>
 			</li>
             <!-- Divider -->
@@ -210,7 +210,7 @@
                                                         	<input required name="quantity" id="quantity" value="">
                                                         </td>
                                                         <td class="col-2 text-center">
-                                                        	 <input id="increaseButton" class="btn btn-primary" value="Aumentar" onclick = "stockValidation()">
+                                                        	 <input id="increaseButton" class="btn btn-success" value="Aumentar" onclick = "stockValidation()">
                                                         </td>
                                                     </tr>    
                                                     </form>                                          		                                                	

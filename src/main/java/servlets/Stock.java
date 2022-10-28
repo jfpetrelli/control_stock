@@ -43,35 +43,20 @@ public class Stock extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		if(stores == null) {			
+		
+		
+		try {
+			Stores store = storeLogic.getById(Integer.parseInt(request.getParameter("store")));		
+			Integer store_id = Integer.parseInt(request.getParameter("store"));
+			
+			request.setAttribute("products", productLogic.getProductsStores(store_id));
+			request.setAttribute("store", store);
+		} catch (Exception e) {
 			response.sendRedirect("/control_stock/500.html");
 			return;
-		} 
-		
-		String action = request.getParameter("action");			 
-		request.setAttribute("stores", stores);
-		
-		if(action != null) {
-			
-			 String store_id = request.getParameter("store");
-		     if(store_id.equals("")) {
-					response.sendRedirect("/control_stock/500.html");
-					return;
-		     }
-		     		     
-			if(action.equals("Buscar Articulos")) {
-			    products = productLogic.getProductsStores(Integer.parseInt(store_id));
-		        request.setAttribute("products", products);
-		        request.setAttribute("store", store_id);
-			}
-			
-			if(action.equals("Agregar")) {
-		        request.setAttribute("products", products);
-		        request.setAttribute("store", store_id);		        
-			}		        
-		       
 		}
+
+
 		request.getRequestDispatcher("WEB-INF/stock.jsp").forward(request, response);
 	}
 

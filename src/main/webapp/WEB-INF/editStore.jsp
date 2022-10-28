@@ -67,9 +67,9 @@
                 </a>
 			</li>
 			 <li class="nav-item active">
-                <a class="nav-link" href="Stock">
+                <a class="nav-link" href="Stores">
                     <i class = "fas fa-clipboard-list"></i>
-                    <span>Stock</span>
+                    <span>Depositos</span>
                 </a>
 			</li>
             <!-- Divider -->
