@@ -29,4 +29,8 @@ public class LocationsLogic {
 	public void update(Location location) {
 		dataLocation.update(location);
 	}
+	
+	public void delete(Location location) {
+		dataLocation.delete(location);
+	}
 }
