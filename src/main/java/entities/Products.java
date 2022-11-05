@@ -9,6 +9,7 @@ public class Products {
 	private double price;
 	private double stock;	
 	private HashMap<Stores, Integer> stores = new HashMap<Stores, Integer>();
+	private int pos;
 		
 	public HashMap<Stores, Integer> getStores() {
 		return stores;
@@ -40,6 +41,11 @@ public class Products {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
+	public int getPos() {
+		return pos;
+	}
+	public void setPos(int pos) {
+		this.pos = pos;
+	}
 	
 }

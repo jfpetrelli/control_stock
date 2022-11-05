@@ -134,11 +134,14 @@ public class Sale extends HttpServlet {
 					return;
 		        }
 
-		        Products product_selected = SalesLogic.setProduct(products, request.getParameter("quantity"), request.getParameter("product"));
+		        Products product_selected = salesLogic.setProduct(products, request.getParameter("quantity"), request.getParameter("product"));
+		        
 		        total += product_selected.getPrice() * product_selected.getStock();
 		        sale.addProduct(product_selected);
 		        request.setAttribute("products_selected", sale.getProducts());
 		        request.setAttribute("total", total);
+		        
+		        System.out.println(product_selected.getPos());
 		        
 			}
 			
@@ -160,9 +163,20 @@ public class Sale extends HttpServlet {
 				request.setAttribute("msgAddOK", msgAddOK);
 				sale = null;
 			}
+			
 			if(action.equals("Eliminar")) {
 				
-				System.out.println(request.getParameter("deleteItem"));
+				//int pos = Integer.parseInt(request.getParameter("Eliminar"));
+				System.out.println( "Boton " + request.getParameter("Eliminar"));
+				//salesLogic.deleteItem(pos, sale);
+				
+				 request.setAttribute("products", products);
+			     request.setAttribute("customer", customer_id);
+			     request.setAttribute("store", store_id);
+			     request.setAttribute("datetime", datetime);
+			     request.setAttribute("products_selected", sale.getProducts());
+			     request.setAttribute("products_selected", sale.getProducts());
+			     request.setAttribute("total", total);
 				
 			}
 		       

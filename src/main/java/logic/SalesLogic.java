@@ -12,6 +12,7 @@ public class SalesLogic {
 
 	private DataSales dataSales = new DataSales();
 	private ProductsLogic productsLogic = new ProductsLogic();
+	private int pos=0;
 	
 	
 	public static String quantityAddOK(ArrayList<Products> products,String quantity, String id_product) {
@@ -35,7 +36,7 @@ public class SalesLogic {
 		return null;
 	}
 	
-	public static Products setProduct(ArrayList<Products> products,String quantity, String id_product) {
+	public Products setProduct(ArrayList<Products> products,String quantity, String id_product) {
 		
 		Products prod_selected = new Products();
 		
@@ -49,6 +50,8 @@ public class SalesLogic {
 				prod_selected.setDetail(product.getDetail());
 				prod_selected.setPrice(product.getPrice());
 				prod_selected.setStock(Double.parseDouble(quantity));
+				prod_selected.setPos(pos);
+				pos++;
 				return prod_selected;
 				
 				
@@ -87,6 +90,26 @@ public class SalesLogic {
 		
 		return "Se cargó la venta correctamente";
 
+	}
+	
+	public void deleteItem(int pos, Sales sale) {
+		
+
+		ArrayList<Products> products = sale.getProducts();
+		int i=0;
+		for(Products prod: products) {
+			
+			if(prod.getPos() == pos) {
+				
+				sale.getProducts().remove(i);
+				return;
+			}
+			
+			i++;
+		}
+		
+		
+		
 	}
 	
 }

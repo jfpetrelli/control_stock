@@ -306,9 +306,9 @@
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
-                                                    	<th class="d-none">Pos</th>
+                                                    	<th class="col-3">Pos</th>
                                                     	<th class="d-none">ID</th>
-                                                        <th class="col-6">Articulo</th>
+                                                        <th class="col-3">Articulo</th>
                                                         <th class="col-2 text-right">Cantidad</th>
                                                         <th class="col-2 text-right">Precio Unitario</th>
                                                         <th class="col-2 text-right">Total</th>
@@ -318,13 +318,12 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                <% if(products_selected != null){ int pos = 0;%>
+                                                <% if(products_selected != null){ %>
                                                 	<% for (Products product: products_selected ){ %>
                                                 	<tr>
-                                                	<td class="d-none"><%= pos++ %></td>
-                                                	<input type="hidden" class="form-control text-right font-weight-bold" name="deleteItem" value = "<%= pos %>">
+                                                		<td class="col-3">  <input type="hidden" class="form-control text-right font-weight-bold" name="deleteItem" value= "<%= product.getPos() %>"> <%= product.getPos() %></td>
                                                 		<td class="d-none"><%= product.getId() %></td>
-                                                        <td class="col-6"><%= product.getDetail() %></td>
+                                                        <td class="col-3"><%= product.getDetail() %></td>
                                                         <td class="col-2 text-right"><%= product.getStock() %></td>
                                                         <td class="col-2 text-right"><%= product.getPrice() %></td>
                                                         <td class="col-2 text-right"><%= product.getPrice() * product.getStock() %></td>
