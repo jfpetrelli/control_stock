@@ -118,12 +118,6 @@
                     <i class = "fas fa-user-cog"></i>
                     <span>Localidades</span>
                 </a>
-			</li>	
-			<li class="nav-item active">
-                <a class="nav-link" href="ListSale">
-                    <i class = "fas fa-user-cog"></i>
-                    <span>Listado de Ventas</span>
-                </a>
 			</li>						
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -220,16 +214,22 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Venta</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Lista de Ventas</h1>
                     </div>
 
                     <!-- Content Row -->
-                    <form action="Sale" method ="POST" name="form_sale" id = "form_sale">
+                    <form action="ListSale" method ="POST" name="form_sale" id = "form_sale">
                         <div class="row">
                             <div class="col-3">
-                                <div class="mb-3">
-                                    <label for="fechahora" class="form-label">Fecha</label>
-                                    <input type="datetime-local" class="form-control" id="datetime" name = "datetime" value = "<%= request.getAttribute("datetime") %>">
+                               <div class="mb-3">
+                                    <label for="fechahora" class="form-label">Fecha Desde</label>
+                                    <input type="datetime-local" class="form-control" id="datetime" name = "desde_datetime" value = "<%= request.getAttribute("desde_datetime") %>">
+                                  </div> 
+                            </div>
+                            <div class="col-3">
+                            	<div class="mb-3">
+                                    <label for="fechahora" class="form-label">Fecha Hasta</label>
+                                    <input type="datetime-local" class="form-control" id="datetime" name = "hasta_datetime" value = "<%= request.getAttribute("hasta_datetime") %>">
                                   </div> 
                             </div>
                         </div>
@@ -264,39 +264,11 @@
                         <div class="row">
                         	<div class="col-2 align-self-end">
                                 <div class="mb-3">
-                                    <input type="submit" class="form-control bg-warning text-gray-100" value="Buscar Articulos" id ="search" name = "action">
+                                    <input type="submit" class="form-control bg-warning text-gray-100" value="Filtrar" id ="search" name = "action">
                                     <% if(msg != null){
                                     	%> <p class = "d-block"> <%=msg %></p><%
                                     } %>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="mb-3">
-                                   	<label for="product" class="form-label">Articulo</label>
-                                	<select class="form-control" aria-label="Default select example" id="product" name="product">
-									  	<option value = ""></option>
-                                  		<% if(products != null){
-                                            	for(Products product: products){
-                                            		%> <option value = "<%=product.getId() %>"><%=product.getDetail() %> - Cantidad: <%=product.getStock() %></option>
-                                            <%	}
-                                  			} %>
-									</select>
-                                  </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="mb-3 text-right">
-                                   	<label for="quantity" class="form-label pr-4">Cantidad</label>
-                                    <input type="number" class="form-control text-right" id="quantity" name= "quantity" min=0 value= 0 step="1">
-                                  </div>
-                            </div>
-                            <div class="col-2 align-self-end">
-                                <div class="mb-3">
-                                    <input type="submit" class="form-control bg-warning text-gray-100" value="Agregar" id ="add" name = "action">
-                                   
-                                </div>
-                                 
                             </div>
                         </div>
                         <% if(msgAddOK != null){
@@ -312,9 +284,10 @@
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
-                                                    	<th class="col-3">Pos</th>
                                                     	<th class="d-none">ID</th>
+                                                    	<th class="d-none">Cliente</th>
                                                         <th class="col-3">Articulo</th>
+                                                        <th class="col-3">Deposito</th>
                                                         <th class="col-2 text-right">Cantidad</th>
                                                         <th class="col-2 text-right">Precio Unitario</th>
                                                         <th class="col-2 text-right">Total</th>
@@ -327,7 +300,6 @@
                                                 <% if(products_selected != null){ %>
                                                 	<% for (Products product: products_selected ){ %>
                                                 	<tr>
-                                                		<td class="col-3">  <input type="hidden" class="form-control text-right font-weight-bold" name="deleteItem" value= "<%= product.getPos() %>"> <%= product.getPos() %></td>
                                                 		<td class="d-none"><%= product.getId() %></td>
                                                         <td class="col-3"><%= product.getDetail() %></td>
                                                         <td class="col-2 text-right"><%= product.getStock() %></td>
@@ -353,13 +325,6 @@
                                 <div class="mb-3">
                                     <label for="" class="pr-4">Total</label>
                                     <input type="number" class="form-control text-right font-weight-bold" name="total" value = "<%= total %>" disabled>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-end">
-                            <div class="col-2 text-right">
-                                <div class="mb-3">
-                                    <input type="submit" value="Realizar Venta" class="form-control bg-warning text-gray-100" id="submit" name="action">
                                 </div>
                             </div>
                         </div>

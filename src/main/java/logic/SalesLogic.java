@@ -1,5 +1,6 @@
 package logic;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import data.DataCustomers;
@@ -107,8 +108,16 @@ public class SalesLogic {
 			
 			i++;
 		}
+
+	}
+	
+	public void listSales(String customer, String store, LocalDateTime desde, LocalDateTime hasta) {
 		
+	//	dataSales.listSales(customer, store, desde, hasta);
+		if(customer.isEmpty()) customer = null;
+		if(store.isEmpty()) store = null;
 		
+		System.out.println(customer);
 		
 	}
 	
