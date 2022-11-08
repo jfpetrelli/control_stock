@@ -5,7 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
+import entities.ListSales;
 import entities.Sales;
 import entities.Stores;
 
@@ -143,10 +145,12 @@ public class DataSales {
 		return 0.0;
 	}
 	
-	public ResultSet listSales(String customer, String store, LocalDateTime desde, LocalDateTime hasta) {
+	public ArrayList<ListSales> listSales(String customer, String store, LocalDateTime desde, LocalDateTime hasta) {
 		
 		Statement stmt=null;
 		ResultSet rs=null;
+		ArrayList<ListSales> ls = new ArrayList<>();
+
 		try {
 			
 			String sql = "SELECT s.id "
@@ -171,6 +175,22 @@ public class DataSales {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
 			rs= stmt.executeQuery(sql);
 			
+			System.out.println(sql);
+			while(rs.next()) {
+				
+				ListSales l = new ListSales();
+				
+				l.setId(rs.getInt("id"));
+				l.setCustomer(rs.getString("name"));
+				l.setProduct(rs.getString("detail"));
+				l.setStore(rs.getString("storage"));
+				l.setQuantity(rs.getInt("quantity"));
+				l.setUnit_price(rs.getDouble("unit_price"));
+				l.setPrice(rs.getDouble("price"));
+				
+				ls.add(l);
+				
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -183,6 +203,6 @@ public class DataSales {
 				e.printStackTrace();
 			}
 		}		
-		return rs;
+		return ls;
 	}
 }

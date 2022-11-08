@@ -33,8 +33,6 @@ public class ListSale extends HttpServlet {
 	ArrayList<Customers> customers = new ArrayList<>();
 	StoresLogic storesLogic = new StoresLogic();
 	ArrayList<Stores> stores = new ArrayList<>();
-	ProductsLogic productsLogic = new ProductsLogic();
-	ArrayList<Products> products = new ArrayList<>();
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 	LocalDateTime datetime = LocalDateTime.now();
 	SalesLogic salesLogic = new SalesLogic();
@@ -82,17 +80,28 @@ public class ListSale extends HttpServlet {
 
 
 		if(action != null) {
+			
+			
 
 			 String desde_datetime = request.getParameter("desde_datetime");
 			 String hasta_datetime = request.getParameter("hasta_datetime");
 			 
+			if(desde_datetime.isEmpty() || hasta_datetime.isEmpty()) {
+				
+				request.setAttribute("msgAddOK", "Ingrese fecha");
+	        	request.getRequestDispatcher("WEB-INF/listSale.jsp").forward(request, response);
+				return;
+			}
 			if(action.equals("Filtrar")) {
 				
 				 store_id = request.getParameter("store");
 				 customer_id = request.getParameter("customer");
+				 request.setAttribute("customer", customer_id);
+				 request.setAttribute("store", store_id);
+				 request.setAttribute("desde_datetime", desde_datetime);
+				 request.setAttribute("hasta_datetime", hasta_datetime);
 				 
-				 ResultSet rs = salesLogic.listSales(customer_id,store_id, LocalDateTime.parse(desde_datetime, formatter),LocalDateTime.parse(hasta_datetime, formatter));
-				 request.setAttribute("rs", rs);
+				 request.setAttribute("ls", salesLogic.listSales(customer_id,store_id, LocalDateTime.parse(desde_datetime, formatter),LocalDateTime.parse(hasta_datetime, formatter)));
 			}
 			
 		       

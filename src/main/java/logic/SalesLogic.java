@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import data.DataCustomers;
 import data.DataSales;
+import entities.ListSales;
 import entities.Products;
 import entities.Sales;
 import logic.ProductsLogic;;
@@ -112,15 +113,14 @@ public class SalesLogic {
 
 	}
 	
-	public ResultSet listSales(String customer, String store, LocalDateTime desde, LocalDateTime hasta) {
+	public ArrayList<ListSales> listSales(String customer, String store, LocalDateTime desde, LocalDateTime hasta) {
 		
 		
 		if(customer.isEmpty()) customer = null;
 		if(store.isEmpty()) store = null;
 		
-		ResultSet rs = dataSales.listSales(customer, store, desde, hasta);
+		return dataSales.listSales(customer, store, desde, hasta);
 		
-		return rs;
 		
 	}
 	

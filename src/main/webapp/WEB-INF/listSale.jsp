@@ -2,9 +2,9 @@
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
 <%@page import="entities.Customers"%>
 <%@page import="entities.Stores"%>
-<%@page import="entities.Products"%>
+<%@page import="entities.ListSales"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="java.sql.ResultSet"%>
+
 
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -51,9 +51,17 @@
 		
 		String msgAddOK = (String) request.getAttribute("msgAddOK");
 		
-		Double total = (Double) request.getAttribute("total");
 		
-	
+		ArrayList<ListSales> ls = (ArrayList) request.getAttribute("ls");
+		
+		Double total = 0.0;
+		if(ls != null){
+			for(ListSales l: ls){
+			
+				total += l.getPrice()*l.getQuantity();
+			
+			}
+		}
     	
     %>
 
@@ -286,20 +294,30 @@
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
-                                                    	<th class="d-none">Venta</th>
-                                                    	<th class="d-none">Cliente</th>
-                                                    	<th class="col-3">Deposito</th>
-                                                        <th class="col-3">Articulo</th> 
-                                                        <th class="col-2 text-right">Cantidad</th>
-                                                        <th class="col-2 text-right">Precio Unitario</th>
-                                                        <th class="col-2 text-right">Total</th>
-                                                        <th class="col-2 text-right">
-                                                         	
-                                    					</th>
+                                                    	<th class="col-1">Venta</th>
+                                                    	<th class="col-2">Cliente</th>
+                                                    	<th class="col-2">Deposito</th>
+                                                        <th class="col-2">Articulo</th> 
+                                                        <th class="col-1 text-right">Cantidad</th>
+                                                        <th class="col-1 text-right">Precio Unitario</th>
+                                                        <th class="col-1 text-right">Total</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                             
+                                              <% if(ls != null){ %>
+                                                	<% for (ListSales l: ls ){ %>
+                                                	<tr>
+                                                		
+                                                		<td class="col-1"><%= l.getId() %></td>
+                                                        <td class="col-2"><%= l.getCustomer() %></td>
+                                                        <td class="col-2 text-right"><%= l.getStore() %></td>
+                                                        <td class="col-2 text-right"><%= l.getProduct() %></td>
+                                                        <td class="col-1 text-right"><%= l.getQuantity() %></td>
+                                                        <td class="col-1 text-right"><%= l.getUnit_price() %></td>
+                                                        <td class="col-1 text-right"><%= l.getPrice() * l.getQuantity() %></td>
+                                                	</tr>
+                                                	<% } %>
+                                                <% }%>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -310,8 +328,12 @@
                         <div class="row justify-content-end">
                             <div class="col-2 text-right">
                                 <div class="mb-3">
+                                
+                                 <% if(ls != null){ %>
                                     <label for="" class="pr-4">Total</label>
                                     <input type="number" class="form-control text-right font-weight-bold" name="total" value = "<%= total %>" disabled>
+                                    
+                                                                                    <% }%>
                                 </div>
                             </div>
                         </div>
