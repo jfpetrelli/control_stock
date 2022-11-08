@@ -1,5 +1,6 @@
 package logic;
 
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -111,13 +112,15 @@ public class SalesLogic {
 
 	}
 	
-	public void listSales(String customer, String store, LocalDateTime desde, LocalDateTime hasta) {
+	public ResultSet listSales(String customer, String store, LocalDateTime desde, LocalDateTime hasta) {
 		
 		
 		if(customer.isEmpty()) customer = null;
 		if(store.isEmpty()) store = null;
 		
-		dataSales.listSales(customer, store, desde, hasta);
+		ResultSet rs = dataSales.listSales(customer, store, desde, hasta);
+		
+		return rs;
 		
 	}
 	

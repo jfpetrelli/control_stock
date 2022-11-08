@@ -143,16 +143,35 @@ public class DataSales {
 		return 0.0;
 	}
 	
-	public void listSales(String customer, String store, LocalDateTime desde, LocalDateTime hasta) {
+	public ResultSet listSales(String customer, String store, LocalDateTime desde, LocalDateTime hasta) {
 		
 		Statement stmt=null;
 		ResultSet rs=null;
 		try {
-			stmt= DbConnector.getInstancia().getConn().createStatement();
-			rs= stmt.executeQuery("select stock from products_stores where product_id =" + product + " and store_id = " + store);
 			
-			rs.next();
-			return rs.getDouble("stock");
+			String sql = "SELECT s.id "
+					+ "	,c.name "
+					+ "	,p.detail "
+					+ "	,sto.detail AS storage "
+					+ "	,loc.city "
+					+ "	,sd.quantity "
+					+ "	,p.price AS unit_price "
+					+ "	,sd.quantity * p.price AS price "
+					+ "FROM control_stock.sales s "
+					+ "INNER JOIN control_stock.sales_details sd ON s.id = sd.sale_id "
+					+ "INNER JOIN control_stock.customers c ON s.customer = c.id "
+					+ "LEFT JOIN control_stock.products p ON sd.product_id = p.id "
+					+ "LEFT JOIN control_stock.stores sto ON s.store = sto.id "
+					+ "LEFT JOIN control_stock.locations loc ON loc.id = sto.location_id "
+					+ "WHERE 1 = 1 "
+					+ " AND s.date between '" + desde + "' and '" + hasta + "' "
+					+ (customer == null ? "" : " AND s.customer = " + customer)
+					+ (store == null ? "" : " AND s.store = " + store);
+			
+			stmt= DbConnector.getInstancia().getConn().createStatement();
+			rs= stmt.executeQuery(sql);
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -164,6 +183,6 @@ public class DataSales {
 				e.printStackTrace();
 			}
 		}		
-		return 0.0;
+		return rs;
 	}
 }

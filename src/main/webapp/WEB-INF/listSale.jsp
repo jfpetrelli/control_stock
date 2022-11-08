@@ -4,6 +4,8 @@
 <%@page import="entities.Stores"%>
 <%@page import="entities.Products"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.sql.ResultSet"%>
+
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -31,9 +33,7 @@
     <%
     	ArrayList<Customers> customers = (ArrayList) request.getAttribute("customers");
     	ArrayList<Stores> stores = (ArrayList) request.getAttribute("stores");
-    	ArrayList<Products> products = (ArrayList) request.getAttribute("products");	
-
-    	ArrayList<Products> products_selected = (ArrayList) request.getAttribute("products_selected");	
+  
 
 		String customer_selected = new String();
 		String store_selected = new String();
@@ -52,6 +52,8 @@
 		String msgAddOK = (String) request.getAttribute("msgAddOK");
 		
 		Double total = (Double) request.getAttribute("total");
+		
+	
     	
     %>
 
@@ -284,10 +286,10 @@
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
-                                                    	<th class="d-none">ID</th>
+                                                    	<th class="d-none">Venta</th>
                                                     	<th class="d-none">Cliente</th>
-                                                        <th class="col-3">Articulo</th>
-                                                        <th class="col-3">Deposito</th>
+                                                    	<th class="col-3">Deposito</th>
+                                                        <th class="col-3">Articulo</th> 
                                                         <th class="col-2 text-right">Cantidad</th>
                                                         <th class="col-2 text-right">Precio Unitario</th>
                                                         <th class="col-2 text-right">Total</th>
@@ -297,22 +299,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                <% if(products_selected != null){ %>
-                                                	<% for (Products product: products_selected ){ %>
-                                                	<tr>
-                                                		<td class="d-none"><%= product.getId() %></td>
-                                                        <td class="col-3"><%= product.getDetail() %></td>
-                                                        <td class="col-2 text-right"><%= product.getStock() %></td>
-                                                        <td class="col-2 text-right"><%= product.getPrice() %></td>
-                                                        <td class="col-2 text-right"><%= product.getPrice() * product.getStock() %></td>
-                                                        <td class="col-2 text-right">
-                    					 				<button type="submit" name="action" value="Eliminar" class="btn btn-danger btn-circle btn-sm">
-  																<i class="fas fa-trash"></i>
-														</button>                               								
-                                        				</td>
-                                                	</tr>
-                                                	<% } %>
-                                                <% }%>
+                                             
                                                 </tbody>
                                             </table>
                                         </div>

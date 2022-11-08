@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -90,8 +91,8 @@ public class ListSale extends HttpServlet {
 				 store_id = request.getParameter("store");
 				 customer_id = request.getParameter("customer");
 				 
-				 salesLogic.listSales(customer_id,store_id, LocalDateTime.parse(desde_datetime, formatter),LocalDateTime.parse(hasta_datetime, formatter));
-
+				 ResultSet rs = salesLogic.listSales(customer_id,store_id, LocalDateTime.parse(desde_datetime, formatter),LocalDateTime.parse(hasta_datetime, formatter));
+				 request.setAttribute("rs", rs);
 			}
 			
 		       
