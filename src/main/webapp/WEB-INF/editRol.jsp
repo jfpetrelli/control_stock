@@ -90,6 +90,12 @@
                     <i class = "fas fa-user-cog"></i>
                     <span>Localidades</span>
                 </a>
+			</li>
+			<li class="nav-item active">
+                <a class="nav-link" href="User">
+                    <i class = "fas fa-user-cog"></i>
+                    <span>Usuarios</span>
+                </a>
 			</li>						
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

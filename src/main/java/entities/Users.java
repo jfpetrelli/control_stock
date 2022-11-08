@@ -3,12 +3,12 @@ package entities;
 public class Users {
 
 	private int id;
-	private int id_rol;
 	private String username;
 	private String name;
 	private String lastname;
 	private String email;
 	private String password;
+	private Roles rol;
 	
 	public int getId() {
 		return id;
@@ -16,11 +16,11 @@ public class Users {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getId_rol() {
-		return id_rol;
+	public Roles getRol() {
+		return this.rol;
 	}
-	public void setId_rol(int id_rol) {
-		this.id_rol = id_rol;
+	public void setRol(Roles rol) {
+		this.rol = rol;
 	}
 	public String getUsername() {
 		return username;

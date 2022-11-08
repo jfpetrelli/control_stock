@@ -1,6 +1,7 @@
-
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
-<%@page import="entities.Customers"%>
+<%@page import="entities.Users"%>
+<%@page import="logic.RolesLogic"%>
+<%@page import="entities.Roles"%>
 <%@page import="java.util.ArrayList"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -16,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Control Stock</title>
+    <title>Sistema de Control de Stock</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -26,8 +27,12 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <%    	
-		//Customers customer = (Customers) request.getAttribute("customer");
+    <%
+    
+    		
+    		ArrayList<Users> users = (ArrayList) request.getAttribute("users");
+
+    	
     %>
 
 </head>
@@ -52,7 +57,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-             <li class="nav-item active">
+            <li class="nav-item active">
                 <a class="nav-link" href="Sale">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Venta</span>
@@ -99,8 +104,8 @@
                     <i class = "fas fa-user-cog"></i>
                     <span>Usuarios</span>
                 </a>
-			</li>	
-									
+			</li>							
+							
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -196,46 +201,80 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Clientes</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Usuarios</h1>
                     </div>
+                    <div class="row">
+                        	<div class="col-2 align-self-end">
+                                <div class="mb-3">
+									<a  class="btn btn-primary" href="NewUser">Dar de Alta</a>
+                                </div>
+                            </div>                        	                        
+                    </div>
+                    <!-- Content Row -->
+                      
 
-					<div class="row">
-                            <div class="col-10 text-center">
-                            	<h4 >Alta de Cliente:</h4>
-                    		</div>	        	
-                    </div>     	
-					<form action = "NewCustomer" method = "POST">
-					  <div class="form-group">
-					    <label for="nameCustomer">Nombre</label>
-					    <input type="text" class="form-control" name="name" aria-describedby="textHelp" placeholder="Ej: Juan" pattern="[a-zA-Z ]{3,30}" required>
-					  </div>
-					  <div class="form-group">
-					    <label for="surnameCustomer">Apellido</label>
-					    <input type="text" class="form-control" name="surname" aria-describedby="textHelp" placeholder="Ej: Perez" pattern="[a-zA-Z ]{3,30}" required>
-					  </div>
-					  <div class="form-group">
-					    <label for="emailCustomer">Email</label>
-					    <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Ej: juanperez@gmail.com">
-					  </div>
-					  <div class="form-group">
-					    <label for="comercialNameCustomer">Empresa</label>
-					    <input type="text" class="form-control" name="comercialName" aria-describedby="textHelp" placeholder="Ej: Perez S.A.">
-					  </div>
-					  <div  class="row">
-							<div class="col-1">
-								<button type="submit" class="btn btn-primary">Aceptar</button> 																																					
-							</div>
-							<div class="col-2">
-								<a href="Customer" class="btn btn-info" role="button">Atras</a>
-							</div>		
-					  </div>																										
-					</form>                       		   
 
-                   
+                        <!-- Begin Page Content -->
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- DataTales Example -->
+                                <div class="card shadow mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="usersTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                    	<th class="col-1 text-center">Nombre</th>
+                                                    	<th class="col-1 text-center">Apellido</th>
+                                                    	<th class="col-1 text-center">Email</th>
+                                                        <th class="col-1 text-center">Usuario</th>
+                                                        <th class="col-1 text-center">Contraseña</th>
+                                                        <th class="col-1 text-center">Rol</th>
+                                                        <th colspan=2 class="col-6 text-center">Acciones</th> 
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbodyRoles">
+                                                <% for (Users user : users) {%>                                              
+                                                	<tr id="<%= user.getId() %>">
+                                                		<td class="col-1 text-center"><%= user.getName() %></td>
+                                                		<td class="col-1 text-center"><%= user.getLastname() %></td>
+                                                		<td class="col-1 text-center"><%= user.getEmail() %></td>
+                                                		<td class="col-1 text-center"><%= user.getUsername() %></td>
+                                                		<td class="col-1 text-center"><%= user.getPassword() %></td>
+                                                		<td class="col-1 text-center"><%= user.getRol().getType() %></td>
+                                                        <td class="col-3 ">
+															<div  class="row justify-content-md-center">
+																<div class="col-3">
+																	<form  action="EditUser" method="GET">
+																			<input type="hidden" name="user_id" value="<%= user.getId() %>">
+																			<input type="submit" class="btn btn-primary" value="Editar"> 																																					
+																	</form>	
+																			 	
+																	
+																</div>
+																<div class="col-3">
+																	<form  action="RemoveUser" method="POST">
+																			<input type="hidden" name="user_id"  value="<%= user.getId() %>">																		
+																			<input type="submit" class="btn btn-danger" value="Eliminar">																
+																	</form>	
+																</div>		
+															</div>																									
+														</td>												
+                                                    </tr>                                              		
+                                                <% } %>	
+                                                	
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+
+                     
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
 
@@ -249,7 +288,11 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    
 
+	
+	
+	
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -286,9 +329,6 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-    
 </body>
 
 </html>
-
-

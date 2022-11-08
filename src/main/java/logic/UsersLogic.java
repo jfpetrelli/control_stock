@@ -1,29 +1,36 @@
 package logic;
-import entities.Users;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import data.DataUsers;
+import entities.Users;
 
 
 public class UsersLogic {
 	
-	private DataUsers dataUsers;
-
-	public UsersLogic() {
-		dataUsers = new DataUsers();
+	DataUsers dataUser = new DataUsers();
+	
+	public ArrayList<Users> getAll() throws SQLException {
+		
+		return dataUser.readAll();
+	
 	}
 	
 	public void create(Users user) {
-		dataUsers.create(user);
-	}
-
-	public void edit() {
-		
+		dataUser.create(user);
 	}
 	
-	public void view() {
-		
+	public void remove(Users user) {
+		dataUser.remove(user);
 	}
 	
-	public void delete() {
-		
+	public void update(Users user) {
+		dataUser.update(user);
+	}
+	
+	public Users getById(Integer id) {
+		Users user = dataUser.getById(id);
+		return user;
 	}
 }

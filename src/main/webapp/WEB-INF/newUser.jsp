@@ -1,6 +1,6 @@
-
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
-<%@page import="entities.Customers"%>
+<%@page import="entities.Roles"%>
+<%@page import="entities.Users"%>
 <%@page import="java.util.ArrayList"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -26,8 +26,9 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <%    	
-		//Customers customer = (Customers) request.getAttribute("customer");
+    
+    <%
+    		ArrayList<Roles> roles = (ArrayList) request.getAttribute("roles");
     %>
 
 </head>
@@ -52,7 +53,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-             <li class="nav-item active">
+            <li class="nav-item active">
                 <a class="nav-link" href="Sale">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Venta</span>
@@ -99,8 +100,7 @@
                     <i class = "fas fa-user-cog"></i>
                     <span>Usuarios</span>
                 </a>
-			</li>	
-									
+			</li>							
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -196,37 +196,42 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Clientes</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Usuarios</h1>
                     </div>
 
 					<div class="row">
                             <div class="col-10 text-center">
-                            	<h4 >Alta de Cliente:</h4>
+                            	<h4 >Alta de Usuario:</h4>
                     		</div>	        	
                     </div>     	
-					<form action = "NewCustomer" method = "POST">
+					<form action = "NewUser" method = "POST">
 					  <div class="form-group">
-					    <label for="nameCustomer">Nombre</label>
-					    <input type="text" class="form-control" name="name" aria-describedby="textHelp" placeholder="Ej: Juan" pattern="[a-zA-Z ]{3,30}" required>
-					  </div>
-					  <div class="form-group">
-					    <label for="surnameCustomer">Apellido</label>
-					    <input type="text" class="form-control" name="surname" aria-describedby="textHelp" placeholder="Ej: Perez" pattern="[a-zA-Z ]{3,30}" required>
-					  </div>
-					  <div class="form-group">
-					    <label for="emailCustomer">Email</label>
-					    <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Ej: juanperez@gmail.com">
-					  </div>
-					  <div class="form-group">
-					    <label for="comercialNameCustomer">Empresa</label>
-					    <input type="text" class="form-control" name="comercialName" aria-describedby="textHelp" placeholder="Ej: Perez S.A.">
-					  </div>
+						<label for="nameUser">Nombre</label>
+							<input type="text" class="form-control" name="name" aria-describedby="textHelp" placeholder="Ej: Juan" required>
+						<label for="lastnameUser">Apellido</label>
+							<input type="text" class="form-control" name="lastname" aria-describedby="textHelp" placeholder="Ej: Perez" required>
+						<label for="emailUser">Email</label>
+							<input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Ej: juanperez@gmail.com">
+						<label for="usernameUser">Usuario</label>
+							<input type="text" class="form-control" name="username" aria-describedby="textHelp" placeholder="Ej: jperez48" required>
+						<label for="passwordUser">Contraseña</label>
+							<input type="text" class="form-control" name="password" aria-describedby="textHelp" placeholder="Ej: Asd123" required>
+						<label for="rolUser">Rol</label>
+							<select class="form-control" aria-label="Default select example" id="rol_id" name="rol_id">
+                                  		<% for (Roles rol : roles) {%>
+									  		<option 
+									  			value= "<%=rol.getId() %>"
+												selected= "<%=rol.getType()%>"
+									  		><%=rol.getType() %></option>
+									  	<% } %>
+							</select>
+					  	</div>
 					  <div  class="row">
 							<div class="col-1">
 								<button type="submit" class="btn btn-primary">Aceptar</button> 																																					
 							</div>
 							<div class="col-2">
-								<a href="Customer" class="btn btn-info" role="button">Atras</a>
+								<a href="User" class="btn btn-info" role="button">Atras</a>
 							</div>		
 					  </div>																										
 					</form>                       		   
@@ -290,5 +295,3 @@
 </body>
 
 </html>
-
-
