@@ -169,12 +169,13 @@ public class Sale extends HttpServlet {
 				int pos = Integer.parseInt(request.getParameter("deleteItem"));
 				salesLogic.deleteItem(pos, sale);
 				
+				
 				 request.setAttribute("products", products);
 			     request.setAttribute("customer", customer_id);
 			     request.setAttribute("store", store_id);
 			     request.setAttribute("datetime", datetime);
 			     request.setAttribute("products_selected", sale.getProducts());
-			     request.setAttribute("total", total);
+			     request.setAttribute("total", sale.getTotal());
 				
 			}
 		       

@@ -327,16 +327,20 @@
                                                 <% if(products_selected != null){ %>
                                                 	<% for (Products product: products_selected ){ %>
                                                 	<tr>
-                                                		<td class="col-3">  <input type="hidden" class="form-control text-right font-weight-bold" name="deleteItem" value= "<%= product.getPos() %>"> <%= product.getPos() %></td>
+                                                		<td class="col-3">   <%= product.getPos() %></td>
                                                 		<td class="d-none"><%= product.getId() %></td>
                                                         <td class="col-3"><%= product.getDetail() %></td>
                                                         <td class="col-2 text-right"><%= product.getStock() %></td>
                                                         <td class="col-2 text-right"><%= product.getPrice() %></td>
                                                         <td class="col-2 text-right"><%= product.getPrice() * product.getStock() %></td>
                                                         <td class="col-2 text-right">
-                    					 				<button type="submit" name="action" value="Eliminar" class="btn btn-danger btn-circle btn-sm">
+                                                        <form action="Sale" method ="POST" id="deleteItem">
+                                                        		<input type="hidden" class="form-control text-right font-weight-bold" name="deleteItem" value= "<%= product.getPos() %>">	
+                                                                <button type="submit" name="action" value="Eliminar" class="btn btn-danger btn-circle btn-sm">
   																<i class="fas fa-trash"></i>
-														</button>                               								
+														</button> 
+                                                        </form>
+                              								
                                         				</td>
                                                 	</tr>
                                                 	<% } %>
