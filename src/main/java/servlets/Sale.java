@@ -166,15 +166,13 @@ public class Sale extends HttpServlet {
 			
 			if(action.equals("Eliminar")) {
 				
-				//int pos = Integer.parseInt(request.getParameter("Eliminar"));
-				System.out.println( "Boton " + request.getParameter("Eliminar"));
-				//salesLogic.deleteItem(pos, sale);
+				int pos = Integer.parseInt(request.getParameter("deleteItem"));
+				salesLogic.deleteItem(pos, sale);
 				
 				 request.setAttribute("products", products);
 			     request.setAttribute("customer", customer_id);
 			     request.setAttribute("store", store_id);
 			     request.setAttribute("datetime", datetime);
-			     request.setAttribute("products_selected", sale.getProducts());
 			     request.setAttribute("products_selected", sale.getProducts());
 			     request.setAttribute("total", total);
 				
