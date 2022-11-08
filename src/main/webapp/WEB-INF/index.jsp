@@ -85,11 +85,11 @@
                     <i class = "fas fa-user-cog"></i>
                     <span>Localidades</span>
                 </a>
-			</li>
+			</li>	
 			<li class="nav-item active">
-                <a class="nav-link" href="User">
+                <a class="nav-link" href="ListSale">
                     <i class = "fas fa-user-cog"></i>
-                    <span>Usuarios</span>
+                    <span>Listado de Ventas</span>
                 </a>
 			</li>						
             <!-- Divider -->

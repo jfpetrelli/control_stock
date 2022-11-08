@@ -51,7 +51,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-               <li class="nav-item active">
+            <li class="nav-item active">
                 <a class="nav-link" href="Sale">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Venta</span>
@@ -92,7 +92,13 @@
                     <i class = "fas fa-user-cog"></i>
                     <span>Localidades</span>
                 </a>
-			</li>					
+			</li>	
+			<li class="nav-item active">
+                <a class="nav-link" href="ListSale">
+                    <i class = "fas fa-user-cog"></i>
+                    <span>Listado de Ventas</span>
+                </a>
+			</li>						
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
