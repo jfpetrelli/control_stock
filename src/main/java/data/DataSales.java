@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 
 import entities.Sales;
 import entities.Stores;
@@ -119,6 +120,30 @@ public class DataSales {
 	}
 	
 	public double getStock(int product, int store) {
+		
+		Statement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt= DbConnector.getInstancia().getConn().createStatement();
+			rs= stmt.executeQuery("select stock from products_stores where product_id =" + product + " and store_id = " + store);
+			
+			rs.next();
+			return rs.getDouble("stock");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		return 0.0;
+	}
+	
+	public void listSales(String customer, String store, LocalDateTime desde, LocalDateTime hasta) {
 		
 		Statement stmt=null;
 		ResultSet rs=null;
