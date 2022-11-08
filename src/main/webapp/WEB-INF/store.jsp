@@ -40,7 +40,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
+       <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-warning sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -95,6 +95,12 @@
                 <a class="nav-link" href="LocationList">
                     <i class = "fas fa-user-cog"></i>
                     <span>Localidades</span>
+                </a>
+			</li>	
+			<li class="nav-item active">
+                <a class="nav-link" href="ListSale">
+                    <i class = "fas fa-user-cog"></i>
+                    <span>Listado de Ventas</span>
                 </a>
 			</li>						
             <!-- Divider -->
