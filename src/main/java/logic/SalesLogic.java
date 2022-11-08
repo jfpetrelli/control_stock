@@ -13,7 +13,7 @@ public class SalesLogic {
 
 	private DataSales dataSales = new DataSales();
 	private ProductsLogic productsLogic = new ProductsLogic();
-	private int pos=0;
+	private int pos=1;
 	
 	
 	public static String quantityAddOK(ArrayList<Products> products,String quantity, String id_product) {
