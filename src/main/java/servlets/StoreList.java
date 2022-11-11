@@ -15,7 +15,7 @@ import data.DataStores;
 /**
  * Servlet implementation class Stores
  */
-@WebServlet("/Stores")
+@WebServlet("/StoreList")
 public class StoreList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	DataStores dataStore = new DataStores();
