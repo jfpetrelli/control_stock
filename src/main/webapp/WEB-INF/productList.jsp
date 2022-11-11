@@ -55,7 +55,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+             <li class="nav-item active">
                 <a class="nav-link" href="Sale">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Venta</span>
@@ -74,15 +74,21 @@
                 </a>
 			</li>
 			 <li class="nav-item active">
-                <a class="nav-link" href="Stock">
+                <a class="nav-link" href="StoreList">
                     <i class = "fas fa-clipboard-list"></i>
-                    <span>Stock</span>
+                    <span>Depositos</span>
                 </a>
 			</li>
 			<li class="nav-item active">
                 <a class="nav-link" href="Product">
                     <i class = "fab fa-product-hunt"></i>
                     <span>Productos</span>
+                </a>
+			</li>
+			<li class="nav-item active">
+                <a class="nav-link" href="User">
+                    <i class = "fa fa-users"></i>
+                    <span>Usuarios</span>
                 </a>
 			</li>
 			<li class="nav-item active">
@@ -102,7 +108,7 @@
                     <i class = "fas fa-user-cog"></i>
                     <span>Listado de Ventas</span>
                 </a>
-			</li>						
+			</li>					
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
