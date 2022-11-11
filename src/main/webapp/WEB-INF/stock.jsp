@@ -202,6 +202,12 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h2 class="h5 mb-0 text-gray-800">Dirección: <%= store.getAddress() %></h2>
                     </div>
+                    
+					<form id="" action="AddProductToStore" method="GET">                                                   																		
+						<button type="submit"  class="form-control bg-warning text-gray-100" id="submit" name="action">Agregar producto </button>    
+						<input type="hidden" name="store" value="<%=store.getId() %>">
+ 
+                    </form>
 
                         <!-- Begin Page Content -->
                         <div class="row">
