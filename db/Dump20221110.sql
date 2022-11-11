@@ -55,7 +55,7 @@ CREATE TABLE `locations` (
   `state` varchar(45) DEFAULT NULL,
   `zipcode` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `locations` (
 
 LOCK TABLES `locations` WRITE;
 /*!40000 ALTER TABLE `locations` DISABLE KEYS */;
-INSERT INTO `locations` VALUES (2,'Baigorria City','Santa Fe','2152'),(3,'Funes','Santa Fe','2132'),(9,'Rosario','Santa Fe','2000');
+INSERT INTO `locations` VALUES (11,'Funes','Santa Fe','2132'),(12,'Rosario','Santa Fe','2000');
 /*!40000 ALTER TABLE `locations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,7 +117,7 @@ CREATE TABLE `products_stores` (
 
 LOCK TABLES `products_stores` WRITE;
 /*!40000 ALTER TABLE `products_stores` DISABLE KEYS */;
-INSERT INTO `products_stores` VALUES (2,2,111),(2,3,55),(3,2,555),(3,3,55),(4,1,30),(4,3,33),(5,1,45),(5,3,55);
+INSERT INTO `products_stores` VALUES (2,2,111),(2,3,55),(2,20,0),(3,2,555),(3,3,55),(3,20,2),(4,1,30),(4,3,33),(4,20,3),(5,1,45),(5,3,55),(5,20,44),(46,20,5);
 /*!40000 ALTER TABLE `products_stores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,8 +217,10 @@ CREATE TABLE `stores` (
   `detail` varchar(45) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
   `location_id` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`),
+  KEY `FK_Location_idx` (`location_id`),
+  CONSTRAINT `FK_Location` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,7 +229,7 @@ CREATE TABLE `stores` (
 
 LOCK TABLES `stores` WRITE;
 /*!40000 ALTER TABLE `stores` DISABLE KEYS */;
-INSERT INTO `stores` VALUES (1,'Deposito 1','Direcciòn 1',9),(2,'Deposito 2','Direceción 2',2),(3,'Deposito 3','Direccion 3',3);
+INSERT INTO `stores` VALUES (20,'Deposito 1','Uno',11),(21,'Dos','Depo 2',12);
 /*!40000 ALTER TABLE `stores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -270,4 +272,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-10 21:17:05
+-- Dump completed on 2022-11-10 22:14:19
