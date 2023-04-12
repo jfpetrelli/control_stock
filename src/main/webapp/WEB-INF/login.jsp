@@ -1,4 +1,10 @@
+<%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
+<%@page import="entities.Roles"%>
+<%@page import="entities.Users"%>
+<%@page import="java.util.ArrayList"%>
 
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +15,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta language="java">
 
     <title>Login</title>
 
@@ -22,6 +27,11 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     
+    <%    	
+		Users user = (Users) request.getAttribute("user");
+    %>
+    
+
 </head>
 
 <body class="bg-gradient-primary">
@@ -43,11 +53,11 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Bienvenido!</h1>
                                     </div>
-                                    <form class="user" method="POST" action= "Login">
+                                    <form class="user" method="POST" action= "Main">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" name="email"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Ingresa tu correo electronico...">
+                                                placeholder="Enter Email Address...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user" name="password"
@@ -63,7 +73,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Olvidaste tu contraseÃ±a?</a>
+                                        <a class="small" href="forgot-password.html">Olvidaste tu contraseña?</a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="register.html">Crea una cuenta!</a>

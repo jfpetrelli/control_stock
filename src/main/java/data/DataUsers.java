@@ -188,4 +188,43 @@ public class DataUsers {
             }
 		}
 	}
+	
+	public Users Validar(String email,String password) {
+		Users user=null;
+		DataRoles dataRoles = new DataRoles();
+		
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select * from users where mail = ? and password = ?"
+					);
+			stmt.setString(1, email);
+			stmt.setString(2,password);
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()) {
+				user = new Users();
+				user.setId(rs.getInt("id"));
+				user.setUsername(rs.getString("user_name"));
+				user.setPassword(rs.getString("password"));
+				user.setName(rs.getString("name"));
+				user.setLastname(rs.getString("surname"));
+				user.setEmail(rs.getString("mail"));
+				user.setRol(dataRoles.getById(rs.getInt("rol")));
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		return user;
+	}
+	
 }

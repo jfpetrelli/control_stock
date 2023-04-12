@@ -1,27 +1,31 @@
 package servlets;
 
 import java.io.IOException;
+
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import logic.UsersLogic;
+
 import entities.Users;
+import logic.UsersLogic;
+
 /**
- * Servlet implementation class Main
+ * Servlet implementation class Login
  */
-@WebServlet("/Main")
-public class Main extends HttpServlet {
+@WebServlet("/Login")
+public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	UsersLogic userLogic = new UsersLogic();
-	Users user = new Users();
-       
+	Users user = new Users();   
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Main() {
+    public Login() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,7 +35,7 @@ public class Main extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
+		request.getRequestDispatcher("login.html").forward(request, response);
 	}
 
 	/**
@@ -39,7 +43,31 @@ public class Main extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request,response);
+		String action = request.getParameter("action");
+		
+		if(action.equalsIgnoreCase("Ingresar")) {
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
+			
+			
+			user = userLogic.Validar(email, password);
+			
+			String rol = user.getRol().getType();
+			
+			if(user!=null) {
+				HttpSession sesion = request.getSession();
+				sesion.setAttribute("user", user);
+				sesion.setAttribute("pass", password);
+				sesion.setAttribute("rol", rol);
+				
+				request.setAttribute("user", user);
+				request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
+			}
+			else {
+				response.sendRedirect("/control_stock/404.html");
+				return;
+				}
+		}
 	}
 
 }

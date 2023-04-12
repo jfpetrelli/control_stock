@@ -33,4 +33,8 @@ public class UsersLogic {
 		Users user = dataUser.getById(id);
 		return user;
 	}
+	
+	public Users Validar(String email, String password) {
+		return dataUser.Validar(email,password);
+	}
 }
