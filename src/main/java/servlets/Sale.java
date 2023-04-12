@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import entities.Customers;
 import entities.Products;
@@ -19,6 +21,7 @@ import logic.CustomersLogic;
 import logic.ProductsLogic;
 import logic.SalesLogic;
 import logic.StoresLogic;
+import entities.Users;
 
 /**
  * Servlet implementation class Sale
@@ -61,6 +64,11 @@ public class Sale extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession sesion = request.getSession();
+		Users user = (Users) sesion.getAttribute("usuario");
+		
+		request.setAttribute("tipoRol", user.getRol().getType());
+		request.setAttribute("nombreUsuario", user.getName());
 		
 		if(customers == null || stores == null) {
 			

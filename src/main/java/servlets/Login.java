@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import entities.Users;
 import logic.UsersLogic;
+import entities.Roles;
+import logic.RolesLogic;
 
 /**
  * Servlet implementation class Login
@@ -21,7 +23,9 @@ import logic.UsersLogic;
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	UsersLogic userLogic = new UsersLogic();
-	Users user = new Users();   
+	Users user = new Users();
+	RolesLogic rolLogic = new RolesLogic();
+	Roles rol = new Roles();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -51,16 +55,19 @@ public class Login extends HttpServlet {
 			
 			
 			user = userLogic.Validar(email, password);
-			
-			String rol = user.getRol().getType();
+			//Recupero el rol
+		
 			
 			if(user!=null) {
-				HttpSession sesion = request.getSession();
-				sesion.setAttribute("user", user);
-				sesion.setAttribute("pass", password);
-				sesion.setAttribute("rol", rol);
 				
-				request.setAttribute("user", user);
+				
+				HttpSession sesion = request.getSession();
+				sesion.setAttribute("usuario", user);
+				sesion.setAttribute("nombreUsario", user.getName());
+				sesion.setAttribute("tipoRol", user.getRol().getType());
+				
+				request.setAttribute("nombreUsuario", user.getName());
+				request.setAttribute("tipoRol", user.getRol().getType());
 				request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
 			}
 			else {

@@ -29,6 +29,8 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <%
+    	String nombreUsuario = (String) request.getAttribute("nombreUsuario");
+
     	ArrayList<Customers> customers = (ArrayList) request.getAttribute("customers");
     	ArrayList<Stores> stores = (ArrayList) request.getAttribute("stores");
     	ArrayList<Products> products = (ArrayList) request.getAttribute("products");	
@@ -73,6 +75,11 @@
                 <div class="sidebar-brand-text mx-3">Control Stock</div>
             </a>
 
+             <%    	
+					String tipoRol = (String) request.getAttribute("tipoRol");
+    				if(tipoRol.equalsIgnoreCase("Vendedor"))
+    		{%>
+
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
@@ -82,7 +89,17 @@
                     <i class="fas fa-shopping-cart"></i>
                     <span>Venta</span>
                 </a>
-            </li>
+             <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">    
+            </li><%}
+    					else{%>
+    		<li class="nav-item active">
+                <a class="nav-link" href="Sale">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Venta</span>
+                </a>
+            </li>			
+            
             <li class="nav-item active">
                 <a class="nav-link" href="Customer">
                     <i class="fas fa-address-book"></i>
@@ -133,6 +150,7 @@
 			</li>						
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+            <%}%>
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -189,7 +207,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=nombreUsuario%></span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
