@@ -95,8 +95,10 @@ public class SalesLogic {
 
 	}
 	
-	public void deleteItem(int pos, Sales sale) {
+	public void deleteItem(int pos, Sales sale, ArrayList<Products> products_list) {
 		
+		int id =0 ;
+		double quantity = 0;
 
 		ArrayList<Products> products = sale.getProducts();
 		int i=0;
@@ -105,7 +107,18 @@ public class SalesLogic {
 			if(prod.getPos() == pos) {
 				
 				sale.getProducts().remove(i);
-				return;
+				id = prod.getId();
+				quantity = prod.getStock();
+				break;
+			}
+			
+			i++;
+		}
+		for(Products prod: products_list) {
+			
+			if(prod.getId() == id) {
+				
+				prod.setStock(prod.getStock() + quantity);
 			}
 			
 			i++;

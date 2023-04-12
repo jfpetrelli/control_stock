@@ -318,7 +318,7 @@
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
-                                                    	<th class="col-3">Pos</th>
+                                                    	<th class="d-none">Pos</th>
                                                     	<th class="d-none">ID</th>
                                                         <th class="col-3">Articulo</th>
                                                         <th class="col-2 text-right">Cantidad</th>
@@ -333,7 +333,7 @@
                                                 <% if(products_selected != null){ %>
                                                 	<% for (Products product: products_selected ){ %>
                                                 	<tr>
-                                                		<td class="col-3">   <%= product.getPos() %></td>
+                                                		<td class="d-none">   <%= product.getPos() %></td>
                                                 		<td class="d-none"><%= product.getId() %></td>
                                                         <td class="col-3"><%= product.getDetail() %></td>
                                                         <td class="col-2 text-right"><%= product.getStock() %></td>

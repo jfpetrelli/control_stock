@@ -167,9 +167,7 @@ public class Sale extends HttpServlet {
 			if(action.equals("Eliminar")) {
 				
 				int pos = Integer.parseInt(request.getParameter("deleteItem"));
-				salesLogic.deleteItem(pos, sale);
-				
-				
+				salesLogic.deleteItem(pos, sale, products);
 				 request.setAttribute("products", products);
 			     request.setAttribute("customer", customer_id);
 			     request.setAttribute("store", store_id);

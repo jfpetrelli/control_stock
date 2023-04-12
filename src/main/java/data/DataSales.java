@@ -175,7 +175,6 @@ public class DataSales {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
 			rs= stmt.executeQuery(sql);
 			
-			System.out.println(sql);
 			while(rs.next()) {
 				
 				ListSales l = new ListSales();
