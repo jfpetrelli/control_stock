@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import logic.UsersLogic;
 import entities.Users;
@@ -31,6 +32,12 @@ public class Main extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession sesion = request.getSession();
+		Users user = (Users) sesion.getAttribute("usuario");
+		
+		request.setAttribute("tipoRol", user.getRol().getType());
+		request.setAttribute("nombreUsuario", user.getName());
+		
 		request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
 	}
 
