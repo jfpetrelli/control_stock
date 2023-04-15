@@ -47,7 +47,9 @@ public class DeleteStore extends HttpServlet {
 			return;
 		}
 		store.setId(Integer.parseInt(request.getParameter("store")));
-		storeLogic.delete(store);
+		if(!storeLogic.delete(store)) {
+			request.setAttribute("error", "No se pudo eliminar el depósito.");
+		}
 		StoreList stores = new StoreList();
 		stores.doGet(request, response);
 	}

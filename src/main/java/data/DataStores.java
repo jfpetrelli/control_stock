@@ -133,10 +133,10 @@ public class DataStores {
 		}
 	}
 	
-	public void delete(Stores store) {
+	public boolean delete(Stores store) {
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
-		
+		boolean deleted;
 		try {
 			stmt= DbConnector.getInstancia().getConn().
 					prepareStatement(
@@ -147,9 +147,11 @@ public class DataStores {
 
 			stmt.executeUpdate();
 			
+			deleted = true;
 			
 		}  catch (SQLException e) {
             e.printStackTrace();
+            deleted = false;
 		} finally {
             try {
                 if(keyResultSet!=null)keyResultSet.close();
@@ -159,5 +161,7 @@ public class DataStores {
             	e.printStackTrace();
             }
 		}
+		
+		return deleted;
 	}
 }

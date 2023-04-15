@@ -25,8 +25,8 @@ public class StoresLogic {
 		dataStores.create(store);
 	}
 	
-	public void delete(Stores store) {
-		dataStores.delete(store);
+	public boolean delete(Stores store) {
+		return dataStores.delete(store);
 	}
 	
 	public void update(Stores store) {
