@@ -99,9 +99,10 @@ public class DataRoles {
 		
 	}
 	
-	public void remove(Roles rol) {
+	public boolean remove(Roles rol) {
 		
 		PreparedStatement stmt= null;
+		boolean deleted;
 		
 		try {
 			stmt= DbConnector.getInstancia().getConn().
@@ -112,9 +113,10 @@ public class DataRoles {
 			stmt.setInt(1, rol.getId());
 
 			stmt.executeUpdate();
-			
+			deleted = true;
 			
 		}  catch (SQLException e) {
+			deleted = false;
             e.printStackTrace();
 		} finally {
             try {
@@ -124,7 +126,7 @@ public class DataRoles {
             	e.printStackTrace();
             }
 		}
-		
+		return deleted;
 	}
 	
 	public void update(Roles rol) {

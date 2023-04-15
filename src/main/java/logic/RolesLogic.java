@@ -30,8 +30,8 @@ public class RolesLogic {
 		dataRol.create(rol);
 	}
 	
-	public void remove(Roles rol) {
-		dataRol.remove(rol);
+	public boolean remove(Roles rol) {
+		return dataRol.remove(rol);
 	}
 	
 	public void update(Roles rol) {

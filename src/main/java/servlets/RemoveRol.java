@@ -35,7 +35,9 @@ public class RemoveRol extends HttpServlet {
 		// TODO Auto-generated method stub
 		Integer rol_id = Integer.parseInt(request.getParameter("rol_id"));
 		Roles rol = rolLogic.getById(rol_id);
-		rolLogic.remove(rol);
+		if(!rolLogic.remove(rol)) {
+		    request.setAttribute("error", "No se pudo borrar el rol.");
+		}
 		
 		roles = rolLogic.getAll();
 	    request.setAttribute("roles", roles);
