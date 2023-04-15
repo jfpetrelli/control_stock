@@ -46,7 +46,9 @@ public class DeleteLocation extends HttpServlet {
 			return;
 		}
 		location.setId(Integer.parseInt(request.getParameter("location")));
-		locationLogic.delete(location);
+		if(!locationLogic.delete(location)) {
+		    request.setAttribute("error", "No se pudo borrar la localidad.");
+		}
 		LocationList locations = new LocationList();
 		locations.doGet(request, response);
 	}

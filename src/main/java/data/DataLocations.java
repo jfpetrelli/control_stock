@@ -137,9 +137,10 @@ public class DataLocations {
 		}
 	}
 		
-	public void delete(Location location) {
+	public boolean delete(Location location) {
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
+		boolean deleted;
 		
 		try {
 			stmt= DbConnector.getInstancia().getConn().
@@ -150,10 +151,11 @@ public class DataLocations {
 			stmt.setInt(1, location.getId());
 
 			stmt.executeUpdate();
-			
+			deleted = true;
 			
 		}  catch (SQLException e) {
             e.printStackTrace();
+            deleted = false;
 		} finally {
             try {
                 if(keyResultSet!=null)keyResultSet.close();
@@ -163,6 +165,8 @@ public class DataLocations {
             	e.printStackTrace();
             }
 		}
+		
+		return deleted;
 	}		
 	
 }

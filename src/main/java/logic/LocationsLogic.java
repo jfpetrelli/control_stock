@@ -30,7 +30,7 @@ public class LocationsLogic {
 		dataLocation.update(location);
 	}
 	
-	public void delete(Location location) {
-		dataLocation.delete(location);
+	public boolean delete(Location location) {
+		return dataLocation.delete(location);
 	}
 }

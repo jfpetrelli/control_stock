@@ -29,6 +29,7 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <%
     	ArrayList<Location> locations = (ArrayList) request.getAttribute("locations");    
+    	String error = 	(String) request.getAttribute("error");
     %>
 
 </head>
@@ -215,6 +216,16 @@
                                 </div>
                             </div>                        	                        
                         </div>
+                        
+                        <% if(error != null) {%>
+                       <div class="row">
+                        	<div class="text-center">
+                                <div class="mb-3">
+									<h4><%= error %></h4>
+                                </div>
+                            </div>                        	                        
+                        </div>
+ <%}%>                        
                         <!-- Begin Page Content -->
                         <div class="row">
                             <div class="col-12">
