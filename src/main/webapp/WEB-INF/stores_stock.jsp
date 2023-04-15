@@ -30,6 +30,7 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <%
     	ArrayList<Stores> stores = (ArrayList) request.getAttribute("stores"); 	
+    	String error = (String) request.getAttribute("error");
     %>
 
 </head>
@@ -205,8 +206,14 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Depósitos</h1>
                     </div>
+                    
+
 
                     <!-- Content Row -->
+                    
+                    <% if (error != null) {%>
+						<h4><%= error %></h4>
+					<% } else {%>
                     <form action="Stock" method ="POST">
                         <div class="row">                           
                             <div class="col-6">
@@ -230,6 +237,7 @@
                             </div>
                         </div>
                     </form>
+                 <% } %>
                 </div>
                 <!-- /.container-fluid -->
 

@@ -45,6 +45,11 @@ public class Stock extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		stores = storeLogic.getAll();
+		if(stores == null) {
+			String error = "Error al consultar el stock de los depósitos.";
+			request.setAttribute("error", error);
+			request.getRequestDispatcher("WEB-INF/stores_stock.jsp").forward(request, response);
+		}
 		request.setAttribute("stores", stores);
 		request.getRequestDispatcher("WEB-INF/stores_stock.jsp").forward(request, response);
 
