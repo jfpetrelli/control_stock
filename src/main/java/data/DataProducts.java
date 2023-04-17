@@ -253,10 +253,10 @@ public class DataProducts {
 		
 	}
 	
-	public void remove(Products product) {
+	public boolean remove(Products product) {
 		
 		PreparedStatement stmt= null;
-		
+		boolean removed;
 		try {
 			stmt= DbConnector.getInstancia().getConn().
 					prepareStatement(
@@ -267,8 +267,9 @@ public class DataProducts {
 
 			stmt.executeUpdate();
 			
-			
+			removed = true;
 		}  catch (SQLException e) {
+			removed = false;
             e.printStackTrace();
 		} finally {
             try {
@@ -278,6 +279,7 @@ public class DataProducts {
             	e.printStackTrace();
             }
 		}
+		return removed;
 		
 	}
 	

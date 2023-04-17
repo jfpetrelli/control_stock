@@ -36,7 +36,9 @@ public class RemoveProduct extends HttpServlet {
 		// TODO Auto-generated method stub
 		Integer product_id = Integer.parseInt(request.getParameter("product_id"));
 		Products product = productLogic.getById(product_id);
-		productLogic.remove(product);
+		if(!productLogic.remove(product)) {
+		    request.setAttribute("error", "No se pudo borrar el producto.");			
+		}
 		
 		products = productLogic.getAll();
 	    request.setAttribute("products", products);

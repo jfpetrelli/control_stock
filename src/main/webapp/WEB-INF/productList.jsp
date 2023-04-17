@@ -29,6 +29,7 @@
     
     		
     		ArrayList<Products> products = (ArrayList) request.getAttribute("products");
+    		String error = (String) request.getAttribute("error");
 
     	
     %>
@@ -214,7 +215,15 @@
                             </div>                        	                        
                     </div>
                     <!-- Content Row -->
-                      
+                                              <% if(error != null) {%>
+                       <div class="row">
+                        	<div class="text-center">
+                                <div class="mb-3">
+									<h4><%= error %></h4>
+                                </div>
+                            </div>                        	                        
+                        </div>
+ <%}%>                        
 
 
                         <!-- Begin Page Content -->

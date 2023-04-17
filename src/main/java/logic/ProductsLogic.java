@@ -82,8 +82,8 @@ public class ProductsLogic {
 			dataProducts.create(product);
 		}
 		
-		public void remove(Products product) {
-			dataProducts.remove(product);
+		public boolean remove(Products product) {
+			return dataProducts.remove(product);
 		}
 		
 		public void update(Products product) {
