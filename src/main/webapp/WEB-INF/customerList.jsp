@@ -1,6 +1,7 @@
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
 <%@page import="entities.Customers"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="entities.Users"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -27,8 +28,8 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <%
     
-    		
-    		ArrayList<Customers> customers = (ArrayList) request.getAttribute("customers");
+    	Users user = (Users) request.getAttribute("usuario");
+    	ArrayList<Customers> customers = (ArrayList) request.getAttribute("customers");
 
     	
     %>
@@ -50,17 +51,17 @@
                 </div>
                 <div class="sidebar-brand-text mx-3">Control Stock</div>
             </a>
-
-            <!-- Divider -->
+            
+             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            
+    		<li class="nav-item active">
                 <a class="nav-link" href="Sale">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Venta</span>
                 </a>
-            </li>
+            </li>			
+            
             <li class="nav-item active">
                 <a class="nav-link" href="Customer">
                     <i class="fas fa-address-book"></i>
@@ -108,9 +109,10 @@
                     <i class = "fas fa-user-cog"></i>
                     <span>Listado de Ventas</span>
                 </a>
-			</li>					
+			</li>						
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -167,7 +169,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=user.getName()%></span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
@@ -306,7 +308,9 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <form action="Login" method ="POST">
+                   	<input type="submit" value="Logout" class="form-control bg-warning text-gray-100" id="logout" name="action">
+                    </form>
                 </div>
             </div>
         </div>

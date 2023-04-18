@@ -33,12 +33,17 @@ public class Main extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession sesion = request.getSession();
-		Users user = (Users) sesion.getAttribute("usuario");
 		
+		Users user = (Users) sesion.getAttribute("usuario");
+		System.out.println(user);
+		if (user != null)
+		{
 		request.setAttribute("tipoRol", user.getRol().getType());
 		request.setAttribute("nombreUsuario", user.getName());
-		
 		request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
+		}
+		else
+		request.getRequestDispatcher("login.html").forward(request, response);
 	}
 
 	/**
