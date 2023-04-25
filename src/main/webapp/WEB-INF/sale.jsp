@@ -30,6 +30,7 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <%
     	String nombreUsuario = (String) request.getAttribute("nombreUsuario");
+    	String tipoRol = (String) request.getAttribute("tipoRol");
 
     	ArrayList<Customers> customers = (ArrayList) request.getAttribute("customers");
     	ArrayList<Stores> stores = (ArrayList) request.getAttribute("stores");
@@ -75,8 +76,7 @@
                 <div class="sidebar-brand-text mx-3">Control Stock</div>
             </a>
 
-             <%    	
-					String tipoRol = (String) request.getAttribute("tipoRol");
+            <%    	
     				if(tipoRol.equalsIgnoreCase("Vendedor"))
     		{%>
 
@@ -423,7 +423,9 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <form action="Login" method ="POST">
+                   	<input type="submit" value="Logout" class="form-control bg-warning text-gray-100" id="logout" name="action">
+                    </form>
                 </div>
             </div>
         </div>
@@ -445,6 +447,9 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    
+    
+    
 </body>
 
 </html>

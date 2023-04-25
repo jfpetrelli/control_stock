@@ -49,32 +49,39 @@ public class Login extends HttpServlet {
 		// TODO Auto-generated method stub
 		String action = request.getParameter("action");
 		
-		if(action.equalsIgnoreCase("Ingresar")) {
-			String email = request.getParameter("email");
-			String password = request.getParameter("password");
-			
-			
-			user = userLogic.Validar(email, password);
-			//Recupero el rol
-		
-			
-			if(user!=null) {
-				
-				
-				HttpSession sesion = request.getSession();
-				sesion.setAttribute("usuario", user);
-				sesion.setAttribute("nombreUsario", user.getName());
-				sesion.setAttribute("tipoRol", user.getRol().getType());
-				
-				request.setAttribute("nombreUsuario", user.getName());
-				request.setAttribute("tipoRol", user.getRol().getType());
-				request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
+		if(action.equals("Logout")) 
+			{
+				request.getSession().invalidate();
+				Login userServlet = new Login();
+				userServlet.doGet(request, response);
 			}
-			else {
-				response.sendRedirect("/control_stock/404.html");
-				return;
-				}
-		}
+		
+		if(action.equalsIgnoreCase("Ingresar")) 
+			{
+				String email = request.getParameter("email");
+				String password = request.getParameter("password");
+				
+				
+				user = userLogic.Validar(email, password);
+			
+				
+				if(user!=null) 
+					{
+						HttpSession sesion = request.getSession();
+						sesion.setAttribute("usuario", user);
+						sesion.setAttribute("nombreUsario", user.getName());
+						sesion.setAttribute("tipoRol", user.getRol().getType());
+						
+						request.setAttribute("nombreUsuario", user.getName());
+						request.setAttribute("tipoRol", user.getRol().getType());
+						request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
+					}
+				else 
+					{
+						response.sendRedirect("/control_stock/404.html");
+						return;
+					}
+			}
 	}
 
 }

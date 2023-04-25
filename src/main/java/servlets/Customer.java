@@ -10,8 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import entities.Customers;
+import entities.Users;
 import logic.CustomersLogic;
 
 /**
@@ -37,6 +39,24 @@ public class Customer extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		//System.out.println("Hola Servlet..");
+		HttpSession sesion = request.getSession();
+		
+		Users user = (Users) sesion.getAttribute("usuario");
+		
+		if (user == null)
+		{
+			response.sendRedirect("/control_stock/500.html");
+			return;
+		}
+		else
+			if(user.getRol().getType().equalsIgnoreCase("Vendedor"))
+				{
+					response.sendRedirect("/control_stock/404.html");
+					return;
+				}
+		
+		request.setAttribute("usuario", user);
+
 		customers = customerLogic.getAll();
 		request.setAttribute("customers", customers);
 		request.getRequestDispatcher("WEB-INF/customerList.jsp").forward(request, response);
