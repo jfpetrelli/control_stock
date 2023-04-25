@@ -111,10 +111,10 @@ public class DataCustomers {
 		
 	}
 	
-	public void remove(Customers customer) {
+	public boolean remove(Customers customer) {
 		
 		PreparedStatement stmt= null;
-		
+		boolean removed;
 		try {
 			stmt= DbConnector.getInstancia().getConn().
 					prepareStatement(
@@ -124,10 +124,11 @@ public class DataCustomers {
 			stmt.setInt(1, customer.getId());
 
 			stmt.executeUpdate();
-			
+			removed = true;
 			
 		}  catch (SQLException e) {
             e.printStackTrace();
+            removed = false;
 		} finally {
             try {
                 if(stmt!=null)stmt.close();
@@ -136,7 +137,7 @@ public class DataCustomers {
             	e.printStackTrace();
             }
 		}
-		
+		return removed;
 	}
 	
 	public void update(Customers customer) {

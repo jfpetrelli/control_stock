@@ -29,8 +29,8 @@ public class CustomersLogic {
 		dataCustomer.create(customer);
 	}
 	
-	public void remove(Customers customer) {
-		dataCustomer.remove(customer);
+	public boolean remove(Customers customer) {
+		return dataCustomer.remove(customer);
 	}
 	
 	public void update(Customers customer) {

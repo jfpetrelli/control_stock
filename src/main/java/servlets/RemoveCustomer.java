@@ -37,7 +37,9 @@ public class RemoveCustomer extends HttpServlet {
 		// TODO Auto-generated method stub
 		Integer customer_id = Integer.parseInt(request.getParameter("customer_id"));
 		Customers customer = customerLogic.getById(customer_id);
-		customerLogic.remove(customer);
+		if(!customerLogic.remove(customer)) {
+		    request.setAttribute("error", "No se pudo borrar el cliente.");			
+		}
 		
 		customers = customerLogic.getAll();
 	    request.setAttribute("customers", customers);
