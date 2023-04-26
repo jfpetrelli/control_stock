@@ -32,7 +32,6 @@
     		ArrayList<Customers> customers = (ArrayList) request.getAttribute("customers");
 			String error = (String) request.getAttribute("error");
     		Users user = (Users) request.getAttribute("usuario");
-    		ArrayList<Customers> customers = (ArrayList) request.getAttribute("customers");
 
 
     %>
