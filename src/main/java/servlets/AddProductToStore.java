@@ -42,11 +42,21 @@ public class AddProductToStore extends HttpServlet {
 			response.sendRedirect("/control_stock/500.html");
 			return;
 		}
-		Integer store_id = Integer.parseInt(request.getParameter("store"));
-		products = productLogic.getAll();
-	    request.setAttribute("store", request.getParameter("store"));
-	    request.setAttribute("products", products);
-	     
+		try {
+			Integer store_id = Integer.parseInt(request.getParameter("store"));
+			Stores store = dataStore.getById(store_id);
+			if(store == null) {
+				response.sendRedirect("/control_stock/500.html");
+				return;
+			}
+			products = productLogic.getAll();
+		    request.setAttribute("store", request.getParameter("store"));
+		    request.setAttribute("products", products);		     
+		} catch (Exception e) {
+			response.sendRedirect("/control_stock/500.html");
+			return;
+		}
+
 		request.getRequestDispatcher("WEB-INF/addProductToStore.jsp").forward(request, response);
 	}
 

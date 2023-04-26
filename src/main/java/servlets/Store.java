@@ -38,11 +38,12 @@ public class Store extends HttpServlet {
 		}
 		Integer store_id = Integer.parseInt(request.getParameter("store"));
 		Stores store = storeLogic.getById(store_id);
-		entities.Location location = locationLogic.getById(store.getLocation_id());
 		if(store == null) {
 			response.sendRedirect("/control_stock/500.html");
 			return;
 		}
+		entities.Location location = locationLogic.getById(store.getLocation_id());
+
 		request.setAttribute("store", store);
 		request.setAttribute("location", location.getCity());
 		request.getRequestDispatcher("WEB-INF/store.jsp").forward(request, response);
