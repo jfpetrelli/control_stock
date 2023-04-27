@@ -31,9 +31,18 @@ public class EditRol extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Integer rol_id = Integer.parseInt(request.getParameter("rol_id"));
-		Roles rol = rolLogic.getById(rol_id);
-	    request.setAttribute("rol", rol);
+		try {
+			Integer rol_id = Integer.parseInt(request.getParameter("rol_id"));
+			Roles rol = rolLogic.getById(rol_id);
+		    request.setAttribute("rol", rol);
+		    if(rol == null) {
+				response.sendRedirect("/control_stock/500.html");				
+				return;
+		    }
+		} catch (Exception e) {
+			response.sendRedirect("/control_stock/500.html");				
+			return;
+		}
 	     
 		request.getRequestDispatcher("WEB-INF/editRol.jsp").forward(request, response); 
 	}

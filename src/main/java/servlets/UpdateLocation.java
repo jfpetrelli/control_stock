@@ -31,9 +31,18 @@ public class UpdateLocation extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Integer location_id = Integer.parseInt(request.getParameter("location"));
-		entities.Location location = locationLogic.getById(location_id);
-	    request.setAttribute("location", location);
+		try {
+			Integer location_id = Integer.parseInt(request.getParameter("location"));
+			entities.Location location = locationLogic.getById(location_id);
+		    request.setAttribute("location", location);
+		    if(location == null) {
+				response.sendRedirect("/control_stock/500.html");	
+				return;
+		    }
+		} catch (Exception e) {
+			response.sendRedirect("/control_stock/500.html");	
+			return;
+		}
 	     
 		request.getRequestDispatcher("WEB-INF/editLocation.jsp").forward(request, response); 
 	}

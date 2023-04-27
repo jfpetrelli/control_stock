@@ -34,9 +34,18 @@ public class EditProduct extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		try {
 		Integer product_id = Integer.parseInt(request.getParameter("product_id"));
 		Products product = productLogic.getById(product_id);
 	    request.setAttribute("product", product);
+	    if(product == null) {
+			response.sendRedirect("/control_stock/500.html");				
+			return;
+	    }
+		} catch (Exception e) {
+			response.sendRedirect("/control_stock/500.html");				
+			return;
+		}
 	     
 		request.getRequestDispatcher("WEB-INF/editProduct.jsp").forward(request, response); 
 	}
