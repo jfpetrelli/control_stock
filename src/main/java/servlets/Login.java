@@ -39,7 +39,18 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("login.html").forward(request, response);
+		
+		HttpSession sesion = request.getSession();
+		user = (Users) sesion.getAttribute("usuario");
+		
+		if (user == null)
+		{
+			sesion.invalidate();
+			response.sendRedirect("/control_stock/login.html");
+			return;
+		}
+		else
+			request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
 	}
 
 	/**
@@ -49,7 +60,7 @@ public class Login extends HttpServlet {
 		// TODO Auto-generated method stub
 		String action = request.getParameter("action");
 		
-		if(action.equals("Logout")) 
+		if(action.equals("Desconectarse")) 
 			{
 				request.getSession().invalidate();
 				Login userServlet = new Login();
@@ -77,7 +88,7 @@ public class Login extends HttpServlet {
 						request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
 					}
 				else 
-					{
+					{	
 						response.sendRedirect("/control_stock/404.html");
 						return;
 					}
