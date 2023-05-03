@@ -196,6 +196,8 @@ public class DataUsers {
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
+			
+			if (DbConnector.getInstancia().getConn() ==null) return user;
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
 					"select * from users where mail = ? and password = ?"
 					);
@@ -214,14 +216,14 @@ public class DataUsers {
 
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return user;
 		}finally {
 			try {
 				if(rs!=null) {rs.close();}
 				if(stmt!=null) {stmt.close();}
-				DbConnector.getInstancia().releaseConn();
+				//DbConnector.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				return user;
 			}
 		}		
 		return user;

@@ -70,7 +70,8 @@ public class Sale extends HttpServlet {
 		
 		if (user == null)
 			{
-				response.sendRedirect("/control_stock/500.html");
+				sesion.invalidate();
+				response.sendRedirect("/control_stock/404.html");
 				return;
 			}
 

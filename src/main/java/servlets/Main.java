@@ -17,7 +17,6 @@ import entities.Users;
 public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	UsersLogic userLogic = new UsersLogic();
-	Users user = new Users();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -35,7 +34,7 @@ public class Main extends HttpServlet {
 		HttpSession sesion = request.getSession();
 		
 		Users user = (Users) sesion.getAttribute("usuario");
-		System.out.println(user);
+		//System.out.println(user);
 		if (user != null)
 		{
 		request.setAttribute("tipoRol", user.getRol().getType());
@@ -43,7 +42,11 @@ public class Main extends HttpServlet {
 		request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
 		}
 		else
-		request.getRequestDispatcher("login.html").forward(request, response);
+		{
+		sesion.invalidate();
+		response.sendRedirect("/control_stock/login.html");
+		}
+		
 	}
 
 	/**

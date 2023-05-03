@@ -221,15 +221,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Listo para irte?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Listo para salir?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">—</span>
                     </button>
                 </div>
-                <div class="modal-body">Selecciona "Desconectarse" si quieres cerrar sesión.</div>
+                <div class="modal-body">Haz clic en "Desconectarse" para salir.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="Login">Desconectarse</a>
+                    <form action="Login" method ="POST">
+                   	<input type="submit" value="Desconectarse" class="form-control bg-warning text-gray-100" id="logout" name="action">
+                    </form>
                 </div>
             </div>
         </div>

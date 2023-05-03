@@ -43,18 +43,13 @@ public class Customer extends HttpServlet {
 		
 		Users user = (Users) sesion.getAttribute("usuario");
 		
-		if (user == null)
+		if (user == null || user.getRol().getType().equalsIgnoreCase("Vendedor"))
 		{
-			response.sendRedirect("/control_stock/500.html");
+			sesion.invalidate();
+			response.sendRedirect("/control_stock/404.html");
 			return;
 		}
-		else
-			if(user.getRol().getType().equalsIgnoreCase("Vendedor"))
-				{
-					response.sendRedirect("/control_stock/404.html");
-					return;
-				}
-		
+
 		request.setAttribute("usuario", user);
 
 		customers = customerLogic.getAll();

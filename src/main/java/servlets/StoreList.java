@@ -9,8 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import data.DataStores;
+import entities.Users;
 
 /**
  * Servlet implementation class Stores
@@ -19,6 +21,7 @@ import data.DataStores;
 public class StoreList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	DataStores dataStore = new DataStores();
+	ArrayList<entities.Stores> stores = new ArrayList<>();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -33,7 +36,21 @@ public class StoreList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ArrayList<entities.Stores> stores = new ArrayList<>();
+		
+		HttpSession sesion = request.getSession();
+		
+		Users user = (Users) sesion.getAttribute("usuario");
+		
+		if (user == null || user.getRol().getType().equalsIgnoreCase("Vendedor"))
+		{
+			sesion.invalidate();
+			response.sendRedirect("/control_stock/404.html");
+			return;
+		}
+
+		request.setAttribute("nombreUsuario", user.getName());
+		
+		
 		try {
 			stores = dataStore.readAll();
 			request.setAttribute("stores", stores);
