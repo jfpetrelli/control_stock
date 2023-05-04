@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 
 import entities.ListSales;
@@ -224,13 +223,58 @@ public class DataSales {
 				Sales l = new Sales();
 				
 				l.setId(rs.getInt("id"));
-//				l.setDatetime( rs.getDate("date").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+				l.setDatetime( rs.getTimestamp("date").toLocalDateTime());
+				
+				s.add(l);
+				
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Error en formato Date");
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		return s;
+	}
+
+	public ArrayList<ListSales> salesDetailsWithoutStatus(int sale_id) {
+		
+		Statement stmt=null;
+		ResultSet rs=null;
+		ArrayList<ListSales> s = new ArrayList<>();
+
+		try {
+			
+			String sql = "SELECT sd.sale_id, sd.product_id, sd.pos, sd.quantity, p.detail as product, sd.status FROM sales_details sd "
+					+ "inner join products p on p.id = sd.product_id where sd.sale_id =" + sale_id;
+			
+			stmt= DbConnector.getInstancia().getConn().createStatement();
+			rs= stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				ListSales l = new ListSales();
+				
+				l.setId(rs.getInt("sale_id"));
+				l.setProductId(rs.getInt("product_id"));
+				l.setPos(rs.getInt("pos"));
+				l.setQuantity(rs.getInt("quantity"));
+				l.setProduct(rs.getString("product"));
+				l.setStatus(rs.getBoolean("status"));
 
 				s.add(l);
 				
 			}
 			
 		} catch (SQLException e) {
+			System.out.println("Error al recuperar el detalle de la venta");
 			e.printStackTrace();
 		}finally {
 			try {

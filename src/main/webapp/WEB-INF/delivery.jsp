@@ -1,6 +1,7 @@
 
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
 <%@page import="entities.Sales"%>
+<%@page import="entities.ListSales"%>
 <%@page import="java.util.ArrayList"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -32,8 +33,13 @@ String nombreUsuario = (String) request.getAttribute("nombreUsuario");
 String tipoRol = (String) request.getAttribute("tipoRol");
     		String msg = (String) request.getAttribute("msg");		
         	ArrayList<Sales> sales = (ArrayList) request.getAttribute("sales");
-        	
-    	
+        	ArrayList<ListSales> listSales = (ArrayList) request.getAttribute("listSales");
+        	ArrayList<ListSales> listSalesUpdated = (ArrayList) request.getAttribute("listSales");
+    		String sale_selected = new String();
+        	String sal = (String)request.getAttribute("sale");
+        	if(sal != null){
+    			sale_selected = sal;
+    		}
     %>
 
 </head>
@@ -225,8 +231,9 @@ String tipoRol = (String) request.getAttribute("tipoRol");
                                   <select class="form-control" aria-label="Default select example" id="sale" name="sale">
                                   <option value = ""></option>
 									<% for (Sales sale: sales) {%>
-										<option value= "<%=sale.getId() %>" 
-									   ><%=sale.getId() %></option>
+										<option value= "<%=sale.getId() %>"
+										 <%if(sale_selected != null && !sale_selected.isEmpty()) {%> 
+									  <%if(sale.getId() == Integer.parseInt(sale_selected)){ %> selected<% }}%> >Venta Nro.: <%= sale.getId() %> - Fecha: <%= sale.getDatetime() %></option>
 									  <% } %>
 								 </select>
                                 </div> 
@@ -255,14 +262,23 @@ String tipoRol = (String) request.getAttribute("tipoRol");
                                                     	<th class="d-none">ID</th>
                                                         <th class="col-3">Articulo</th>
                                                         <th class="col-2 text-right">Cantidad</th>
-                                                        <th class="col-2 text-right">Precio Unitario</th>
-                                                        <th class="col-2 text-right">Total</th>
-                                                        <th class="col-2 text-right">
-                                                         	
-                                    					</th>
+                                                        <th class="col-2 text-right">Entregado?</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                <% if(listSales != null){ %>
+                                                <% for (ListSales listSale: listSales ){ %>
+                                                	<tr>
+                                                		<td class="d-none"> <input type="text" value = "<%= listSale.getPos() %>" name = "pos">  <%= listSale.getPos() %></td>
+                                                		<td class="d-none"> <input type="text" value = "<%= listSale.getId() %>" name = "id_sale"> <%= listSale.getId() %></td>
+                                                        <td class="col-3"><%= listSale.getProduct() %></td>
+                                                        <td class="col-2 text-right"><%= listSale.getQuantity() %></td>
+                                                        <td class="col-2 text-right"> <input class="form-check-input" type="checkbox" name = "status"
+                                                        <% if(listSale.getStatus()){ %> checked <% } %>
+                                                        ></td>
+                                                	</tr>
+                                                	<% } %>
+                                                	<% } %>
                                                 </tbody>
                                             </table>
                                         </div>

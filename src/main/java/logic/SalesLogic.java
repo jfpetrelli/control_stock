@@ -137,7 +137,26 @@ public class SalesLogic {
 
 	public ArrayList<Sales> getSalesWithoutStatus() {
 		// TODO Auto-generated method stub
-		return dataSales.salesWithoutStatus();
+		try {
+			return dataSales.salesWithoutStatus();
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.out.println("Error en formato Date");
+			
+		}
+		return null;
+		
+	}
+
+	public ArrayList<ListSales> getSalesWithoutStatus(int sale_id) {
+		// TODO Auto-generated method stub
+		try {
+			return dataSales.salesDetailsWithoutStatus(sale_id);
+		} catch (Exception e) {
+			System.out.println("Error al traer el detalle de la venta");
+			return null;
+		}
+		
 	}
 	
 }

@@ -6,10 +6,14 @@ public class ListSales {
 	private String customer;
 	private String store;
 	private String product;
+	private int product_id;
+	private int pos;
 	private String city;
 	private int quantity;
 	private double unit_price;
 	private double price;
+	private boolean status;
+	
 	public int getId() {
 		return id;
 	}
@@ -57,6 +61,24 @@ public class ListSales {
 	}
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	public void setProductId(int product_id) {
+		this.product_id = product_id;
+	}
+	public int getProductId() {
+		return product_id;
+	}
+	public void setPos(int pos) {
+		this.pos = pos;
+	}
+	public int getPos() {
+		return pos;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+	public boolean getStatus() {
+		return status;
 	}
 	
 	

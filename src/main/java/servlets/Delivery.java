@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entities.ListSales;
 import entities.Sales;
 import entities.Users;
 import logic.SalesLogic;
@@ -23,6 +24,7 @@ public class Delivery extends HttpServlet {
 	
 	SalesLogic salesLogic = new SalesLogic();
 	ArrayList<Sales> sales = new ArrayList<>();
+	ArrayList<ListSales> listSales = new ArrayList<>();
     String sale_id ;
        
     /**
@@ -77,8 +79,18 @@ public class Delivery extends HttpServlet {
 							request.getRequestDispatcher("WEB-INF/delivery.jsp").forward(request, response);
 							return;
 						}
+						listSales = salesLogic.getSalesWithoutStatus(Integer.parseInt(sale_id));
+						
+						request.setAttribute("sale", sale_id);
+						request.setAttribute("listSales", listSales);
 	
 					}
+				if(action.equals("Terminar Pedido")) 
+				{
+					System.out.println(request.getParameter("id_sale"));
+					System.out.println(request.getParameter("pos"));
+					System.out.println(request.getParameter("status"));
+				}
 					
 		       
 			}
