@@ -214,6 +214,13 @@
                                 </div>
                             </div>                        	                        
                     </div>
+					<div class="row">
+                        	<div class="col-2 align-self-end">
+                                <div class="mb-3">
+									<a  class="btn btn-primary" href="SendMail">Enviar listado</a>
+                                </div>
+                            </div>                        	                        
+                    </div>                    
                     <!-- Content Row -->
                                               <% if(error != null) {%>
                        <div class="row">
