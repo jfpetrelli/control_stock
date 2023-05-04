@@ -1,6 +1,6 @@
+
 <%@page import="javax.servlet.jsp.tagext.TryCatchFinally"%>
-<%@page import="entities.Roles"%>
-<%@page import="entities.Users"%>
+<%@page import="entities.Sales"%>
 <%@page import="java.util.ArrayList"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -26,9 +26,14 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    
-    <%    	
-		String nombreUsuario = (String) request.getAttribute("nombreUsuario");
+<%
+
+String nombreUsuario = (String) request.getAttribute("nombreUsuario");
+String tipoRol = (String) request.getAttribute("tipoRol");
+    		String msg = (String) request.getAttribute("msg");		
+        	ArrayList<Sales> sales = (ArrayList) request.getAttribute("sales");
+        	
+    	
     %>
 
 </head>
@@ -38,7 +43,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
+       <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-warning sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -48,11 +53,6 @@
                 </div>
                 <div class="sidebar-brand-text mx-3">Control Stock</div>
             </a>
-            
-             <%    	
-					String tipoRol = (String) request.getAttribute("tipoRol");
-    				if(tipoRol.equalsIgnoreCase("Vendedor"))
-    		{%>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -63,24 +63,13 @@
                     <i class="fas fa-shopping-cart"></i>
                     <span>Venta</span>
                 </a>
-             <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">    
-            </li><%}
-    					else{%>
-    		<li class="nav-item active">
-                <a class="nav-link" href="Sale">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Venta</span>
-                </a>
             </li>
-            
             <li class="nav-item active">
                 <a class="nav-link" href="Delivery">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Entregas</span>
                 </a>
-            </li>			
-            
+            </li>	
             <li class="nav-item active">
                 <a class="nav-link" href="Customer">
                     <i class="fas fa-address-book"></i>
@@ -131,7 +120,6 @@
 			</li>						
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-            <%}%>
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -158,13 +146,37 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=nombreUsuario%></span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
@@ -186,7 +198,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Desconectarse
+                                    Logout
                                 </a>
                             </div>
                         </li>
@@ -195,17 +207,79 @@
 
                 </nav>
                 <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
+                
+               <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">CONTROL STOCK</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Entregas</h1>
                     </div>
 
                     <!-- Content Row -->
-
+                    <form action="#" method ="POST" name="form_sale" id = "form_sale">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="mb-3">
+                                  <label for="sale" class="form-label">Venta</label>
+                                  <select class="form-control" aria-label="Default select example" id="sale" name="sale">
+                                  <option value = ""></option>
+									<% for (Sales sale: sales) {%>
+										<option value= "<%=sale.getId() %>" 
+									   ><%=sale.getId() %></option>
+									  <% } %>
+								 </select>
+                                </div> 
+                            </div>
+                            <div class="col-2 align-self-end">
+                                <div class="mb-3">
+                                    <input type="submit" class="form-control bg-warning text-gray-100" value="Traer Venta" id ="search" name = "action">
+                                </div>
+                            </div>
+                        </div>
+                         <% if(msg != null){
+                                    	%> <p class = "d-block"> <%=msg %></p><%
+                                    } %>
+                        </div>
+                        <!-- Begin Page Content -->
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- DataTales Example -->
+                                <div class="card shadow mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                    	<th class="d-none">Pos</th>
+                                                    	<th class="d-none">ID</th>
+                                                        <th class="col-3">Articulo</th>
+                                                        <th class="col-2 text-right">Cantidad</th>
+                                                        <th class="col-2 text-right">Precio Unitario</th>
+                                                        <th class="col-2 text-right">Total</th>
+                                                        <th class="col-2 text-right">
+                                                         	
+                                    					</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="col-2 text-right">
+                                <div class="mb-3">
+                                    <input type="submit" value="Terminar Pedido" class="form-control bg-warning text-gray-100" id="submit" name="action">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -230,7 +304,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Listo para salir?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">—</span>
+                        <span aria-hidden="true">X—</span>
                     </button>
                 </div>
                 <div class="modal-body">Haz clic en "Desconectarse" para salir.</div>
@@ -260,7 +334,9 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
+    
+    
+    
 </body>
 
 </html>

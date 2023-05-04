@@ -1,20 +1,18 @@
 package logic;
 
-import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import data.DataCustomers;
+
 import data.DataSales;
 import entities.ListSales;
 import entities.Products;
 import entities.Sales;
-import logic.ProductsLogic;;
+
 
 public class SalesLogic {
 
 	private DataSales dataSales = new DataSales();
-	private ProductsLogic productsLogic = new ProductsLogic();
 	private int pos=1;
 	
 	
@@ -135,6 +133,11 @@ public class SalesLogic {
 		return dataSales.listSales(customer, store, desde, hasta);
 		
 		
+	}
+
+	public ArrayList<Sales> getSalesWithoutStatus() {
+		// TODO Auto-generated method stub
+		return dataSales.salesWithoutStatus();
 	}
 	
 }

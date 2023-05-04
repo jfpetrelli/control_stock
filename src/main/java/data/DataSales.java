@@ -5,11 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 import entities.ListSales;
 import entities.Sales;
-import entities.Stores;
 
 public class DataSales {
 
@@ -203,5 +203,44 @@ public class DataSales {
 			}
 		}		
 		return ls;
+	}
+	
+	public ArrayList<Sales> salesWithoutStatus() {
+		
+		Statement stmt=null;
+		ResultSet rs=null;
+		ArrayList<Sales> s = new ArrayList<>();
+
+		try {
+			
+			String sql = " select id, date from sales where id in( " +
+					" select sale_id from sales_details where status = 0) ";
+			
+			stmt= DbConnector.getInstancia().getConn().createStatement();
+			rs= stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				Sales l = new Sales();
+				
+				l.setId(rs.getInt("id"));
+//				l.setDatetime( rs.getDate("date").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+
+				s.add(l);
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		return s;
 	}
 }
