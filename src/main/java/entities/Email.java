@@ -17,15 +17,50 @@ public class Email {
     private Session mSession;
     private MimeMessage mCorreo;
     
-    public Email() {
+    
+    
+    public String getEmailTo() {
+		return emailTo;
+	}
+
+
+	public void setEmailTo(String emailTo) {
+		this.emailTo = emailTo;
+	}
+
+
+	public String getSubject() {
+		return subject;
+	}
+
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+
+	public String getContent() {
+		return content;
+	}
+
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+
+	public Email(String contact, String subject, String content) {
         mProperties = new Properties();
+        this.emailTo = contact;
+        this.subject = subject;
+        this.content = content;
     }
 
 	
     public void createEmail() {
-        emailTo = "leonardopmiceli@gmail.com";
-        subject = "Titulo";
-        content = "Cuerpo";
+        emailTo = this.getEmailTo();
+        subject = this.getSubject();
+        content = this.getContent();
         
          // Simple mail transfer protocol
         mProperties.put("mail.smtp.host", "smtp.gmail.com");
@@ -43,20 +78,21 @@ public class Email {
             mCorreo.setFrom(new InternetAddress(emailFrom));
             mCorreo.setRecipient(Message.RecipientType.TO, new InternetAddress(emailTo));
             mCorreo.setSubject(subject);
-            mCorreo.setText(content, "ISO-8859-1", "html");                                 
+            mCorreo.setContent(content, "text/html; charset=utf-8");                             
         } catch (Exception e) {
         	
         }
     }
 
-    public void sendEmail() {
+    public boolean sendEmail() {
         try {
             Transport mTransport = mSession.getTransport("smtp");
             mTransport.connect(emailFrom, passwordFrom);
             mTransport.sendMessage(mCorreo, mCorreo.getRecipients(Message.RecipientType.TO));
             mTransport.close();            
         } catch (Exception e) {
-        	
-        }
+        	 return false;
+        }        
+        return true;
     }
 }
