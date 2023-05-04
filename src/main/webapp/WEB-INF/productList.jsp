@@ -216,8 +216,11 @@
                     </div>
 					<div class="row">
                         	<div class="col-2 align-self-end">
-                                <div class="mb-3">
-									<a  class="btn btn-primary" href="SendMail">Enviar listado</a>
+                                <div class="mb-3">					
+									<form  action="SendMail" method="POST">
+										<input type="email" name="email" >
+										<input type="submit" class="btn btn-primary" value="Enviar listado"> 																																																								
+									</form>									
                                 </div>
                             </div>                        	                        
                     </div>                    
