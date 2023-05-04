@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entities.Customers;
 import entities.Email;
-import entities.Mail;
 import entities.Products;
 import logic.ProductsLogic;
 
