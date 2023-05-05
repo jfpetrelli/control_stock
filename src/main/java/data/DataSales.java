@@ -212,8 +212,9 @@ public class DataSales {
 
 		try {
 			
-			String sql = " select id, date from sales where id in( " +
-					" select sale_id from sales_details where status = 0) ";
+		//	String sql = " select id, date from sales where id in( " +
+		//			" select sale_id from sales_details where status = 0) ";
+			String sql = " select id, date from sales";
 			
 			stmt= DbConnector.getInstancia().getConn().createStatement();
 			rs= stmt.executeQuery(sql);
@@ -286,5 +287,35 @@ public class DataSales {
 			}
 		}		
 		return s;
+	}
+
+	public String updateStatus(int id_venta, int pos, boolean status) {
+		
+		PreparedStatement stmt = null;			
+		try {
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+							"UPDATE sales_details SET status = ? where sale_id = ? and pos = ? "
+			);
+
+			stmt.setBoolean(1,status);
+			stmt.setInt(2, id_venta);
+			stmt.setInt(3, pos);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			return "Error al actualizar estado";
+
+		} finally {
+            try {	            	
+                if(stmt!=null) {
+                	stmt.close();
+                }	                
+				DbConnector.getInstancia().releaseConn();	                
+            } catch (SQLException e) {
+				// TODO Auto-generated catch block
+            	e.printStackTrace();
+            }
+		}
+		return "Estado actualizado";
 	}
 }

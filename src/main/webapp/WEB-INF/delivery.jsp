@@ -31,7 +31,9 @@
 
 String nombreUsuario = (String) request.getAttribute("nombreUsuario");
 String tipoRol = (String) request.getAttribute("tipoRol");
-    		String msg = (String) request.getAttribute("msg");		
+    		String msg = (String) request.getAttribute("msg");	
+    		String msgpedido = (String) request.getAttribute("msgpedido");		
+    		String msgAddOK = (String) request.getAttribute("msgAddOK");
         	ArrayList<Sales> sales = (ArrayList) request.getAttribute("sales");
         	ArrayList<ListSales> listSales = (ArrayList) request.getAttribute("listSales");
         	ArrayList<ListSales> listSalesUpdated = (ArrayList) request.getAttribute("listSales");
@@ -247,7 +249,11 @@ String tipoRol = (String) request.getAttribute("tipoRol");
                          <% if(msg != null){
                                     	%> <p class = "d-block"> <%=msg %></p><%
                                     } %>
+                                     <% if(msgAddOK != null){
+                                    	%><p class = "d-block"> <%=msgAddOK %></p> <%
+                                    } %>
                         </div>
+                       
                         <!-- Begin Page Content -->
                         <div class="row">
                             <div class="col-12">
@@ -255,7 +261,7 @@ String tipoRol = (String) request.getAttribute("tipoRol");
                                 <div class="card shadow mb-4">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <table class="table table-bordered" id="dataTable" name="dateTable" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
                                                     	<th class="d-none">Pos</th>
@@ -265,7 +271,7 @@ String tipoRol = (String) request.getAttribute("tipoRol");
                                                         <th class="col-2 text-right">Entregado?</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody name="tBody">
                                                 <% if(listSales != null){ %>
                                                 <% for (ListSales listSale: listSales ){ %>
                                                 	<tr>
@@ -273,8 +279,8 @@ String tipoRol = (String) request.getAttribute("tipoRol");
                                                 		<td class="d-none"> <input type="text" value = "<%= listSale.getId() %>" name = "id_sale"> <%= listSale.getId() %></td>
                                                         <td class="col-3"><%= listSale.getProduct() %></td>
                                                         <td class="col-2 text-right"><%= listSale.getQuantity() %></td>
-                                                        <td class="col-2 text-right"> <input class="form-check-input" type="checkbox" name = "status"
-                                                        <% if(listSale.getStatus()){ %> checked <% } %>
+                                                        <td class="col-2 text-right"> <input class="form-check-input" type="checkbox"  name = "status"
+                                                        <% if(listSale.getStatus()){ %> checked value="<%= listSale.getPos() %>" <% }else{%> value="<%= listSale.getPos() %>" <%} %>
                                                         ></td>
                                                 	</tr>
                                                 	<% } %>
@@ -290,6 +296,11 @@ String tipoRol = (String) request.getAttribute("tipoRol");
                         <div class="row justify-content-end">
                             <div class="col-2 text-right">
                                 <div class="mb-3">
+                               
+                         <% if(msgpedido != null){
+                                    	%> <p class = "d-block"> <%=msg %></p><%
+                                    } %>
+                  
                                     <input type="submit" value="Terminar Pedido" class="form-control bg-warning text-gray-100" id="submit" name="action">
                                 </div>
                             </div>
@@ -350,7 +361,6 @@ String tipoRol = (String) request.getAttribute("tipoRol");
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-    
     
     
 </body>

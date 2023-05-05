@@ -158,5 +158,19 @@ public class SalesLogic {
 		}
 		
 	}
+
+	public String updateStatus(ArrayList<ListSales> listSales) {
+		// TODO Auto-generated method stub
+		String msg = "";
+		for(ListSales listSale: listSales) {
+			
+			
+			msg = dataSales.updateStatus(listSale.getId(),listSale.getPos(),listSale.getStatus());
+			
+			
+		}
+		
+		return msg;
+	}
 	
 }

@@ -32,7 +32,6 @@ public class Delivery extends HttpServlet {
      */
     public Delivery() {
         super();
-
         // TODO Auto-generated constructor stub
     }
 
@@ -41,7 +40,7 @@ public class Delivery extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-        sales = salesLogic.getSalesWithoutStatus();
+
 		HttpSession sesion = request.getSession();
 		Users user = (Users) sesion.getAttribute("usuario");
 		
@@ -54,7 +53,7 @@ public class Delivery extends HttpServlet {
 
 			request.setAttribute("tipoRol", user.getRol().getType());
 			request.setAttribute("nombreUsuario", user.getName());
-		
+			sales = salesLogic.getSalesWithoutStatus();
 		
 		if(sales == null) {
 			
@@ -87,10 +86,36 @@ public class Delivery extends HttpServlet {
 					}
 				if(action.equals("Terminar Pedido")) 
 				{
-					System.out.println(request.getParameter("id_sale"));
-					System.out.println(request.getParameter("pos"));
-					System.out.println(request.getParameter("status"));
+					if(request.getParameterValues("status") != null) {
+						String[] status = request.getParameterValues("status");
+						
+						 for(int i=0;i<status.length;i++)
+					       {
+								
+								for(ListSales listSale: listSales) {
+									
+									if(listSale.getPos() == Integer.parseInt(status[i])) {
+										listSale.setStatus(true);
+										
+									}
+									
+								}
+								
+					       }
+						 
+						 String msgAddOK = salesLogic.updateStatus(listSales);
+						request.setAttribute("msgAddOK", msgAddOK);
+
+
+					}else {
+						request.setAttribute("msgpedido", "Seleccione al menos una entrega");
+						request.getRequestDispatcher("WEB-INF/delivery.jsp").forward(request, response);
+						return;
+					}
+					
+
 				}
+				
 					
 		       
 			}
