@@ -6,9 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import entities.Customers;
 import entities.Products;
+import entities.Users;
 import logic.ProductsLogic;
 
 
@@ -34,6 +36,22 @@ public class EditProduct extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
+		HttpSession sesion = request.getSession();
+		Users user = (Users) sesion.getAttribute("usuario");
+		
+		//Chequeo si el usuario es Vendedor o no hay usuario
+		if (user == null || user.getRol().getType().equalsIgnoreCase("Vendedor"))
+			{
+				sesion.invalidate();
+				response.sendRedirect("/control_stock/404.html");
+				return;
+			}
+
+		request.setAttribute("nombreUsuario", user.getName());
+		
+		//Logica para editar producto
 		try {
 		Integer product_id = Integer.parseInt(request.getParameter("product_id"));
 		Products product = productLogic.getById(product_id);

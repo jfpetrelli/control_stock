@@ -46,9 +46,11 @@ public class Stock extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
 		HttpSession sesion = request.getSession();
 		Users user = (Users) sesion.getAttribute("usuario");
 		
+		//Chequeo si el usuario es Vendedor o no hay usuario
 		if (user == null || user.getRol().getType().equalsIgnoreCase("Vendedor"))
 			{
 				sesion.invalidate();
@@ -75,6 +77,20 @@ public class Stock extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		HttpSession sesion = request.getSession();
+		Users user = (Users) sesion.getAttribute("usuario");
+		
+		//Chequeo si el usuario es Vendedor o no hay usuario
+		if (user == null || user.getRol().getType().equalsIgnoreCase("Vendedor"))
+			{
+				sesion.invalidate();
+				response.sendRedirect("/control_stock/404.html");
+				return;
+			}
+
+		request.setAttribute("nombreUsuario", user.getName());
+		
 		try {
 			Stores store = storeLogic.getById(Integer.parseInt(request.getParameter("store")));		
 			Integer store_id = Integer.parseInt(request.getParameter("store"));
