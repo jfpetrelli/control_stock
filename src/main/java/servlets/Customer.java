@@ -38,19 +38,19 @@ public class Customer extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//System.out.println("Hola Servlet..");
+
 		HttpSession sesion = request.getSession();
-		
 		Users user = (Users) sesion.getAttribute("usuario");
 		
+		//Chequeo si el usuario es Vendedor o no hay usuario
 		if (user == null || user.getRol().getType().equalsIgnoreCase("Vendedor"))
-		{
-			sesion.invalidate();
-			response.sendRedirect("/control_stock/404.html");
-			return;
-		}
+			{
+				sesion.invalidate();
+				response.sendRedirect("/control_stock/404.html");
+				return;
+			}
 
-		request.setAttribute("usuario", user);
+		request.setAttribute("nombreUsuario", user.getName());
 
 		customers = customerLogic.getAll();
 		request.setAttribute("customers", customers);
