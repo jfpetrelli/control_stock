@@ -214,7 +214,8 @@ public class DataSales {
 			
 		//	String sql = " select id, date from sales where id in( " +
 		//			" select sale_id from sales_details where status = 0) ";
-			String sql = " select id, date from sales";
+			String sql = " select id, date from sales where id in( " +
+						" select sale_id from sales_details where status = 0) ";
 			
 			stmt= DbConnector.getInstancia().getConn().createStatement();
 			rs= stmt.executeQuery(sql);
@@ -254,7 +255,7 @@ public class DataSales {
 		try {
 			
 			String sql = "SELECT sd.sale_id, sd.product_id, sd.pos, sd.quantity, p.detail as product, sd.status FROM sales_details sd "
-					+ "inner join products p on p.id = sd.product_id where sd.sale_id =" + sale_id;
+					+ "inner join products p on p.id = sd.product_id where sd.status = 0 and sd.sale_id =" + sale_id;
 			
 			stmt= DbConnector.getInstancia().getConn().createStatement();
 			rs= stmt.executeQuery(sql);

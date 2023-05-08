@@ -22,10 +22,10 @@ import logic.SalesLogic;
 public class Delivery extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	SalesLogic salesLogic = new SalesLogic();
+	SalesLogic salesLogic;
 	ArrayList<Sales> sales = new ArrayList<>();
 	ArrayList<ListSales> listSales = new ArrayList<>();
-    String sale_id ;
+    String sale_id;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -51,6 +51,7 @@ public class Delivery extends HttpServlet {
 				return;
 			}
 
+			salesLogic = new SalesLogic();
 			request.setAttribute("tipoRol", user.getRol().getType());
 			request.setAttribute("nombreUsuario", user.getName());
 			sales = salesLogic.getSalesWithoutStatus();
@@ -86,38 +87,34 @@ public class Delivery extends HttpServlet {
 					}
 				if(action.equals("Terminar Pedido")) 
 				{
-					if(request.getParameterValues("status") != null) {
+					
 						String[] status = request.getParameterValues("status");
 						
-						 for(int i=0;i<status.length;i++)
-					       {
-								
-								for(ListSales listSale: listSales) {
+						if(status == null) {
+							request.setAttribute("msgpedido", "Seleccione al menos un artículo entregado.");
+							request.getRequestDispatcher("WEB-INF/delivery.jsp").forward(request, response);
+							return;
+
+						}else {
+							for(int i=0;i<status.length;i++)
+								{
+								System.out.println(status[i]);
+									for(ListSales listSale: listSales) {
 									
-									if(listSale.getPos() == Integer.parseInt(status[i])) {
-										listSale.setStatus(true);
+										if(listSale.getPos() == Integer.parseInt(status[i])) {
+											listSale.setStatus(true);
 										
+										}									
 									}
-									
 								}
-								
-					       }
+						}
 						 
 						 String msgAddOK = salesLogic.updateStatus(listSales);
 						request.setAttribute("msgAddOK", msgAddOK);
-
-
-					}else {
-						request.setAttribute("msgpedido", "Seleccione al menos una entrega");
-						request.getRequestDispatcher("WEB-INF/delivery.jsp").forward(request, response);
-						return;
-					}
 					
-
 				}
 				
-					
-		       
+
 			}
 		
 		request.getRequestDispatcher("WEB-INF/delivery.jsp").forward(request, response);

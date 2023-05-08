@@ -252,6 +252,9 @@ String tipoRol = (String) request.getAttribute("tipoRol");
                                      <% if(msgAddOK != null){
                                     	%><p class = "d-block"> <%=msgAddOK %></p> <%
                                     } %>
+                                     <% if(msgpedido != null){
+                                    	%> <p class = "d-block"> <%=msgpedido %></p><%
+                                    } %>
                         </div>
                        
                         <!-- Begin Page Content -->
@@ -296,10 +299,6 @@ String tipoRol = (String) request.getAttribute("tipoRol");
                         <div class="row justify-content-end">
                             <div class="col-2 text-right">
                                 <div class="mb-3">
-                               
-                         <% if(msgpedido != null){
-                                    	%> <p class = "d-block"> <%=msg %></p><%
-                                    } %>
                   
                                     <input type="submit" value="Terminar Pedido" class="form-control bg-warning text-gray-100" id="submit" name="action">
                                 </div>
