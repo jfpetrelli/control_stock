@@ -214,7 +214,7 @@
 								    <label for="detailProduct">Descripcion</label>
 									<input required class="form-control" name="detail" value="<%=product.getDetail()%>">
 								    <label for="priceProduct">Precio</label>
-								    <input required class="form-control" name="price" value="<%=product.getPrice()%>">
+								    <input type="number" required class="form-control" name="price" value="<%=product.getPrice()%>">
 								    <br>
 								    <div  class="row">
 										<div class="col-1">

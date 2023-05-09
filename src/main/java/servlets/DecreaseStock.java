@@ -96,10 +96,20 @@ public class DecreaseStock extends HttpServlet {
 		// TODO Auto-generated method stub
 		Integer productId = Integer.parseInt(request.getParameter("product"));
 		Integer storeId = Integer.parseInt(request.getParameter("store"));
-		Integer quantity = Integer.parseInt(request.getParameter("quantity"));
+		Integer quantity = Integer.parseInt(request.getParameter("quantity"));			
 		
 		Products product = dataProduct.getById(productId);
 		Stores store = dataStore.getById(storeId);
+		
+		Products p = dataProduct.getProductByStore(store, product);
+		Integer stock = p.getStores().get(store);
+		
+		if(stock < quantity || quantity < 0) {
+		    request.setAttribute("error", "El stock es insuficiente para la cantidad ingresada.");			
+			request.getRequestDispatcher("WEB-INF/decreaseStock.jsp").forward(request, response);
+			return;			
+		}			
+		
 		productLogic.decreaseStock(store, product, quantity);
 		
 		Stock stockServlet = new Stock();

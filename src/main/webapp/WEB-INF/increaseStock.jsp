@@ -244,7 +244,7 @@
                                                         	<span id="productStock"><%= product.getStock() %></span>
                                                         </td>
                                                         <td class="col-1 text-center">
-                                                        	<input required name="quantity" id="quantity" value="">
+                                                        	<input type="number" required name="quantity" id="quantity" value="">
                                                         </td>
                                                         <td class="col-2 text-center">
                                                         	 <input id="increaseButton" class="btn btn-success" value="Aumentar" onclick = "stockValidation()">

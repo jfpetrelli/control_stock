@@ -32,6 +32,7 @@
 		Stores store = (Stores) request.getAttribute("store");
 		Products product = (Products) request.getAttribute("product"); 
     	String nombreUsuario = (String) request.getAttribute("nombreUsuario");
+    	String error = (String) request.getAttribute("error");
     %>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	
@@ -215,6 +216,16 @@
 					<div class="row">
                             <div class="col-12">
                             <h4>Disminuir stock:</h4>
+                       <% if(error != null) {%>
+	                       <div class="row">
+	                        	<div class="text-center">
+	                                <div class="mb-3">
+										<h4><%= error %></h4>
+	                                </div>
+	                            </div>                        	                        
+	                        </div>
+                        <% } %>	
+                            
                                 <!-- DataTales Example -->
                                 <div class="card shadow mb-4">
                                     <div class="card-body">
@@ -248,7 +259,7 @@
                                                         	<span id="productStock"><%= product.getStock() %></span>                                                        	
                                                         </td>
                                                         <td class="col-1 text-center">
-                                                        	<input required name="quantity" id="quantity" value="">
+                                                        	<input type="number" required name="quantity" id="quantity" value="">
                                                         </td>
                                                         <td class="col-2 text-center">
                                                         	 <input id="decreaseButton" class="btn btn-danger" value="Restar" onclick = "stockValidation()">

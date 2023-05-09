@@ -35,25 +35,35 @@ public class EditCustomer extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		try {
+			HttpSession sesion = request.getSession();
+			Users user = (Users) sesion.getAttribute("usuario");
 			
-		HttpSession sesion = request.getSession();
-		Users user = (Users) sesion.getAttribute("usuario");
-		
-		//Chequeo si el usuario es Vendedor o no hay usuario
-		if (user == null || user.getRol().getType().equalsIgnoreCase("Vendedor"))
+			//Chequeo si el usuario es Vendedor o no hay usuario
+			if (user == null || user.getRol().getType().equalsIgnoreCase("Vendedor")) {
+					sesion.invalidate();
+					response.sendRedirect("/control_stock/404.html");
+					return;
+			}
+
+			request.setAttribute("nombreUsuario", user.getName());
+			
+			//Logica para editar usuario
+			Integer customer_id = Integer.parseInt(request.getParameter("customer_id"));
+			Customers customer = customerLogic.getById(customer_id);
+			
+			if (customer == null)
 			{
-				sesion.invalidate();
 				response.sendRedirect("/control_stock/404.html");
 				return;
 			}
-
-		request.setAttribute("nombreUsuario", user.getName());
-		
-		//Logica para editar usuario
-		Integer customer_id = Integer.parseInt(request.getParameter("customer_id"));
-		Customers customer = customerLogic.getById(customer_id);
-	    request.setAttribute("customer", customer);
-	     
+			
+		    request.setAttribute("customer", customer);			
+		} catch (Exception e) {
+			response.sendRedirect("/control_stock/404.html");
+			return;
+		}
+			     
 		request.getRequestDispatcher("WEB-INF/editCustomer.jsp").forward(request, response); 
 		
 	}

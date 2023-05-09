@@ -99,6 +99,13 @@ public class IncreaseStock extends HttpServlet {
 		Integer productId = Integer.parseInt(request.getParameter("product"));
 		Integer storeId = Integer.parseInt(request.getParameter("store"));
 		Integer quantity = Integer.parseInt(request.getParameter("quantity"));
+		
+		if(quantity < 0) {
+		    request.setAttribute("error", "La cantidad a agregar no puede ser igual o menor que 0.");			
+			request.getRequestDispatcher("WEB-INF/increaseStock.jsp").forward(request, response);
+			return;			
+		}	
+		
 		Products product = dataProduct.getById(productId);
 		Stores store = dataStore.getById(storeId);
 		productLogic.increaseStock(store, product, quantity);
