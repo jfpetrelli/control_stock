@@ -67,6 +67,7 @@ public class SalesLogic {
 	public String addSale(Sales sale) {
 		
 		
+		if(sale.getProducts().isEmpty()) return "Ingrese al menos un artículo";
 		
 		Integer id = dataSales.insertSale(sale);
 		
@@ -77,6 +78,7 @@ public class SalesLogic {
 		ArrayList<Products> products = new ArrayList<>();
 		products = sale.getProducts();
 		int count = 1;
+
 		for(Products prod: products) {
 			
 			String ok = dataSales.insertProductsQuantities(id,prod.getId(), prod.getStock(), count);

@@ -75,7 +75,7 @@ public class DataSales {
 			
 		}  catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            return "";
 		} finally {
             try {
                 if(keyResultSet!=null)keyResultSet.close();
@@ -83,7 +83,7 @@ public class DataSales {
                 DbConnector.getInstancia().releaseConn();
             } catch (SQLException e) {
             	e.printStackTrace();
-            	return null;
+            	return "";
 
             }
 		}
