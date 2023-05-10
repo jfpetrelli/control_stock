@@ -144,9 +144,9 @@ public class SalesLogic {
 		} catch (Exception e) {
 			e.getStackTrace();
 			System.out.println("Error en formato Date");
-			
+			return null;
 		}
-		return null;
+
 		
 	}
 
