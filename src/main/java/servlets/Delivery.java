@@ -111,7 +111,9 @@ public class Delivery extends HttpServlet {
 						 
 						 String msgAddOK = salesLogic.updateStatus(listSales);
 						request.setAttribute("msgAddOK", msgAddOK);
-					
+						sales = salesLogic.getSalesWithoutStatus();
+						request.setAttribute("sales", sales);
+					   
 				}
 				
 
