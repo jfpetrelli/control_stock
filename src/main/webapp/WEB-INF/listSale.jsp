@@ -60,7 +60,7 @@
 		if(ls != null){
 			for(ListSales l: ls){
 			
-				total += l.getPrice()*l.getQuantity();
+				total += l.getPrice();
 			
 			}
 		}
@@ -321,14 +321,13 @@
                                               <% if(ls != null){ %>
                                                 	<% for (ListSales l: ls ){ %>
                                                 	<tr>
-                                                		
                                                 		<td class="col-1"><%= l.getId() %></td>
                                                         <td class="col-2"><%= l.getCustomer() %></td>
                                                         <td class="col-2 text-right"><%= l.getStore() %></td>
                                                         <td class="col-2 text-right"><%= l.getProduct() %></td>
                                                         <td class="col-1 text-right"><%= l.getQuantity() %></td>
                                                         <td class="col-1 text-right"><%= l.getUnit_price() %></td>
-                                                        <td class="col-1 text-right"><%= l.getPrice() * l.getQuantity() %></td>
+                                                        <td class="col-1 text-right"><%= l.getPrice() %></td>
                                                 	</tr>
                                                 	<% } %>
                                                 <% }%>
@@ -345,7 +344,7 @@
                                 
                                  <% if(ls != null){ %>
                                     <label for="" class="pr-4">Total</label>
-                                    <input type="number" class="form-control text-right font-weight-bold" name="total" value = "<%= total %>" disabled>
+                                    <input type="text" class="form-control text-right font-weight-bold" name="total" value = "<%= total %>" disabled>
                                     
                                                                                     <% }%>
                                 </div>

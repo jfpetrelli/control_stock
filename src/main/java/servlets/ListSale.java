@@ -1,7 +1,7 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,12 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import entities.Customers;
-import entities.Products;
 import entities.Sales;
 import entities.Stores;
 import entities.Users;
 import logic.CustomersLogic;
-import logic.ProductsLogic;
 import logic.SalesLogic;
 import logic.StoresLogic;
 
@@ -36,7 +34,8 @@ public class ListSale extends HttpServlet {
 	StoresLogic storesLogic = new StoresLogic();
 	ArrayList<Stores> stores = new ArrayList<>();
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-	LocalDateTime datetime = LocalDateTime.now();
+	LocalDate d = LocalDate.now();
+	LocalDateTime datetime = d.atStartOfDay();
 	SalesLogic salesLogic = new SalesLogic();
 	Sales sale;
 	String store_id;
