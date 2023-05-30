@@ -44,17 +44,19 @@ public class Delivery extends HttpServlet {
 		HttpSession sesion = request.getSession();
 		Users user = (Users) sesion.getAttribute("usuario");
 		
-		if (user == null)
+		//Chequeo si el usuario es Vendedor o no hay usuario
+		if (user == null || user.getRol().getType().equalsIgnoreCase("Vendedor"))
 			{
 				sesion.invalidate();
 				response.sendRedirect("/control_stock/404.html");
 				return;
 			}
 
-			salesLogic = new SalesLogic();
-			request.setAttribute("tipoRol", user.getRol().getType());
-			request.setAttribute("nombreUsuario", user.getName());
-			sales = salesLogic.getSalesWithoutStatus();
+		request.setAttribute("nombreUsuario", user.getName());
+		
+
+		salesLogic = new SalesLogic();
+		sales = salesLogic.getSalesWithoutStatus();
 		
 		if(sales == null) {
 			

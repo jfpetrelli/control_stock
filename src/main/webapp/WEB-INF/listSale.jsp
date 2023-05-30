@@ -96,6 +96,12 @@
                 </a>
             </li>
             <li class="nav-item active">
+                <a class="nav-link" href="Delivery">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Entregas</span>
+                </a>
+            </li>
+            <li class="nav-item active">
                 <a class="nav-link" href="Customer">
                     <i class="fas fa-address-book"></i>
                     <span>Clientes</span>
@@ -306,14 +312,14 @@
                                     <div class="card-body">
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                <thead>
-                                                    <tr>
+                                                <thead bgcolor= "#f6c23e">
+                                                    <tr style="color:white">
                                                     	<th class="col-1">Venta</th>
                                                     	<th class="col-2">Cliente</th>
                                                     	<th class="col-2">Deposito</th>
                                                         <th class="col-2">Articulo</th> 
                                                         <th class="col-1 text-right">Cantidad</th>
-                                                        <th class="col-1 text-right">Precio Unitario</th>
+                                                        <th class="col-2 text-right">Precio Unitario</th>
                                                         <th class="col-1 text-right">Total</th>
                                                     </tr>
                                                 </thead>
@@ -323,8 +329,8 @@
                                                 	<tr>
                                                 		<td class="col-1"><%= l.getId() %></td>
                                                         <td class="col-2"><%= l.getCustomer() %></td>
-                                                        <td class="col-2 text-right"><%= l.getStore() %></td>
-                                                        <td class="col-2 text-right"><%= l.getProduct() %></td>
+                                                        <td class="col-2"><%= l.getStore() %></td>
+                                                        <td class="col-2"><%= l.getProduct() %></td>
                                                         <td class="col-1 text-right"><%= l.getQuantity() %></td>
                                                         <td class="col-1 text-right"><%= l.getUnit_price() %></td>
                                                         <td class="col-1 text-right"><%= l.getPrice() %></td>

@@ -153,7 +153,7 @@ public class DataSales {
 		try {
 			
 			String sql = "SELECT s.id "
-					+ "	,c.name "
+					+ "	,CONCAT(c.surname,', ',c.name) as name "
 					+ "	,p.detail "
 					+ "	,sto.detail AS storage "
 					+ "	,loc.city "

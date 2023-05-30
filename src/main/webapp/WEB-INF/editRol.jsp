@@ -59,6 +59,12 @@
                     <span>Venta</span>
                 </a>
             </li>
+           	<li class="nav-item active">
+                <a class="nav-link" href="Delivery">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Entregas</span>
+                </a>
+            </li>
             <li class="nav-item active">
                 <a class="nav-link" href="Customer">
                     <i class="fas fa-address-book"></i>

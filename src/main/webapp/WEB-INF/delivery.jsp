@@ -29,8 +29,7 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 <%
 
-String nombreUsuario = (String) request.getAttribute("nombreUsuario");
-String tipoRol = (String) request.getAttribute("tipoRol");
+			String nombreUsuario = (String) request.getAttribute("nombreUsuario");
     		String msg = (String) request.getAttribute("msg");	
     		String msgpedido = (String) request.getAttribute("msgpedido");		
     		String msgAddOK = (String) request.getAttribute("msgAddOK");
@@ -77,7 +76,7 @@ String tipoRol = (String) request.getAttribute("tipoRol");
                     <i class="fas fa-shopping-cart"></i>
                     <span>Entregas</span>
                 </a>
-            </li>	
+            </li>
             <li class="nav-item active">
                 <a class="nav-link" href="Customer">
                     <i class="fas fa-address-book"></i>
@@ -184,7 +183,7 @@ String tipoRol = (String) request.getAttribute("tipoRol");
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=nombreUsuario%></span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
@@ -206,7 +205,7 @@ String tipoRol = (String) request.getAttribute("tipoRol");
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Desconectarse
                                 </a>
                             </div>
                         </li>
@@ -330,7 +329,7 @@ String tipoRol = (String) request.getAttribute("tipoRol");
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Listo para salir?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">X—</span>
+                        <span aria-hidden="true">—</span>
                     </button>
                 </div>
                 <div class="modal-body">Haz clic en "Desconectarse" para salir.</div>
