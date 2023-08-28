@@ -264,14 +264,14 @@
 																<% if(!productLogic.belongsToStore(store_selected, product)){ %>
 																<div class="col-4">
 																	<form id="addToStore<%= product.getId() %>" action="SaveProductToStore" method="POST">
-																		<input id ="quantity<%= product.getId() %>" required class="form-control" type="number" name="quantity" value="">
+																		<input id ="quantity<%= product.getId() %>" required class="form-control" type="number" name="quantity" min="1" pattern="^[0-9]+">
 																		<input type="hidden" name="store" value="<%=store_selected %>">
 																		<input id ="product_id" type="hidden" name="product" value="<%= product.getId() %>">
-																	</form>	
 																</div>
 																<div class="col-2">
 																	<button type="submit" class="btn btn-primary" onclick="stockValidation()">Agregar</button>
 																</div>
+																	</form>
 																<%} else {%>
 																<div class="col-2">
 																	<form id="removeFromStore<%= product.getId() %>" action="RemoveProductFromStore" method="POST">
@@ -361,13 +361,13 @@
 			var quantityId = 'quantity'+productId;
 			var quantityToAdd = document.getElementById(quantityId).value;	
 
-			quantityToAdd = parseInt(quantityToAdd);
-			if(quantityToAdd < 0){
-				alert("No puede ingresar números negativos.");
-				return;
-			}
+			//quantityToAdd = parseInt(quantityToAdd);
+			//if(quantityToAdd < 0){
+				//alert("No puede ingresar números negativos.");
+				//return;
+			//}
 			if(!quantityToAdd){
-				alert("Debe ingresar un número válido.");
+				//alert("Debe ingresar un número válido.");
 				return;
 			}
 			
@@ -380,7 +380,3 @@
 </body>
 
 </html>
-
-<script>
-	
-</script>
