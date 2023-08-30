@@ -261,7 +261,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (4,'leonardo','leonardo','leonardo','leonardo','leo@nardo.com',7),(5,'cora','cora','Cora','Cora','co@ra.com',8);
+INSERT INTO `users` VALUES (4,'admin','admin','administrador','administrador','admin@admin.com',7),(5,'vendedor','vendedor','Vendedor','Vendedor','vendedor@vendedor.com',8);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -274,4 +274,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-30 20:35:32
+-- Dump completed on 2023-08-30 20:39:54
