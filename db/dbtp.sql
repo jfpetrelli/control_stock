@@ -29,7 +29,7 @@ CREATE TABLE `customers` (
   `comercial_name` varchar(45) NOT NULL,
   `mail` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (2,'Juan','Perez','JP SA','jp@gmail.com'),(3,'Sebastian','Cejas','Mi Emprendimiento SRL','sabastian@miemprendimiento.com.ar');
+INSERT INTO `customers` VALUES (2,'Juan','Perez','JP SA','jp@gmail.com'),(8,'John','Doe','JohnDoeSRL','email@email.com');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,7 +80,7 @@ CREATE TABLE `products` (
   `detail` varchar(45) DEFAULT NULL,
   `price` double NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (2,'Microondas',25000),(3,'Cocinia',45000),(4,'Heladera',65000),(5,'Lavavajillas',120000),(46,'Calefón',43000);
+INSERT INTO `products` VALUES (2,'Microondas',25000),(3,'Cocinia',45000),(4,'Heladera',65000),(5,'Lavavajillas',120000);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,7 +117,7 @@ CREATE TABLE `products_stores` (
 
 LOCK TABLES `products_stores` WRITE;
 /*!40000 ALTER TABLE `products_stores` DISABLE KEYS */;
-INSERT INTO `products_stores` VALUES (2,2,111),(2,3,55),(2,20,0),(3,2,555),(3,3,55),(3,20,2),(4,1,30),(4,3,33),(4,20,3),(5,1,45),(5,3,55),(5,20,44),(46,20,5);
+INSERT INTO `products_stores` VALUES (2,2,111),(2,3,55),(2,20,7),(2,21,0),(2,23,15),(3,2,555),(3,3,55),(3,20,100),(3,21,0),(4,1,30),(4,3,33),(4,20,20),(5,1,45),(5,3,55),(5,23,16);
 /*!40000 ALTER TABLE `products_stores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +132,7 @@ CREATE TABLE `roles` (
   `id` int NOT NULL AUTO_INCREMENT,
   `type` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +141,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (3,'Admin'),(4,'Vendedor'),(6,'Dios');
+INSERT INTO `roles` VALUES (7,'Administrador'),(8,'Vendedor');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,7 +163,7 @@ CREATE TABLE `sales` (
   KEY `FK_customer_idx` (`customer`),
   CONSTRAINT `FK_customer` FOREIGN KEY (`customer`) REFERENCES `customers` (`id`),
   CONSTRAINT `FK_store` FOREIGN KEY (`store`) REFERENCES `stores` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,7 +172,7 @@ CREATE TABLE `sales` (
 
 LOCK TABLES `sales` WRITE;
 /*!40000 ALTER TABLE `sales` DISABLE KEYS */;
-INSERT INTO `sales` VALUES (1,'2022-10-25 00:00:00',25000,2,1),(2,'2022-10-25 00:00:00',25000,2,3),(3,'2022-10-31 00:00:00',125000,2,2),(4,'2022-11-08 00:00:00',305000,2,1),(5,'2022-11-08 00:00:00',65000,2,1);
+INSERT INTO `sales` VALUES (1,'2022-10-25 00:00:00',25000,2,1),(2,'2022-10-25 00:00:00',25000,2,3),(3,'2022-10-31 00:00:00',125000,2,2),(4,'2022-11-08 00:00:00',305000,2,1),(5,'2022-11-08 00:00:00',65000,2,1),(6,'2022-11-11 00:00:00',70000,2,21),(7,'2023-04-17 00:00:00',25000,2,20),(8,'2023-04-27 00:00:00',70000,2,21),(9,'2023-07-03 00:00:00',45000,2,21),(10,'2023-08-28 00:00:00',25000,2,23),(11,'2023-08-28 00:00:00',250000,2,20);
 /*!40000 ALTER TABLE `sales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,6 +188,7 @@ CREATE TABLE `sales_details` (
   `product_id` int NOT NULL,
   `quantity` int DEFAULT NULL,
   `pos` varchar(45) NOT NULL,
+  `status` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`sale_id`,`product_id`,`pos`),
   KEY `FK_product_idx` (`product_id`),
   CONSTRAINT `FK_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
@@ -201,7 +202,7 @@ CREATE TABLE `sales_details` (
 
 LOCK TABLES `sales_details` WRITE;
 /*!40000 ALTER TABLE `sales_details` DISABLE KEYS */;
-INSERT INTO `sales_details` VALUES (1,2,1,'1'),(2,2,1,'1'),(3,2,5,'1'),(4,4,1,'1'),(4,5,2,'2'),(5,4,1,'1');
+INSERT INTO `sales_details` VALUES (1,2,1,'1',0),(2,2,1,'1',0),(3,2,5,'1',0),(4,4,1,'1',1),(4,5,2,'2',1),(5,4,1,'1',0),(6,2,1,'1',0),(6,3,1,'2',0),(7,2,1,'1',0),(8,2,1,'1',1),(8,3,1,'2',1),(9,3,1,'1',0),(10,2,1,'1',0),(11,2,10,'1',0);
 /*!40000 ALTER TABLE `sales_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,7 +221,7 @@ CREATE TABLE `stores` (
   PRIMARY KEY (`id`),
   KEY `FK_Location_idx` (`location_id`),
   CONSTRAINT `FK_Location` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -229,7 +230,7 @@ CREATE TABLE `stores` (
 
 LOCK TABLES `stores` WRITE;
 /*!40000 ALTER TABLE `stores` DISABLE KEYS */;
-INSERT INTO `stores` VALUES (20,'Deposito 1','Uno',11),(21,'Dos','Depo 2',12);
+INSERT INTO `stores` VALUES (20,'Zeballos','Zeballos 1010',11),(21,'Depo Dos','9 de Julio 1010',12),(23,'Depo Tres','3 de Febrero',12);
 /*!40000 ALTER TABLE `stores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -251,7 +252,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   KEY `FK_rol_idx` (`rol`),
   CONSTRAINT `FK_rol` FOREIGN KEY (`rol`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,6 +261,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (4,'leonardo','leonardo','leonardo','leonardo','leo@nardo.com',7),(5,'cora','cora','Cora','Cora','co@ra.com',8);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -272,4 +274,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-10 22:14:19
+-- Dump completed on 2023-08-30 20:35:32
