@@ -320,6 +320,7 @@
                                                         <th class="col-2">Articulo</th> 
                                                         <th class="col-1 text-right">Cantidad</th>
                                                         <th class="col-2 text-right">Precio Unitario</th>
+                                                        <th class="col-1">Entregado</th>
                                                         <th class="col-1 text-right">Total</th>
                                                     </tr>
                                                 </thead>
@@ -333,6 +334,7 @@
                                                         <td class="col-2"><%= l.getProduct() %></td>
                                                         <td class="col-1 text-right"><%= l.getQuantity() %></td>
                                                         <td class="col-1 text-right"><%= l.getUnit_price() %></td>
+                                                        <td class="col-1"><%= l.entregado() %></td>
                                                         <td class="col-1 text-right"><%= l.getPrice() %></td>
                                                 	</tr>
                                                 	<% } %>

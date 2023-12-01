@@ -160,6 +160,7 @@ public class DataSales {
 					+ "	,sd.quantity "
 					+ "	,p.price AS unit_price "
 					+ "	,sd.quantity * p.price AS price "
+					+ "	,sd.status AS status "
 					+ "FROM control_stock.sales s "
 					+ "INNER JOIN control_stock.sales_details sd ON s.id = sd.sale_id "
 					+ "INNER JOIN control_stock.customers c ON s.customer = c.id "
@@ -185,7 +186,7 @@ public class DataSales {
 				l.setQuantity(rs.getInt("quantity"));
 				l.setUnit_price(rs.getDouble("unit_price"));
 				l.setPrice(rs.getDouble("price"));
-				
+				l.setStatus(rs.getBoolean("status"));
 				ls.add(l);
 				
 			}

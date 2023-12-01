@@ -81,5 +81,9 @@ public class ListSales {
 		return status;
 	}
 	
+	public String entregado() {
+		return (this.getStatus() ? "Si": "No");
+	}
+	
 	
 }
