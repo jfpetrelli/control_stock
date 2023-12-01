@@ -62,7 +62,7 @@ public class RemoveProductFromStore extends HttpServlet {
 			dataProduct.removeStock(store, product);
 			
 			products = productLogic.getAll();
-		    request.setAttribute("store", request.getParameter("store"));
+		    request.setAttribute("store", store);
 		    request.setAttribute("products", products);
 		} catch (Exception e) {
 			response.sendRedirect("/control_stock/500.html");		

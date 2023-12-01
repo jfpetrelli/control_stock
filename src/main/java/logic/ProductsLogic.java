@@ -57,12 +57,12 @@ public class ProductsLogic {
 			dataProducts.createStock(store,product,quantity);
 		}
 		
-		public boolean belongsToStore(String store, Products product) {
-			Integer storeId = Integer.parseInt(store);
+		public boolean belongsToStore(Integer store, Products product) {
+			//Integer storeId = Integer.parseInt(store);
 			
 			ArrayList<Products> products = null;
 			try {
-				products = dataProducts.readProductsStores(storeId);
+				products = dataProducts.readProductsStores(store);
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

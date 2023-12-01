@@ -4,6 +4,7 @@
 <%@page import="entities.Products"%>
 <%@page import="logic.ProductsLogic"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.io.IOException"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -34,13 +35,9 @@
     	ArrayList<Products> products = (ArrayList) request.getAttribute("products");	
     	ProductsLogic productLogic = new ProductsLogic();
     		
-		String store_selected = new String();
-		String sto = (String)request.getAttribute("store");
+		Stores store_selected = new Stores();
+		store_selected = (Stores)request.getAttribute("store");
 		
-		if(sto != null){
-			store_selected = sto;
-		}
-    	
     %>
 
 </head>
@@ -229,7 +226,7 @@
 
                             <div class="col">
                                 <div class="mb-3">
-                                  	<label for="store" class="form-label">Deposito <%= sto %></label>
+                                  	<label for="store" class="form-label"><%= store_selected.getDetail() %></label>
                                   	
                                 </div> 
                             </div>
@@ -261,11 +258,11 @@
                                                         <td class="col-3 ">
 															<div  class="row justify-content-md-center">
 																
-																<% if(!productLogic.belongsToStore(store_selected, product)){ %>
+																<% if(!productLogic.belongsToStore(store_selected.getId(), product)){ %>
 																<div class="col-4">
 																	<form id="addToStore<%= product.getId() %>" action="SaveProductToStore" method="POST">
 																		<input id ="quantity<%= product.getId() %>" required class="form-control" type="number" name="quantity" min="1" pattern="^[0-9]+">
-																		<input type="hidden" name="store" value="<%=store_selected %>">
+																		<input type="hidden" name="store" value="<%=store_selected.getId() %>">
 																		<input id ="product_id" type="hidden" name="product" value="<%= product.getId() %>">
 																</div>
 																<div class="col-2">
@@ -275,7 +272,7 @@
 																<%} else {%>
 																<div class="col-2">
 																	<form id="removeFromStore<%= product.getId() %>" action="RemoveProductFromStore" method="POST">
-																		<input type="hidden" name="store" value="<%=store_selected %>">
+																		<input type="hidden" name="store" value="<%=store_selected.getId() %>">
 																		<input type="hidden" name="product" value="<%= product.getId() %>">																		
 																	</form>	
 																	<button form="removeFromStore<%= product.getId() %>" type="submit" class="btn btn-danger">Eliminar</button>
