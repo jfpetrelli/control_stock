@@ -51,8 +51,8 @@ public class ListSale extends HttpServlet {
     public ListSale() {
         super();
         // TODO Auto-generated constructor stub
-        customers = customersLogic.getAll();
-        stores = storesLogic.getAll();
+        customers = null;
+        stores = null;
 
     }
 
@@ -62,6 +62,8 @@ public class ListSale extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
+        customers = customersLogic.getAll();
+        stores = storesLogic.getAll();
 		HttpSession sesion = request.getSession();
 		Users user = (Users) sesion.getAttribute("usuario");
 		

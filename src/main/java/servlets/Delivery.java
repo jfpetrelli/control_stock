@@ -32,6 +32,7 @@ public class Delivery extends HttpServlet {
      */
     public Delivery() {
         super();
+        sales = null;
         // TODO Auto-generated constructor stub
     }
 

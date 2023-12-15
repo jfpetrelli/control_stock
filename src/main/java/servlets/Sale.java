@@ -54,8 +54,9 @@ public class Sale extends HttpServlet {
     public Sale() {
         super();
         // TODO Auto-generated constructor stub
-        customers = customersLogic.getAll();
-        stores = storesLogic.getAll();
+        customers = null;
+        stores = null;
+
 
     }
 
@@ -67,6 +68,9 @@ public class Sale extends HttpServlet {
 
 		HttpSession sesion = request.getSession();
 		Users user = (Users) sesion.getAttribute("usuario");
+		
+        customers = customersLogic.getAll();
+        stores = storesLogic.getAll();
 		
 		if (user == null)
 			{
